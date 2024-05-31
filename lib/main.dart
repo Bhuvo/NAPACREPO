@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:npac/common_widget/radio_button_list.dart';
 import 'package:npac/contoller/form1Controller.dart';
+import 'package:npac/page/formOne.dart';
 import 'package:npac/utils/theme_utils.dart';
 
 void main() {
@@ -34,8 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool widget1 = false;
-  String widget1String ='';
+
   bool isExpanded = false;
   final List<String> _options = ["Antenatal", "Post-partum (Up to 6 weeks)", "Postnatal (up to 5 months, only for peri-partum cardiomyopathy)"];
 
@@ -82,33 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ListView.builder(
                       shrinkWrap: true,
                       itemCount: controller.form.value.form1List!.length,itemBuilder: (context, index) {
-                      return   Column(
-                        children: [
-                          isExpanded
-                              ? Column(crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${controller.form.value.form1List![index].heading}'),
-                              MRadioButtonList(options: controller.form.value.form1List![index].options,onChanged: (Stringvalue,boolvalue){
-                                setState(() {
-                                  widget1String = '';
-                                });
-                                setState(() {
-                                  widget1 = boolvalue;
-                                  widget1String = Stringvalue;
-                                });
-                              },selectedValue:widget1String ,),
-                            ],
-                          )
-                              : Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('${controller.form.value.form1List![index].heading} ${widget1String} '),
-                              Checkbox(value: widget1, onChanged: (value) {}),
-                            ],
-                          ),
-                        ],
-                      );
+                      return  FormOne(data: controller.form.value.form1List![index],isExpanded: isExpanded,);
                     },
                     ),
 

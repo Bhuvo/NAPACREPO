@@ -43,6 +43,7 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
       itemCount: manualOptions.length,
       itemBuilder: (context, index) {
         return RadioListTile<String>(
+          key: ValueKey(manualOptions[index]),
           title: Text(manualOptions[index]),
           value: manualOptions[index],
           groupValue: _selectedOption,
@@ -55,6 +56,7 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
       itemCount: widget.options?.length,
       itemBuilder: (context, index) {
         return RadioListTile<String>(
+          key: ValueKey(widget.options?[index]),
           title: Text(widget.options?[index]),
           value: widget.options?[index],
           groupValue: _selectedOption,
