@@ -25,13 +25,13 @@ class _FormOneState extends State<FormOne> {
             ? Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('${widget.data.heading}'),
-            MRadioButtonList(key: ValueKey('${widget.data.heading}'),options: widget.data.options,onChanged: (Stringvalue,boolvalue){
+            MRadioButtonList(key: ValueKey('${widget.data.heading}'),options: widget.data.options,onChanged: (Stringvalue){
               setState(() {
                 widget1String = '';
               });
               setState(() {
-                widget1 = boolvalue;
-                widget1String = Stringvalue;
+               // widget1 = boolvalue;
+                //widget1String = Stringvalue;
               });
             },selectedValue:widget1String ,),
           ],

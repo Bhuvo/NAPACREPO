@@ -22,9 +22,25 @@ class MTheme {
   static RoundedRectangleBorder cardShape = RoundedRectangleBorder(
       borderRadius: cardRadius);
 
-  static MaterialColor get themeColor => Colors.orange;
+  // static MaterialColor get themeColor => MaterialColor(
+  //   0xffa767fb,
+  //   <int, Color>{
+  //     50: Color(0xfff2e5fe),
+  //     100: Color(0xffdabcfb),
+  //     200: Color(0xffc290f9),
+  //     300: Color(0xffa967f7),
+  //     400: Color(0xff9745f5),
+  //     500: Color(0xff8424f3),
+  //     600: Color(0xff741fe0),
+  //     700: Color(0xff621bcc),
+  //     800: Color(0xff5017b8),
+  //     900: Color(0xff3c12a3),
+  //   },
+  // );
+  static MaterialColor get themeColor => Colors.red;
   // static Color get primary => Colors.yellow;
-  static Color get primary => Color(0xffffa032);
+  //static Color get primary => Color(0xffa767fb);
+   static Color get primary => Color(0xffec2111);
   // static const Color  primary = Color(0xffffa032);
   static  ThemeData get lightTheme => ThemeData(
       progressIndicatorTheme: ProgressIndicatorThemeData(

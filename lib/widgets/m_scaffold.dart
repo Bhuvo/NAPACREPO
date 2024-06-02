@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foode/utils/navigator_utils.dart';
+import 'package:npac/utils/navigator_utils.dart';
 
 class MScaffold extends StatelessWidget {
   final Widget? body, floatingActionButton, bottomSheet, bottomNavigationBar;

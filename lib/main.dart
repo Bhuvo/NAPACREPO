@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:npac/common_widget/radio_button_list.dart';
-import 'package:npac/contoller/form1Controller.dart';
-import 'package:npac/page/formOne.dart';
-import 'package:npac/utils/theme_utils.dart';
+import 'package:npac/Route/routes.dart';
+import 'package:npac/app/app_scroll.dart';
+import 'package:npac/theme/theme.dart';
+import 'package:npac/Route/router.dart';
+import 'package:npac/utils/navigator_utils.dart';
+import 'package:npac/widgets/loading_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,136 +18,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(),
+      title: 'NPAC',
+      scrollBehavior: const ScrollBehaviorModified(),
+      debugShowCheckedModeBanner: false,
+      theme: MTheme.lightTheme,
+      darkTheme: MTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      initialRoute: Routes.splash,
+      onGenerateRoute: MRouter.onGenerateRoute,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class spalshScreen extends StatefulWidget {
+  const spalshScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<spalshScreen> createState() => _spalshScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-
-  bool isExpanded = false;
-  final List<String> _options = ["Antenatal", "Post-partum (Up to 6 weeks)", "Postnatal (up to 5 months, only for peri-partum cardiomyopathy)"];
-
-  form1Controller controller =Get.put(form1Controller());
+class _spalshScreenState extends State<spalshScreen> {
+  void load() async {
+    ///Fake load
+    await Future.delayed(const Duration(seconds: 1));
+      context.push(Routes.login);
+  }
 
   @override
   void initState() {
-    controller.getForm1();
+    load();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: context.primary,
-        title: Center(child: Text('INCLUSION CRITERIA CHECKLIST (FORM A)')),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('For all patients (Tick theapplicable)'),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isExpanded = !isExpanded;
-                              });
-                            },
-                            icon: isExpanded
-                                ? Icon(Icons.keyboard_arrow_up_rounded)
-                                : Icon(Icons.keyboard_arrow_down_rounded))
-                      ],
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: controller.form.value.form1List!.length,itemBuilder: (context, index) {
-                      return  FormOne(data: controller.form.value.form1List![index],isExpanded: isExpanded,);
-                    },
-                    ),
-
-                    // Column(
-                    //   children: [
-                    //     isExpanded
-                    //         ? Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    //           children: [
-                    //             Text('A7'),
-                    //             MRadioButtonList(options: _options,onChanged: (Stringvalue,boolvalue){
-                    //               setState(() {
-                    //                 widget1String = '';
-                    //               });
-                    //               setState(() {
-                    //                 widget1 = boolvalue;
-                    //                 widget1String = Stringvalue;
-                    //               });
-                    //             },selectedValue:widget1String ,),
-                    //           ],
-                    //         )
-                    //         : Row(
-                    //             mainAxisAlignment:
-                    //                 MainAxisAlignment.spaceBetween,
-                    //             children: [
-                    //               Text('A7. ${widget1String} '),
-                    //               Checkbox(value: widget1, onChanged: (value) {}),
-                    //             ],
-                    //           ),
-                    //     isExpanded ?  Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //       Text('A8. Heart disease as per inclusion criteria'),
-                    //         MRadioButtonList(),
-                    //     ],): Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         Text('A8. Heart disease as per inclusion criteria'),
-                    //         Checkbox(value: true, onChanged: (value) {}),
-                    //       ],
-                    //     ),
-                    //     isExpanded ?  Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //         Text('A9. Consented for the study'),
-                    //         MRadioButtonList(),
-                    //       ],):   Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         Text('A9. Consented for the study'),
-                    //         Checkbox(value: true, onChanged: (value) {}),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+    return Center(child: LoadingWidget(),);
   }
 }
+
+
+
 
 // isExpanded ?  Column(
 //                             crossAxisAlignment: CrossAxisAlignment.start,
