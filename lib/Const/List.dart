@@ -11,6 +11,13 @@ class List_items{
   static const  List<String> AntenatalCheckUpPlace =['PHC', 'Private clinic', 'PNH','DH','Private Hospital','TCC'];
   static const  List<String> assessment =['LIVE', 'IUF', 'AGA','SGA'];
   static const  List<String> GTT =['Normal', 'Impaired'];
+  static const  List<String> NormalAbnormal =['Normal', 'Abnormal'];
+  static const  List<String> NormalDilated =['Normal', 'Dilated'];
+  static const  List<String> NormalDilatedHypertrophic =['Normal', 'Dilated','Hypertrophic'];
+  static const  List<String> AVConnection =['Concordant', 'Discordant'];
+
+  static const  List<String> HypoplasticChamber =['Morphologic LA', 'Morphologic RA','Morphologic LV','Morphologic RV','Nil'];
+
   static const  List<String> Diagnosis =['Single', 'Twin','Triple','Multiple'];
   static const  List<String> ETIOLOGICALDiagnosis =['Congenital Heart disease. ', 'Valvular Heart disease (Other than congenital)','Cardiomyopathy (Tick the applicable)','Aortopathies (Tick the applicable)','Cardiac Arrhythmia','Coronary artery disease','Venous thromboembolism/ Pulmonary EmbolismPrimary Pulmonary Hypertension','Others (Miscellaneous)'];
   static const  List<String>  ASSOCIATEDDiagnosis  =['Pulmonary Hypertension (other than primary) ', 'Congestive Heart Failure','Atrial fibrillation (other than lone AF)','Infective endocarditis'];

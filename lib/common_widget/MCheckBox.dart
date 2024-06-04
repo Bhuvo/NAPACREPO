@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class MCheckBox extends StatefulWidget {
   final String? title;
-  final Function(bool?)? onChanged;
+  final Function(bool?, String?)? onChanged;
   const MCheckBox({super.key, this.title, this.onChanged});
 
   @override
@@ -16,18 +16,18 @@ class _MCheckBoxState extends State<MCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text(widget.title ?? ''),
         Checkbox(
           value: boolValue,
           onChanged:(value) {
-            widget.onChanged!(value);
+            widget.onChanged!(value, widget.title);
             setState(() {
               boolValue = value!;
             });
           }
-        )
+        ),
+        Text(widget.title ?? ''),
       ],
     );
   }

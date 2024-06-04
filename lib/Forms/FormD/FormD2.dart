@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:npac/app/export.dart';
 
 class FormD2 extends StatefulWidget {
@@ -43,11 +44,8 @@ class _FormD2State extends State<FormD2> {
         Text('D.5.2.2 ASSOCIATED DIAGNOSIS ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
         Space(),
         MRowTextRadioWidget( onChanged: (val){},options: List_items.ASSOCIATEDDiagnosis ,),
-
-
-
-
-
+        Space(),
+        Container( width: double.infinity,child: FilledButton(onPressed: (){}, child: Text('Next'))),
 
       ],),
     ));

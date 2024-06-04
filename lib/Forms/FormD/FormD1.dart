@@ -45,9 +45,9 @@ class _FormD1State extends State<FormD1> {
         MRowTextRadioWidget(onChanged: (val){},title: 'D1.4 Pregnancy type:',options: List_items.YesNoDetails,),
         MrowTextDatePickerWidget(onChanged: (val){},title: 'D1.5 LMP:',initialDate: DateTime.now(),),
         MrowTextDatePickerWidget(onChanged: (val){},title: 'D1.6 EDD:',initialDate: DateTime.now(),),
-        MRowTextCheck(title: 'D1.7 Antenatal check-ups (tick applicable)',checkboxvalue: AntenatalCheck,onChanged: (val){setState(() {
-          AntenatalCheck = val!;
-        });},),
+        // MRowTextCheck(title: 'D1.7 Antenatal check-ups (tick applicable)',checkboxvalue: AntenatalCheck,onChanged: (val){setState(() {
+        //   AntenatalCheck = val!;
+        // });},),
        if(AntenatalCheck) Column(children: [
          MrowTextDatePickerWidget( onChanged: (val){},title: 'D1.7.1 When was the first AN visit done ',initialDate: DateTime.now(),),
          MRowTextRadioWidget( onChanged: (val){},title: 'D1.7.2 Where was the first AN visit done:', options:List_items.AntenatalCheckUpPlace,),
@@ -93,7 +93,7 @@ class _FormD1State extends State<FormD1> {
        const Divider(thickness: 1,height: 3,),
         MrowTextDatePickerWidget(onChanged: (val){},title: 'D4.9 ECG Date:',isneedDivider: false,),
         MRowTextRadioWidget(onChanged: (val){},title: '', options: ['Normal','Abnormal Upload ECG'],isneedDivider: false,),
-      FilledButton(onPressed: (){context.push(Routes.FormD2);}, child: Text('Next'))
+      Container(width:  double.infinity, child: FilledButton(onPressed: (){context.push(Routes.FormD2);}, child: Text('Next')))
       ],
       ),
     ));

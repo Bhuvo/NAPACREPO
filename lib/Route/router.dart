@@ -5,6 +5,14 @@ import 'package:npac/Forms/Form3/FormThree3Page.dart';
 import 'package:npac/Forms/Form3/FormThreePage.dart';
 import 'package:npac/Forms/FormD/FormD1.dart';
 import 'package:npac/Forms/FormD/FormD2.dart';
+import 'package:npac/Forms/FormD/FormD3.dart';
+import 'package:npac/Forms/FormD/FormD5.dart';
+import 'package:npac/Forms/FormD/FormD6.dart';
+import 'package:npac/Forms/FormD/FormD7.dart';
+import 'package:npac/Forms/FormD/FormD8.dart';
+import 'package:npac/Forms/FormD/FormD9.dart';
+import 'package:npac/Forms/FormE/FormE1.dart';
+import 'package:npac/Forms/FormE/FormE2.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/Views/Auth/login.dart';
 import 'package:npac/Views/Auth/otp.dart';
@@ -35,6 +43,21 @@ class MRouter{
         return pageRoute(const FormD1(), settings);
       case Routes.FormD2:
         return pageRoute(const FormD2(), settings);
+      case Routes.FormD3:
+        return pageRoute(const FormD3(), settings);
+      case Routes.FormD5:
+        return pageRoute(const FormD5(), settings);
+      case Routes.FormD6:
+        return pageRoute(const FormD6(), settings);
+      case Routes.FormD7:
+        return pageRoute(const FormD7(), settings);
+      case Routes.FormD8:
+        return pageRoute(const FormD8(), settings);
+      case Routes.FormD9:
+        return pageRoute(const FormD9(), settings);
+      case Routes.FormE1:
+        return pageRoute(const FormE2(), settings);
+
       case Routes.login:
         return pageRoute(const LoginPage(), settings);
       case Routes.signUp:

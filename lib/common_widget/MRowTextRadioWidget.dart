@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MTextField.dart';
 import 'package:npac/common_widget/radio_button_list.dart';
 import 'package:npac/widgets/MdateTimePicker.dart';
@@ -64,6 +65,7 @@ class _MRowTextRadioWidgetState extends State<MRowTextRadioWidget> {
           ],
         ),
        (widget.isneedDivider ?? true )? Divider(thickness: 1,height: 3,) : Container(),
+        Space()
       ],
     );
   }
