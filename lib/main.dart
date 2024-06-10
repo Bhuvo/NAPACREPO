@@ -41,7 +41,7 @@ class _spalshScreenState extends State<spalshScreen> {
   void load() async {
     ///Fake load
     await Future.delayed(const Duration(seconds: 1));
-      context.push(Routes.Home);
+      context.push(Routes.login);
   }
 
   @override
