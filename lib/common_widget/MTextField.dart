@@ -68,14 +68,14 @@ class MTextField extends StatelessWidget {
       keyboardType: type.keyboardType(),
       obscureText: type == MInputType.password,
       validator:validator ?? (s) {
-        if (required && s!.isEmpty) return '$label is required.';
+        if (required && s!.isEmpty) return 'Field is required.';
         if (type == MInputType.phone && s!.length != 10)
-          return 'Invalid $label';
+          return 'Invalid Phone Number';
         if (type == MInputType.email) {
           bool valid = RegExp(
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
               .hasMatch(s!);
-          if (!valid) return 'Invalid $label';
+          if (!valid) return 'Invalid Email Address';
         }
         return null;
       },

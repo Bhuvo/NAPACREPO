@@ -8,8 +8,8 @@ import 'package:npac/utils/theme_utils.dart';
 import 'package:npac/widgets/m_pin_field.dart';
 
 class otpPage extends StatefulWidget {
-  final String phoneNumber;
-  const otpPage({super.key, required this.phoneNumber});
+  final String? phoneNumber;
+  const otpPage({super.key,  this.phoneNumber});
 
   @override
   State<otpPage> createState() => _otpPageState();
@@ -62,7 +62,7 @@ class _otpPageState extends State<otpPage> {
                         ],
                       ),
                       Space(28),
-                      Text('We sent the verification code to ${widget.phoneNumber}', style: TextStyle(fontSize: 17 ),),
+                      Text('We sent the verification code to ${widget.phoneNumber ?? ''}', style: TextStyle(fontSize: 17 ),),
                       Space(28),
                       Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -73,7 +73,7 @@ class _otpPageState extends State<otpPage> {
                       Space(),
                       MPinField(onChanged: (val){},),
                       Space(28),
-                      Container(width :double.infinity,child: FilledButton(onPressed: () {}, child: Text('Verify OTP'))),
+                      Container(width :double.infinity,child: FilledButton(onPressed: () {context.push(Routes.Home);}, child: Text('Verify OTP'))),
                       Space(),
                     ],
                   ),

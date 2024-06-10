@@ -45,7 +45,7 @@ class _FormD2State extends State<FormD2> {
         Space(),
         MRowTextRadioWidget( onChanged: (val){},options: List_items.ASSOCIATEDDiagnosis ,),
         Space(),
-        Container( width: double.infinity,child: FilledButton(onPressed: (){}, child: Text('Next'))),
+        Container( width: double.infinity,child: FilledButton(onPressed: (){context.push(Routes.FormD3);}, child: Text('Next'))),
 
       ],),
     ));

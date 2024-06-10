@@ -19,20 +19,19 @@ class _LoginPageState extends State<LoginPage> {
     return MScaffold(
       backgroundColor: context.primary,
       body: SafeArea(
-        child: Column(
+        child: ListView(
+          shrinkWrap: true,
           children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                padding: EdgeInsets.all(20),
-                height: 300,
-                width: MediaQuery.of(context).size.width,
-                child: Image(
-                  image: AssetImage("Assets/logo.png"),
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.contain,
-                ),
+            Container(
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              padding: EdgeInsets.all(20),
+              height: 300,
+              width: MediaQuery.of(context).size.width,
+              child: Image(
+                image: AssetImage("Assets/logo.png"),
+                height: 100,
+                width: 100,
+                fit: BoxFit.contain,
               ),
             ),
             Material(
@@ -73,13 +72,13 @@ class _LoginPageState extends State<LoginPage> {
                         autoFocus: false,
                       ),
                       Space(28),
-                      Container(width :double.infinity,child: FilledButton(onPressed: () {context.push(Routes.otpPage,{'phoneNumber': '7092339477'});}, child: Text('Login'))),
+                      Container(width :double.infinity,child: FilledButton(onPressed: () {context.push(Routes.otpPage,{'phoneNumber': '1234567890'});}, child: Text('Login'))),
                       Space(),
                       Text.rich(TextSpan(children: [
                         TextSpan(text: "Don't have an account? "),
                         WidgetSpan(child: InkWell(onTap: () { context.push(Routes.signUp);}, child: Text('Register', style: TextStyle(color: Colors.blue),)))
                       ])),
-                      Space(),
+                      Space(80),
                     ],
                   ),
                 ),

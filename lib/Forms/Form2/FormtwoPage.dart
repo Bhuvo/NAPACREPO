@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MAppBar.dart';
 import 'package:npac/common_widget/MTextField.dart';
 import 'package:npac/common_widget/MrowTextDatePicker.dart';
@@ -76,7 +77,7 @@ class _FormTwoPageState extends State<FormTwoPage> {
                        MrowTextOptionPickerwidget(title: 'B19 Socio-economic status: ',initialvalue: 'Home Maker',options:['Above poverty line ', 'Below poverty line'],onChanged:(val){},),
                        MrowTextTextFieldWidget(title: 'B20. Mention any additional details: ',initialValue: 'No',onChanged: (val){},),
                       Space(20),
-                       FilledButton(onPressed: (){}, child: Text('Submit'))
+                       FilledButton(onPressed: (){context.push(Routes.Home);}, child: Text('Submit'))
                        ],
                   ),
                 ],

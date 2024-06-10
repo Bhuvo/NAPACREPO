@@ -97,14 +97,13 @@ class _SignUpState extends State<SignUp> {
                           autoFocus: false,
                         ),
                         Space(28),
-                        Container(width :double.infinity,child: FilledButton(onPressed: () {}, child: Text('SignUp'))),
+                        Container(width :double.infinity,child: FilledButton(onPressed: () {context.push(Routes.otpPage);}, child: Text('SignUp'))),
                         Space(),
                         Text.rich(TextSpan(children: [
                           TextSpan(text: "Already have an account? "),
                           WidgetSpan(child: InkWell(onTap: () {context.push(Routes.login);}, child: Text('Login', style: TextStyle(color: Colors.blue),)))
                         ])),
-                        Space(),
-                      ],
+                        Space(80),                      ],
                     ),
                   ),
                 ),

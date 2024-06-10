@@ -7,10 +7,13 @@ import 'package:npac/widgets/SheetUP.dart';
 
 class MrowTextOptionPickerwidget extends StatefulWidget {
   final List<String>? options;
+  final String? label;
   final String? title;
+  final List<String>? initialSelectedValue;
   final String? initialvalue;
   final Function(String)? onChanged;
-  const MrowTextOptionPickerwidget({super.key,this.title, this.initialvalue, this.options, this.onChanged});
+  final Function(List<String>)? onSelectedList;
+  const MrowTextOptionPickerwidget({super.key,this.title, this.initialvalue, this.options, this.onChanged, this.onSelectedList, this.initialSelectedValue, this.label});
 
   @override
   State<MrowTextOptionPickerwidget> createState() => _MrowTextOptionPickerwidgetState();
@@ -30,7 +33,8 @@ class _MrowTextOptionPickerwidgetState extends State<MrowTextOptionPickerwidget>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(widget.title ?? ''),
-                  SheetDown<String>(
+                  SheetDown<String>(initialSelectedValue: widget.initialSelectedValue ?? [],onSelectedList: widget.onSelectedList ?? (value){
+                  },label: widget.label ??'Drugs List',
                     value: widget.initialvalue,
                     //label: 'Category',
                     onChanged:widget.onChanged ?? (value){

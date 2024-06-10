@@ -76,7 +76,7 @@ class _FormE2State extends State<FormE2> {
         FromE2Common(title: 'Duration of Stay in ICU',radioiOnChanged: (val){},TextFieldOnChanged: (val){},),
         FromE2Common(title: 'Other Complications/Outcome',radioiOnChanged: (val){},TextFieldOnChanged: (val){},),
         MrowTextTextFieldWidget(title: 'E9. Total duration of hospital stay: Number of days: ',type: MInputType.numeric,),
-        MFilledButton(text: 'Submit',onPressed: (){}),
+        MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);}),
 
 
 

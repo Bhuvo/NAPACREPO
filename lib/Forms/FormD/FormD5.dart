@@ -20,6 +20,9 @@ class _FormD5State extends State<FormD5> {
   String Pulmonary ='';
   String Aortic ='';
 
+  bool isRVOTO = false;
+  bool isAnatomyAbnormal = false;
+
   @override
   Widget build(BuildContext context) {
     return MScaffold(
@@ -69,9 +72,22 @@ class _FormD5State extends State<FormD5> {
         ): Container(),
         MRowTextRadioWidget( onChanged: (val){},options:['Normal','Common Atria','Single Ventricle'],title: 'D8.8 Chamber Description: ',),
         MRowTextRadioWidget( onChanged: (val){},options:List_items.HypoplasticChamber,title: 'D8.9 Hypoplastic Chamber:',),
-        MRowTextRadioWidget( onChanged: (val){},options:['Normal','RVOTO'],title: 'D8.10 RVOT',isneedDivider: false,),
-         Text('D8.10 & 12 RVOT pending Check Box'),
+        MRowTextRadioWidget(title: 'D8.10 RVOT',onChanged: (val){
+          if(val == 'RVOTO'){
+            setState(() {
+              isRVOTO = true;
+            });
+          }else{
+            setState(() {
+              isRVOTO = false;
+            });
+          }
+        },options: ['Normal','RVOTO'],isneedDivider: false,),
+        isRVOTO? MRowTextCheckBox(list: ['IPS','VPS','DCRV'],isneedDivider: false,): Container(),
+        MDivider(),
         MRowTextRadioWidget( onChanged: (val){},options:['Normal','Hypoplastic','Confluent'],title: 'D8.11 MPA and Branch PA’s'),
+        MRowTextCheckBox(title: 'D8.12 LVOT Obstruction',result: (val){},isneedDivider: false,list: ['Valvular','Supra Valvular','Sub Valvular'],),
+        MRowTextRadioWidget(options: ['Fixed','Dynamic'],onChanged: (val){},),
         Text('D8.13 Valve morphology'),
         Space(),
         MRowTextRadioWidget( onChanged: (val){setState(() {
@@ -108,7 +124,9 @@ class _FormD5State extends State<FormD5> {
         });
       }},title: 'D8.16 Coarctation',isneedDivider: isCoarctation ? false: true,),
         isCoarctation? MrowTextTextFieldWidget( onChanged: (val){},title: 'Peak Gradient (mmHg)'): Container(),
-      Text('D8.17 pending'),
+      MRowTextRadioWidget(title: 'D8.17 Coronary anatomy',options: List_items.NormalAbnormal,isneedDivider: false,onChanged: (val){},),
+        isAnatomyAbnormal? MRowTextCheckBox(list: ['Anomalous origin','Anomalous course'],): Container(),
+        isAnatomyAbnormal? MTextField(label: 'Details:',onChanged: (val){},): Container(),
       MrowTextTextFieldWidget(title: 'D8.18 Any other salient features (please mention)',onChanged: (val){}, ),
         MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD6);}),
 

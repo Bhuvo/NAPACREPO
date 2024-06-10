@@ -88,7 +88,7 @@ class _FormD9State extends State<FormD9> {
         isAdviceOther? const MDivider(): Container(),
         const Space(),
         MrowTextDatePickerWidget(onChanged: (val){},title: 'Date of next follow up:',initialDate: DateTime.now(),),
-        MFilledButton(text: 'Submit',onPressed: (){},)
+        MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
       ],),
 
     );

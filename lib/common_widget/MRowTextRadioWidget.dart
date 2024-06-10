@@ -65,7 +65,7 @@ class _MRowTextRadioWidgetState extends State<MRowTextRadioWidget> {
           ],
         ),
        (widget.isneedDivider ?? true )? Divider(thickness: 1,height: 3,) : Container(),
-        Space()
+        (widget.isneedDivider ?? true ) ? Space() : Container(),
       ],
     );
   }

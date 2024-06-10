@@ -31,7 +31,9 @@ class _MrowTextTextFieldWidgetState extends State<MrowTextTextFieldWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(widget.title ?? ''),
-                 MTextField(onChanged: widget.onChanged,initalValue:widget.initialValue ?? '',type: widget.type ?? MInputType.text ,)
+                 MTextField(
+                   required: true,
+                   onChanged: widget.onChanged,initalValue:widget.initialValue ?? '',type: widget.type ?? MInputType.text ,)
                 ],
               ),
             ),

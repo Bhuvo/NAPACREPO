@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:npac/Forms/Form1/contoller/form1Controller.dart';
 import 'package:npac/Forms/Form1/formOne.dart';
+import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MAppBar.dart';
-import 'package:npac/common_widget/radio_button_list.dart';
-import 'package:npac/utils/theme_utils.dart';
 
 class FormOneUi extends StatefulWidget {
   const FormOneUi({super.key});
@@ -64,6 +63,7 @@ class _FormOneUiState extends State<FormOneUi> {
                       return  FormOne(data: controller.form.value.form1List![index],isExpanded: isExpanded,);
                     },
                     ),
+                    MFilledButton(text: 'Submit', onPressed: (){context.push(Routes.Home);},)
                   ],
                 ),
               ),

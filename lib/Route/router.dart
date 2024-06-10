@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:npac/Forms/Form1/FormA1.dart';
 import 'package:npac/Forms/Form3/FormThree2Page.dart';
 import 'package:npac/Forms/Form3/FormThree3Page.dart';
 import 'package:npac/Forms/Form3/FormThreePage.dart';
 import 'package:npac/Forms/FormD/FormD1.dart';
 import 'package:npac/Forms/FormD/FormD2.dart';
 import 'package:npac/Forms/FormD/FormD3.dart';
+import 'package:npac/Forms/FormD/FormD4.dart';
 import 'package:npac/Forms/FormD/FormD5.dart';
 import 'package:npac/Forms/FormD/FormD6.dart';
 import 'package:npac/Forms/FormD/FormD7.dart';
@@ -13,10 +15,34 @@ import 'package:npac/Forms/FormD/FormD8.dart';
 import 'package:npac/Forms/FormD/FormD9.dart';
 import 'package:npac/Forms/FormE/FormE1.dart';
 import 'package:npac/Forms/FormE/FormE2.dart';
+import 'package:npac/Forms/FormF/FormF1.dart';
+import 'package:npac/Forms/FormG/FormG1.dart';
+import 'package:npac/Forms/FormH/FormH1.dart';
+import 'package:npac/Forms/FormH/FormH2.dart';
+import 'package:npac/Forms/FormH/FormH3.dart';
+import 'package:npac/Forms/FormH/FormH4.dart';
+import 'package:npac/Forms/FormH/FormH5.dart';
+import 'package:npac/Forms/FormH/FormH6.dart';
+import 'package:npac/Forms/FormH/FormH7.dart';
+import 'package:npac/Forms/FormI/FormI1.dart';
+import 'package:npac/Forms/FormI/FormI2.dart';
+import 'package:npac/Forms/FormJ/FormJ1.dart';
+import 'package:npac/Forms/FormL/FormL1.dart';
+import 'package:npac/Forms/FormL/FormL2.dart';
+import 'package:npac/Forms/FormM/FormM1.dart';
+import 'package:npac/Forms/FormM/FormM2.dart';
+import 'package:npac/Forms/FormN/FormN1.dart';
+import 'package:npac/Forms/FormN/FormN2.dart';
+import 'package:npac/Forms/FormN/FormN3.dart';
+import 'package:npac/Forms/Formk/FormK1.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/Views/Auth/login.dart';
 import 'package:npac/Views/Auth/otp.dart';
 import 'package:npac/Views/Auth/signUp.dart';
+import 'package:npac/Views/Home/HomePage.dart';
+import 'package:npac/Views/MothersList/MothersList.dart';
+import 'package:npac/Views/MyAccount/EditProfile.dart';
+import 'package:npac/Views/NavBar/NavBar.dart';
 import 'package:npac/main.dart';
 import 'package:npac/Forms/Form1/FormOnePage.dart';
 import 'package:npac/Forms/Form2/FormtwoPage.dart';
@@ -30,7 +56,7 @@ class MRouter{
       case Routes.splash:
         return pageRoute(const spalshScreen(), settings);
       case Routes.Form1:
-        return pageRoute(const FormOneUi(), settings);
+        return pageRoute(const FormA1(), settings);
       case Routes.Form2:
         return pageRoute(const FormTwoPage(), settings);
       case Routes.Form3One:
@@ -45,6 +71,8 @@ class MRouter{
         return pageRoute(const FormD2(), settings);
       case Routes.FormD3:
         return pageRoute(const FormD3(), settings);
+      case Routes.FormD4:
+        return pageRoute(const FormD4(), settings);
       case Routes.FormD5:
         return pageRoute(const FormD5(), settings);
       case Routes.FormD6:
@@ -56,7 +84,50 @@ class MRouter{
       case Routes.FormD9:
         return pageRoute(const FormD9(), settings);
       case Routes.FormE1:
+        return pageRoute(const FormE1(), settings);
+      case Routes.FormE2:
         return pageRoute(const FormE2(), settings);
+      case Routes.FormF1:
+        return pageRoute(const FormF1(), settings);
+      case Routes.FormG1:
+        return pageRoute(const FormG1(), settings);
+      case Routes.FormH1:
+        return pageRoute(const FormH1(), settings);
+      case Routes.FormH2:
+        return pageRoute(const FormH2(), settings);
+      case Routes.FormH3:
+        return pageRoute(const FormH3(), settings);
+      case Routes.FormH4:
+        return pageRoute(const FormH4(), settings);
+      case Routes.FormH5:
+        return pageRoute(const FormH5(), settings);
+      case Routes.FormH6:
+        return pageRoute(const FormH6(), settings);
+      case Routes.FormH7:
+        return pageRoute(const FormH7(), settings);
+      case Routes.FormI1:
+        return pageRoute(const FormI1(), settings);
+      case Routes.FormI2:
+        return pageRoute(const FormI2(), settings);
+      case Routes.FormJ1:
+        return pageRoute(const FormJ1(), settings);
+      case Routes.FormK1:
+        return pageRoute(const FormK1(), settings);
+      case Routes.FormL1:
+        return pageRoute(const FormL1(), settings);
+      case Routes.FormL2:
+        return pageRoute(const FormL2(), settings);
+      case Routes.FormM1:
+        return pageRoute(const FormM1(), settings);
+      case Routes.FormM2:
+        return pageRoute(const FormM2(), settings);
+      case Routes.FormN1:
+        return pageRoute(const FormN1(), settings);
+      case Routes.FormN2:
+        return pageRoute(const FormN2(), settings);
+      case Routes.FormN3:
+        return pageRoute(const FormN3(), settings);
+
 
       case Routes.login:
         return pageRoute(const LoginPage(), settings);
@@ -64,6 +135,13 @@ class MRouter{
         return pageRoute(const SignUp(), settings);
       case Routes.otpPage:
         return pageRoute( otpPage(phoneNumber: args?['phoneNumber'],), settings);
+      case Routes.Home:
+        return pageRoute(const NavBar(), settings);
+      case Routes.EditProfile:
+        return pageRoute( EditProfile(), settings);
+      case Routes.MothersList:
+        return pageRoute(const MothersList(), settings);
+
       default:
         return pageRoute(MScaffold(
           body: Center(
