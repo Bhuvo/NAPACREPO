@@ -10,7 +10,9 @@ class MrowTextDatePickerWidget extends StatefulWidget {
   final DateTime? initialDate;
   final Function(DateTime)? onChanged;
   final bool? isneedDivider;
-  const MrowTextDatePickerWidget({super.key, this.title, this.onChanged, this.initialDate, this.isneedDivider= true,});
+  final bool? enabled;
+
+  const MrowTextDatePickerWidget({super.key, this.title, this.onChanged, this.initialDate, this.isneedDivider= true, this.enabled,});
 
   @override
   State<MrowTextDatePickerWidget> createState() => _MrowTextDatePickerWidgetState();
@@ -52,7 +54,7 @@ class _MrowTextDatePickerWidgetState extends State<MrowTextDatePickerWidget> {
                   //     'Other'
                   //   ],
                   // ),
-                  MDateTimePicker(start: DateTime.utc(1950), end: DateTime.now(),onChanged:widget.onChanged,initial:widget.initialDate,)
+                  MDateTimePicker(enabled:widget.enabled,start: DateTime.utc(1950), end: DateTime.now(),onChanged:widget.onChanged,initial:widget.initialDate,)
 
                 ],
               ),

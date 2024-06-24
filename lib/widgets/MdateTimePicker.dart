@@ -15,6 +15,8 @@ class MDateTimePicker extends StatefulWidget {
   final String? Function(DateTime?)? validator;
   final String? hintDateFormat;
   final bool showTime;
+  final bool? enabled;
+
 
   const MDateTimePicker({
     this.label,
@@ -25,7 +27,7 @@ class MDateTimePicker extends StatefulWidget {
     required this.start,
     required this.end,
     this.hintDateFormat,
-    Key? key,
+    Key? key, this.enabled,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,7 @@ class MDateTimePickerState extends State<MDateTimePicker> {
       child: Stack(
         children: [
           MTextField(
+            enabled: widget.enabled ?? false,
               key: ValueKey(value),
               initalValue: DateFormat(widget.hintDateFormat ?? 'dd/MM/yyyy',).format(value),
               label: widget.label,
@@ -71,9 +74,9 @@ class MDateTimePickerState extends State<MDateTimePicker> {
                   child: IconButton(
                     icon: Icon(
                       CupertinoIcons.calendar,
-                      color: context.primary,
+                      color: (widget.enabled ?? false)?context.primary : Colors.grey,
                     ),
-                    onPressed: pickDate,
+                    onPressed: (widget.enabled ?? false)? pickDate : null,
                   ),
                 ),
                 if(widget.showTime)...[

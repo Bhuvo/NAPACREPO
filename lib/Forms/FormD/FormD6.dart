@@ -14,12 +14,7 @@ class _FormD6State extends State<FormD6> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar:  PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
-      
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MText(text: 'D9. AORTOPATHY ECHO PAGE',),
         Space(),
         MRowTextCheckBox(title: 'Aorta',result: (val){},list: ['Dilated','Aneurysm  ','Coarctation','Stenotic','Others'],isneedDivider: false,),
@@ -82,8 +77,7 @@ class _FormD6State extends State<FormD6> {
         MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
 
         MrowTextTextFieldWidget( title: 'Other relevant echo findings:',onChanged: (val){}),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD7);}),
-      ],),
-    );
+       // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD7);}),
+      ],);
   }
 }

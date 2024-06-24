@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 export 'package:flutter/cupertino.dart';
 export 'package:npac/common_widget/MAppBar.dart';
 export 'package:npac/common_widget/MFormBody.dart';
@@ -20,9 +22,33 @@ export 'package:npac/Forms/FormH/widget/FormH3Common.dart';
 export 'package:npac/Route/routes.dart';
 export 'package:npac/utils/navigator_utils.dart';
 export 'package:npac/common_widget/MRowTextWidget.dart';
+export 'package:flutter/foundation.dart';
+export 'package:npac/API/api.dart';
+export 'package:npac/SharedPreference/sharedPreference_helper.dart';
+export 'package:npac/common_widget/MRowTextSingleOption.dart';
+export 'package:get/get.dart';
 
 
+var apiHeader = {
+  'Content-Type': 'application/json'
+};
 
+
+Map<String, dynamic> removeNulls(Map<String, dynamic> original) {
+  return Map.fromEntries(original.entries.where((entry) => entry.value != null));
+}
+
+
+DateTime? stringToDate(String dateString) {
+  if(dateString == ''||dateString.isEmpty) return null;
+  DateTime date = DateFormat("dd/MM/yyyy").parse(dateString);
+  return date;
+}
+
+String dateToString(DateTime date) {
+  String dateString ='${date.day}/${date.month}/${date.year}';
+  return dateString;
+}
 
 void checkVal(List<String> val, String key, Function(bool) setStateCallback) {
   setStateCallback(val.contains(key));

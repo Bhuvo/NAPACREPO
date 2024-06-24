@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -82,12 +83,12 @@ extension NavigatorUtils on BuildContext{
   }
 
   FutureOr<void> showSnackBar(String message) async {
-    // if(!kIsWeb && Platform.isMacOS){
-    //   ScaffoldMessenger.of(this).showSnackBar(SnackBar(
-    //       behavior: SnackBarBehavior.floating,
-    //       content: Text(message)));
-    //   return;
-    // }
+    if(!kIsWeb || Platform.isMacOS || Platform.isWindows) {
+      ScaffoldMessenger.of(this).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(message)));
+      return;
+    }
     await Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_LONG,

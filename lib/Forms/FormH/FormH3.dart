@@ -15,9 +15,7 @@ class _FormH3State extends State<FormH3> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'H. PERIPARTUM VISIT PAGE (FORM H)',),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MText(text: 'OUTCOME AND COMPLICATIONS (Include Follow-up outcome details too)',),
         Row(
           children: [
@@ -78,8 +76,7 @@ class _FormH3State extends State<FormH3> {
         FormH3Common(title: '12. Acute coronary syndrome',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
         FormH3Common(title: '13. Urgent Cardiac Intervention',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
         MrowTextTextFieldWidget(title: '14. Please provide details of recurrence of any of the above-mentioned outcome events 1-13: (if any)',onChanged: (val){},),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH4);},)
-      ],),
-    );
+        //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH4);},)
+      ],);
   }
 }

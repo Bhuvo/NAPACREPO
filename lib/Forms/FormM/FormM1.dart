@@ -1,3 +1,4 @@
+import 'package:npac/Forms/FormM/FormM2.dart';
 import 'package:npac/app/export.dart';
 
 class FormM1 extends StatefulWidget {
@@ -62,7 +63,8 @@ class _FormM1State extends State<FormM1> {
       MRowTextRadioWidget(title: 'M7.7 Cardiac murmur:',onChanged: (val){},),
       MrowTextDatePickerWidget(title: 'M7.8 ECG Date:',onChanged: (val){},isneedDivider: false,),
       MRowTextRadioWidget(options:List_items.NormalAbnormal ,onChanged: (val){},),
-      MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormM2);},),
+      //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormM2);},),
+      FormM2()
     ],),
     );
   }

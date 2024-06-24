@@ -10,7 +10,9 @@ class MRowTextCheckBox extends StatelessWidget {
   final String? title;
   final List<String>? list;
   final Function(List<String>)? result;
-  const MRowTextCheckBox({super.key, this.isneedDivider, this.title, this.list, this.result});
+  final bool? enabled;
+  final List<String>? selectedlist ;
+  const MRowTextCheckBox({super.key, this.isneedDivider, this.title, this.list, this.result, this.enabled, this.selectedlist});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class MRowTextCheckBox extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title ?? ''),
-                  ListCheckBox(list: list ,result:result,)
+                  ListCheckBox(selectedlist: selectedlist,enabled: enabled,list: list ,result:result,)
                  ],
               ),
             ),
@@ -44,7 +46,9 @@ class MRowTextCheckBox extends StatelessWidget {
 class ListCheckBox extends StatefulWidget {
   final List<String>? list;
   final Function(List<String>)? result;
-  const ListCheckBox({super.key, this.list, this.result});
+  final bool? enabled;
+  final List<String>? selectedlist ;
+  const ListCheckBox({super.key, this.list, this.result, this.enabled, this.selectedlist});
 
   @override
   State<ListCheckBox> createState() => _ListCheckBoxState();
@@ -53,14 +57,21 @@ class ListCheckBox extends StatefulWidget {
 class _ListCheckBoxState extends State<ListCheckBox> {
   List<String> Selectedlist = [];
   @override
+  void initState() {
+    super.initState();
+    Selectedlist = widget.selectedlist ?? [];
+  }
+  @override
   Widget build(BuildContext context) {
+    print(widget.selectedlist);
     return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
         itemCount: widget.list?.length ?? 0,
         itemBuilder: (context, index) {
         return Container(
           padding: EdgeInsets.only(left: 5),
-          child: MCheckBox(onChanged: (val,name){
+          child: MCheckBox(boolValue: widget.selectedlist?.contains(widget.list?[index]) ?? false ,enabled: widget.enabled,onChanged: (val,name){
             if(val!){
               Selectedlist.add(name!);
             }else{

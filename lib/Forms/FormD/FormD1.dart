@@ -1,5 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:npac/Forms/FormD/FormD2.dart';
+import 'package:npac/Forms/FormD/FormD3.dart';
+import 'package:npac/Forms/FormD/FormD4.dart';
+import 'package:npac/Forms/FormD/FormD5.dart';
+import 'package:npac/Forms/FormD/FormD6.dart';
+import 'package:npac/Forms/FormD/FormD7.dart';
+import 'package:npac/Forms/FormD/FormD8.dart';
+import 'package:npac/Forms/FormD/FormD9.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MRowTextRadioWidget.dart';
@@ -93,7 +101,15 @@ class _FormD1State extends State<FormD1> {
        const Divider(thickness: 1,height: 3,),
         MrowTextDatePickerWidget(onChanged: (val){},title: 'D4.9 ECG Date:',isneedDivider: false,),
         MRowTextRadioWidget(onChanged: (val){},title: '', options: ['Normal','Abnormal Upload ECG'],isneedDivider: false,),
-      Container(width:  double.infinity, child: FilledButton(onPressed: (){context.push(Routes.FormD2);}, child: Text('Next')))
+     // Container(width:  double.infinity, child: FilledButton(onPressed: (){context.push(Routes.FormD2);}, child: Text('Next')))
+        FormD2(),
+        FormD3(),
+        FormD4(),
+        FormD5(),
+        FormD6(),
+        FormD7(),
+        FormD8(),
+        FormD9(),
       ],
       ),
     ));

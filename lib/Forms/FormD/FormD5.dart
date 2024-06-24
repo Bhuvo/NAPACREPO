@@ -25,12 +25,7 @@ class _FormD5State extends State<FormD5> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
-
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MText(text: 'D8 CONGENITAL HEART DISEASE ECHO PAGE',),
         Space(),
         MRowTextRadioWidget( onChanged: (val){},options:['Solitus','Inversus','Ambiguous'],title: 'D8.1 Situs',),
@@ -128,9 +123,8 @@ class _FormD5State extends State<FormD5> {
         isAnatomyAbnormal? MRowTextCheckBox(list: ['Anomalous origin','Anomalous course'],): Container(),
         isAnatomyAbnormal? MTextField(label: 'Details:',onChanged: (val){},): Container(),
       MrowTextTextFieldWidget(title: 'D8.18 Any other salient features (please mention)',onChanged: (val){}, ),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD6);}),
+        //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD6);}),
 
-      ],),
-    );
+      ],);
   }
 }

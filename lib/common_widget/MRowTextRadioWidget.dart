@@ -13,8 +13,10 @@ class MRowTextRadioWidget extends StatefulWidget {
   final String? title;
   final String? selectedOption;
   final Function(String)? onChanged;
+  final String? initialValue;
+  final bool? enabled;
   final bool? isneedDivider;
-  const MRowTextRadioWidget({super.key,this.title, this.selectedOption, this.options, this.onChanged, this.isneedDivider = true, this.CheckBoxOptions});
+  const MRowTextRadioWidget({super.key,this.title, this.selectedOption, this.options, this.onChanged, this.isneedDivider = true, this.CheckBoxOptions, this.initialValue, this.enabled});
 
   @override
   State<MRowTextRadioWidget> createState() => _MRowTextRadioWidgetState();
@@ -57,7 +59,7 @@ class _MRowTextRadioWidgetState extends State<MRowTextRadioWidget> {
                   //     'Other'
                   //   ],
                   // ),
-                  MRadioButtonList(onChanged:widget.onChanged,CheckBoxOptions: widget.CheckBoxOptions,options:widget.options ,selectedValue: widget.selectedOption,),
+                  MRadioButtonList(enabled: widget.enabled,initialValue: widget.initialValue,onChanged:widget.onChanged,CheckBoxOptions: widget.CheckBoxOptions,options:widget.options ,selectedValue: widget.selectedOption,),
                 ],
               ),
             ),

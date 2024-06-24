@@ -10,9 +10,7 @@ class FormH6 extends StatefulWidget {
 class _FormH6State extends State<FormH6> {
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'H. PERIPARTUM VISIT PAGE (FORM H)',),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MText(text: 'H6.3 FETAL OUTCOME',),
         Space(),
         MSmallText(text: 'Components of Secondary Outcome-Fetal',),
@@ -28,9 +26,7 @@ class _FormH6State extends State<FormH6> {
         FormH3Common(title: '8. Congenital anomalies (including CHD) in the newborn',TextField1OnChanged:(val){},TextField2OnChanged: (val){},radioiOnChanged: (val){},),
         Space(),
         Text('Signature of PI / Chief investigator of Obstetrics'),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH7);},)
-      ],),
-
-    );
+       // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH7);},)
+      ],);
   }
 }

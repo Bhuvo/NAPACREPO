@@ -39,4 +39,13 @@ class List_items{
 
   static const List<String>  MEDICATIONS =['OvulationInducing Medications:Letrozole,Clomiphene citrate','Folic Acid Sup','Calcium Sup','Iron Sup','Vitamin D Sup','Other Vitamins','HormonalContraceptives: containing estrogen and progestin, or progestin-onlypills.','Thyroid Medications','Antidepressants/ Anxiolytics','Chronic Disease Medications','Vaccinations','Antifungals','Analgesics','Antiemetics','Allergy Meds'];
 
- }
+  static const List<String> CardiologyAndOBGServices =['Same block on the same campus','Different blocks on the same campus','Different blocks in adjacent campus','Located on different campuses, requiring patientsto be shifted to vehicle','different campus'];
+  static const List<String> administrativeSystem =['Unit structure both in OBG and Cardio','Unit structure in Cardio alone','Unit structure in OBG alone','Independent consultants (Senior and junior consultants)','Others'];
+  static const List<String> rolesperformed  =['Offering cardiac opinion for in-patients at the OBG department','Performing echocardiogram at OBG department for PWWHD','Critical care management of PWWHD','All of the above','They don’t visit the OBG department'];
+  static const List<String> systemIntimation  =['One point contact in the cardio department','Telephonic callsto intimate any one of the cardiology faculty','Social Media Groups','Call over memos','Others'];
+  static const List<String> basicEco  =['Cardiology team member (PG/Faculty)','Obstetrician','Anaesthetist','Paediatrician','MFM specialist','Internal medicine','Intensivist','Echo technician','Physician Assistant'];
+  static const List<String> screeningprocess =['Focussed history and clinical examination to identify cardiac red flags','Routine ECG of all antenatal mothers','Routine cardiology consultation of all antenatal mothers','Routine ECHO all antenatal mothers','Others'];
+  static const List<String> antibioticTherapy =['Prosthetic heart valve','Presence of prosthetic material in the heart','Valvular heart diseases','Cardiomyopathies / Heart failure','Pulmonary hypertension','Cyanotic congenital Heart Diseases','Acyanotic congenital Heart Diseases','Aortopathies'];
+  static const List<String> commonAntibiotics =['Cefazolin','Vancomycin','Ceftriaxone','Gentamicin','Metronidazole','Amoxycillin','Ampicillin','Cephalexin','Amikacin','Amoxiclav','Cefaperazone sulbactam','Meropenem','Teicoplanin','Others'];
+
+}

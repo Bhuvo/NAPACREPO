@@ -10,7 +10,7 @@ class MAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: 60,
-      automaticallyImplyLeading: false,
+      //automaticallyImplyLeading: false,
       backgroundColor: context.primary,
       title: Center(child: Text(title)),
     );

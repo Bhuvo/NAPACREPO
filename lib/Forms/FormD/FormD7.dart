@@ -13,13 +13,8 @@ class FormD7 extends StatefulWidget {
 class _FormD7State extends State<FormD7> {
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar:  PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
-
-      body: MFormBody(
-        Childrens: [
+    return Column(
+        children: [
           MText(text: 'D10. CARDIOMYOPATHY/HEART FAILURE ECHO PAGE',),
           Space(),
 
@@ -79,10 +74,9 @@ class _FormD7State extends State<FormD7> {
           MrowTextTextFieldWidget(title: 'Resting Gradient',onChanged: (val){},isneedDivider: false,),
           MrowTextTextFieldWidget(title: 'Provoked gradient:',onChanged: (val){},),
           MrowTextTextFieldWidget(title: 'Other relevant echo findings:',onChanged: (val){},),
-          MFilledButton(text: 'Next',onPressed: (){ context.push(Routes.FormD8);}),
+          //MFilledButton(text: 'Next',onPressed: (){ context.push(Routes.FormD8);}),
 
         ],
-      ),
-    );
+      );
   }
 }

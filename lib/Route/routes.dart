@@ -10,6 +10,7 @@ class Routes {
   static const String Home= '/Home';
   static const String EditProfile= '/EditProfile';
   static const String MothersList= '/MothersList';
+  static const String MothersDetails= '/MothersDetails';
 
 
   static const String Form1 = '/Form1';
@@ -48,6 +49,7 @@ class Routes {
   static const String FormN1 = '/FormN1';
   static const String FormN2 = '/FormN2';
   static const String FormN3 = '/FormN3';
+  static const String Quetionnarie = '/Quetionnarie';
 
 
 

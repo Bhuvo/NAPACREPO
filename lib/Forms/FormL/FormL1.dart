@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:npac/Forms/FormL/FormL2.dart';
 import 'package:npac/Forms/FormL/widget/ValueFunction.dart';
 import 'package:npac/app/export.dart';
 
@@ -72,7 +73,8 @@ class _FormL1State extends State<FormL1> {
         isOthers? MRowTextCheckBox(title: 'Others',list: ['Vegetation','Thrombus'],isneedDivider: false): Container(),
         MDivider(),
         MrowTextTextFieldWidget(title: 'Other salient echo details (if any):',onChanged: (val){},),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormL2);},)
+        //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormL2);},)
+        FormL2(),
       ],),
     );
   }

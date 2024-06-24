@@ -35,13 +35,15 @@ import 'package:npac/Forms/FormN/FormN1.dart';
 import 'package:npac/Forms/FormN/FormN2.dart';
 import 'package:npac/Forms/FormN/FormN3.dart';
 import 'package:npac/Forms/Formk/FormK1.dart';
+import 'package:npac/Forms/QuestionnaireForm/QuestionnaireForm.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/Views/Auth/login.dart';
 import 'package:npac/Views/Auth/otp.dart';
 import 'package:npac/Views/Auth/signUp.dart';
 import 'package:npac/Views/Home/HomePage.dart';
+import 'package:npac/Views/MotherDetails/MotherDetails.dart';
 import 'package:npac/Views/MothersList/MothersList.dart';
-import 'package:npac/Views/MyAccount/EditProfile.dart';
+import 'package:npac/Views/MyAccount/Profile.dart';
 import 'package:npac/Views/NavBar/NavBar.dart';
 import 'package:npac/main.dart';
 import 'package:npac/Forms/Form1/FormOnePage.dart';
@@ -56,11 +58,11 @@ class MRouter{
       case Routes.splash:
         return pageRoute(const spalshScreen(), settings);
       case Routes.Form1:
-        return pageRoute(const FormA1(), settings);
+        return pageRoute(FormA1(isFromPatientDetails: args?['isFromPatientDetails'],), settings);
       case Routes.Form2:
         return pageRoute(const FormTwoPage(), settings);
       case Routes.Form3One:
-        return pageRoute(const FormThreePage(), settings);
+        return pageRoute( FormThreePage(data: args?['data'],isFromPatientDetails: args?['isFromPatientDetails'],), settings);
       case Routes.Form3Two:
         return pageRoute(const FormThree2Page(), settings);
       case Routes.Form3Three:
@@ -84,9 +86,9 @@ class MRouter{
       case Routes.FormD9:
         return pageRoute(const FormD9(), settings);
       case Routes.FormE1:
-        return pageRoute(const FormE1(), settings);
+        return pageRoute( FormE1(isFromPatientDetails: args?['isFromPatientDetails'] ??false,data: args?['data'],), settings);
       case Routes.FormE2:
-        return pageRoute(const FormE2(), settings);
+        return pageRoute( FormE2(formEData: args?['formEData'],), settings);
       case Routes.FormF1:
         return pageRoute(const FormF1(), settings);
       case Routes.FormG1:
@@ -127,20 +129,23 @@ class MRouter{
         return pageRoute(const FormN2(), settings);
       case Routes.FormN3:
         return pageRoute(const FormN3(), settings);
-
+      case Routes.Quetionnarie:
+        return pageRoute(const QuestionnaireForm(), settings);
 
       case Routes.login:
         return pageRoute(const LoginPage(), settings);
       case Routes.signUp:
         return pageRoute(const SignUp(), settings);
       case Routes.otpPage:
-        return pageRoute( otpPage(phoneNumber: args?['phoneNumber'],), settings);
+        return pageRoute(otpPage(phoneNumber: args?['phoneNumber'],), settings);
       case Routes.Home:
         return pageRoute(const NavBar(), settings);
       case Routes.EditProfile:
         return pageRoute( EditProfile(), settings);
       case Routes.MothersList:
         return pageRoute(const MothersList(), settings);
+      case Routes.MothersDetails:
+        return pageRoute( MotherDetails(data: args?['data'],), settings);
 
       default:
         return pageRoute(MScaffold(

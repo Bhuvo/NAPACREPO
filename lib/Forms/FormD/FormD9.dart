@@ -14,12 +14,7 @@ class _FormD9State extends State<FormD9> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)')),
-
-      body: MFormBody(Childrens: [
+    return Column(children: [
         const MText(text: 'D13. RISK ASSESSMENT AND TRIAGE',),
         const Space(),
         MRowTextCheckBox(title: 'D13.1 Baseline risk',result: (val){},list: const ['m WHO I','m WHO II','m WHO II-III','m WHO III ','m WHO IV'],),
@@ -89,8 +84,6 @@ class _FormD9State extends State<FormD9> {
         const Space(),
         MrowTextDatePickerWidget(onChanged: (val){},title: 'Date of next follow up:',initialDate: DateTime.now(),),
         MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
-      ],),
-
-    );
+      ],);
   }
 }

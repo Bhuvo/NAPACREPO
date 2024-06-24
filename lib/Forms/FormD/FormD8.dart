@@ -15,12 +15,7 @@ class _FormD8State extends State<FormD8> {
   bool isAnomalyAbnormal = false;
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
-
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MRowTextRadioWidget( title: 'D 11. Fetal echocardiogram',onChanged: (val){if(val== 'Abnormal'){
           setState(() {
             isEchocardiogramAbnormal = true;
@@ -44,7 +39,7 @@ class _FormD8State extends State<FormD8> {
         }
         },isneedDivider:isAnomalyAbnormal? false: true,options: ['Normal','Abnormal','Not done'],),
         isAnomalyAbnormal ? MrowTextTextFieldWidget( title: 'If abnormal details:',onChanged: (val){}) : Container(),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD9);},),
-      ],),
-    ) ; }
+       // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD9);},),
+      ],);
+  }
 }

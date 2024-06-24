@@ -10,9 +10,7 @@ class FormH5 extends StatefulWidget {
 class _FormH5State extends State<FormH5> {
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'H. PERIPARTUM VISIT PAGE (FORM H)'),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MText(text: 'H6.2 OBSTETRIC OUTCOME (To be signed by the PI Chief Investigator of OBG)',),
         Space(),
         MRowTextRadioWidget(title: 'Mode of delivery ',onChanged: (val){},options: ['NVD','AVD','Failed VD converted to LSCS ','LSCS'],),
@@ -34,9 +32,7 @@ class _FormH5State extends State<FormH5> {
         FormH3Common(title: '9. Near Miss - PH < 7',radioiOnChanged: (val){},TextField1OnChanged:(val){} ,TextField2OnChanged: (val){},),
         FormH3Common(title: '9. Near Miss - Oliguria',radioiOnChanged: (val){},TextField1OnChanged:(val){} ,TextField2OnChanged: (val){},),
         FormH3Common(title: '9. Near Miss - Lactate > 4 mmol/L',radioiOnChanged: (val){},TextField1OnChanged:(val){} ,TextField2OnChanged: (val){},),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH6);},)
-      ],),
-
-    );
+       // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH6);},)
+      ],);
   }
 }

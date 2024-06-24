@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:npac/Forms/FormI/FormI2.dart';
 import 'package:npac/Forms/FormI/Widget/valueFunction.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MRowTextCheckBox.dart';
@@ -138,7 +139,8 @@ class _FormI1State extends State<FormI1> {
           },list: ['Other thrombotic complications','Acute Pulmonary Edema','Cardiogenic Shock','Infective Endocarditis','Others'],),
           isOthers ? MTextField(label: 'If Others specify:',onChanged: (val){},): Container(),
           MrowTextTextFieldWidget(title: 'I5 Any other relevant information/ remarks:',onChanged: (val){},),
-          MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormI2);},),
+          //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormI2);},),
+            FormI2()
 
         ],)
       ],),

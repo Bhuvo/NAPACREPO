@@ -1,4 +1,10 @@
 import 'package:npac/Forms/FormF/widget/ValueFunction.dart';
+import 'package:npac/Forms/FormH/FormH2.dart';
+import 'package:npac/Forms/FormH/FormH3.dart';
+import 'package:npac/Forms/FormH/FormH4.dart';
+import 'package:npac/Forms/FormH/FormH5.dart';
+import 'package:npac/Forms/FormH/FormH6.dart';
+import 'package:npac/Forms/FormH/FormH7.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/utils/navigator_utils.dart';
@@ -97,7 +103,13 @@ class _FormH1State extends State<FormH1> {
         ValueFunction(title: 'Tricuspid',checkboxValue: (val){},MG: (val){},PG: (val){},RegurgitantradioOnchange: (val){},StenoticradioOnchange: (val){},radioValue: (val){},),
         ValueFunction(title: 'Pulmonary',checkboxValue: (val){},MG: (val){},PG: (val){},RegurgitantradioOnchange: (val){},StenoticradioOnchange: (val){},radioValue: (val){},),
         MRowTextRadioWidget(title: 'G4. Any outcome identified in this visit:',onChanged: (val){},),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH2);},)
+       // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH2);},)
+        FormH2(),
+        FormH3(),
+        FormH4(),
+        FormH5(),
+        FormH6(),
+        FormH7(),
       ],),
     );
   }

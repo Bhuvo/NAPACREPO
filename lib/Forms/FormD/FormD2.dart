@@ -14,12 +14,7 @@ class _FormD2State extends State<FormD2> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: MScaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
-
-      body: MFormBody( Childrens: [
+    return Column( children: [
         Text('D5 COMPLETE DIAGNOSIS',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
         Text('D5.1 Obstetric Diagnosis:'),
         MrowTextTextFieldWidget( onChanged: (val){},title: 'Obstetric score:'),
@@ -45,9 +40,8 @@ class _FormD2State extends State<FormD2> {
         Space(),
         MRowTextRadioWidget( onChanged: (val){},options: List_items.ASSOCIATEDDiagnosis ,),
         Space(),
-        Container( width: double.infinity,child: FilledButton(onPressed: (){context.push(Routes.FormD3);}, child: Text('Next'))),
+        //Container( width: double.infinity,child: FilledButton(onPressed: (){context.push(Routes.FormD3);}, child: Text('Next'))),
 
-      ],),
-    ));
+      ],);
   }
 }

@@ -14,9 +14,7 @@ class _FormH7State extends State<FormH7> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title:  'H. PERIPARTUM VISIT PAGE (FORM H)',),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MRowTextRadioWidget(title: 'H7. FINAL OUTCOME ',onChanged: (val){
           if(val =='Death'){
             setState(() {
@@ -58,10 +56,9 @@ class _FormH7State extends State<FormH7> {
           MrowTextDatePickerWidget(title: 'H9.4 Follow up date:',onChanged: (val){},),
           MRowTextRadioWidget(title: 'H9.5 Breast feeding:',onChanged: (val){},options: ['Established (duration)','Not established'],),
           MrowTextTextFieldWidget(title: 'H10 Any other relevant information/ remarks:',onChanged: (val){},),
-          MFilledButton(text: 'submit',onPressed: (){},)
+          MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
         ],):  Container(),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.Home);},)
-      ],),
-    );
+        MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
+      ],);
   }
 }

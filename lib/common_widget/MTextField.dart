@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:npac/utils/theme_utils.dart';
 import 'package:npac/widgets/space.dart';
 
-class MTextField extends StatelessWidget {
+class MTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool? enabled;
   final bool? readOnly;
@@ -23,7 +23,7 @@ class MTextField extends StatelessWidget {
   final void Function()? onTap;
   final void Function(PointerDownEvent)? onTapOutside;
 
-  const MTextField(
+   MTextField(
       {super.key,
       this.enabled,
       this.readOnly,
@@ -49,29 +49,36 @@ class MTextField extends StatelessWidget {
       this.onTapOutside, this.validator});
 
   @override
+  State<MTextField> createState() => _MTextFieldState();
+}
+
+class _MTextFieldState extends State<MTextField> {
+  bool _obscureText = true;
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      readOnly: readOnly ?? false,
-      onTap: onTap,
-      enabled: enabled,
-      controller: controller,
-      initialValue: initalValue,
-      maxLines: maxLines,
-      minLines: minLines,
-      autofocus: autoFocus,
-      onChanged: onChanged,
-      textInputAction: textInputAction,
-      focusNode: focusNode,
-      onEditingComplete: onComplete,
-      onFieldSubmitted: onFieldSubmitted,
-      onTapOutside: onTapOutside,
-      keyboardType: type.keyboardType(),
-      obscureText: type == MInputType.password,
-      validator:validator ?? (s) {
-        if (required && s!.isEmpty) return 'Field is required.';
-        if (type == MInputType.phone && s!.length != 10)
+      readOnly: widget.readOnly ?? false,
+      onTap: widget.onTap,
+      enabled: widget.enabled,
+      controller: widget.controller,
+      initialValue: widget.initalValue,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      autofocus: widget.autoFocus,
+      onChanged: widget.onChanged,
+      textInputAction: widget.textInputAction,
+      focusNode: widget.focusNode,
+      onEditingComplete: widget.onComplete,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      onTapOutside: widget.onTapOutside,
+      keyboardType: widget.type.keyboardType(),
+      obscureText: widget.type == MInputType.password ? _obscureText : false,
+      validator:widget.validator ?? (s) {
+        if (widget.required && s!.isEmpty) return 'Field is required.';
+        if (widget.type == MInputType.phone && s!.length != 10)
           return 'Invalid Phone Number';
-        if (type == MInputType.email) {
+        if (widget.type == MInputType.email) {
           bool valid = RegExp(
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
               .hasMatch(s!);
@@ -79,27 +86,38 @@ class MTextField extends StatelessWidget {
         }
         return null;
       },
-      maxLength: type == MInputType.phone ? 10 : maxLength,
+      maxLength: widget.type == MInputType.phone ? 10 : widget.maxLength,
       inputFormatters: [
-        if (type == MInputType.numeric || type == MInputType.phone)
+        if (widget.type == MInputType.numeric || widget.type == MInputType.phone)
           FilteringTextInputFormatter.digitsOnly,
-        if (type == MInputType.decimal)
+        if (widget.type == MInputType.decimal)
           FilteringTextInputFormatter.allow(RegExp('[[0-9]|\\.|[0-9]]'))
       ],
       decoration: InputDecoration(
-          suffixIcon: suffixIcon,
-          prefixIcon: prefixIcon != null
+          suffixIcon: widget.type == MInputType.password
+              ? IconButton(
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+          )
+              : widget.suffixIcon,
+          prefixIcon: widget.prefixIcon != null
               ? Theme(
                   data: ThemeData(
                     iconTheme: IconThemeData(color: context.primary),
                   ),
-                  child: prefixIcon ?? const Space(0))
+                  child: widget.prefixIcon ?? const Space(0))
               : null,
-          contentPadding: minLines > 1
+          contentPadding: widget.minLines > 1
               ? const EdgeInsets.symmetric(horizontal: 15, vertical: 24)
               : null,
-          label: labelWidget ?? Text(label ?? ''),
-          hintText: hint,
+          label: widget.labelWidget ?? Text(widget.label ?? ''),
+          hintText: widget.hint,
           hintStyle: TextStyle(fontSize: 14, color: Colors.grey.shade500),
           counter: const SizedBox(
             height: 0,

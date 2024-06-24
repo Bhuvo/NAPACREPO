@@ -18,13 +18,8 @@ class _FormD3State extends State<FormD3> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
-
-      body: MFormBody(
-        Childrens: [
+    return Column(
+      children: [
           MRowTextRadioWidget(onChanged: (val){},options: List_items.NormalAbnormal,title: 'D6 ECHOCARDIOGRAPHIC ASSESSMENT',),
           Text('D6.1 Chamber description'),
           Space(),
@@ -93,8 +88,7 @@ class _FormD3State extends State<FormD3> {
           MRowTextRadioWidget(onChanged: (val){},title: 'D6.6 Aorta',options: List_items.NormalAbnormal,),
           MRowTextRadioWidget(onChanged: (val){},title: 'l D6.7 Others: ',options: ['Normal', 'Slight','Moderate','Severe'],),
           MrowTextTextFieldWidget( onChanged: (val){},title: 'D6.8 Any other salient features (please mention below):',),
-          MFilledButton(text: 'Next', onPressed: (){context.push(Routes.FormD4);},),
-        ],) ,
-    );
+          //MFilledButton(text: 'Next', onPressed: (){context.push(Routes.FormD4);},),
+        ],);
   }
 }

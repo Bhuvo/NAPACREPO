@@ -16,9 +16,7 @@ class _FormM2State extends State<FormM2> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'M. POST PARTUM VISIT PAGE',),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MText(text: 'M8 ECHOCARDIOGRAPHIC ASSESSMENT',),
         Space(),
         MSmallText(text: 'Ventricular function ',),
@@ -62,7 +60,6 @@ class _FormM2State extends State<FormM2> {
         MrowTextTextFieldWidget(title: 'Other salient echo details (if any):',onChanged: (val){},),
         MrowTextTextFieldWidget(title: 'M9. Any other comments:',onChanged: (val){},),
         MFilledButton(text: 'Submit',onPressed: (){ context.push(Routes.Home);},)
-      ],),
-    );
+      ],);
   }
 }

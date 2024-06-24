@@ -21,11 +21,7 @@ class _FormThree3pageState extends State<FormThree3page> {
   List<String> outCome = ['Live birth''IUD','Stillbirth','Molar pregnancy ','Ectopic pregnancy','Spontaneous Abortion','Induced Abortion'];
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: MScaffold(
-      appBar:PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'C. REGISTRATION DETAILS-REGISTRATION PAGE (FORM C)',)),
-      body:  MFormBody(Childrens: [
+    return Column(children: [
         MRowTextRadioWidget(title: 'C3. *PREVIOUS PREGNANCY DETAILS – If any \n Has there been any previous pregnancy: ',onChanged: (val){
           if(val == 'Yes'){
             setState(() {
@@ -55,8 +51,7 @@ class _FormThree3pageState extends State<FormThree3page> {
           const Divider(thickness: 1,height: 3,),
           MRowTextRadioWidget(title: 'C3.2.8 Post delivery contraception use:',onChanged: (val){}),
         ],):Container(),
-        FilledButton(onPressed: (){context.push(Routes.Home);}, child: Text('Next'))
-      ]),
-    ));
+        MFilledButton(onPressed: (){context.push(Routes.Home);}, text: 'Submit')
+      ]);
   }
 }

@@ -10,8 +10,7 @@ class FormD4 extends StatefulWidget {
 class _FormD4State extends State<FormD4> {
   @override
   Widget build(BuildContext context) {
-    return MScaffold(appBar: MAppBar(title: 'D. FIRST VISIT PAGE',),
-    body: MFormBody(Childrens: [
+    return Column(children: [
       MText(text: 'D7 PROSTHETIC VALVE ECHO PAGE',),
       Space(),
       Row(
@@ -95,8 +94,7 @@ class _FormD4State extends State<FormD4> {
       Space(),
       TwoTextFields(type1: MInputType.numeric,type2: MInputType.numeric,onChange1: (val){},onChange2: (val){},),
       MrowTextTextFieldWidget(title: 'Other relevant echo findings:',onChanged: (val){},type: MInputType.text,),
-      MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD5);},)
-    ],),
-    );
+     // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD5);},)
+    ],);
   }
 }

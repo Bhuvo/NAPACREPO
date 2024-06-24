@@ -15,10 +15,8 @@ class _FormI2State extends State<FormI2> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'I6. ANTICOAGULANT/ANTIPLATELET REGIMEN',),
-      body: MFormBody(
-        Childrens: [
+    return Column(
+        children: [
         MRowTextRadioWidget(title: 'Indication of AC: Pre-Pregnancy: ',onChanged: (val){},options: ['ACITROM','WARFARIN'],),
         MrowTextTextFieldWidget(title: 'Average INR',onChanged: (val){},),
         MRowTextRadioWidget(title: 'ASPIRIN',onChanged: (val){},),
@@ -36,9 +34,6 @@ class _FormI2State extends State<FormI2> {
           MDivider(),
           Heading_widget(title: 'Follow up',switchingWidget:MRowTextRadioWidget(title: 'Post Delviery (UFH to OAC)',onChanged: (val){},)  ,),
           MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
-
-
-      ],),
-    );
+      ],);
   }
 }

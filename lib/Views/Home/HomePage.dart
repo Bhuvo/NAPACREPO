@@ -1,6 +1,7 @@
 import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:npac/Views/MothersList/MotherListController.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MSmallText.dart';
 import 'package:npac/utils/theme_utils.dart';
@@ -14,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int index = 1;
+    var user = SharePreferencesHelper.getUserString(SharePreferencesHelper.User);
   @override
   Widget build(BuildContext context) {
     return MScaffold(
@@ -69,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          MText(fontSize: 18,text: 'user Name',color: Colors.white),
+          MText(fontSize: 18,text: 'user Name & UserID is ${user.id}',color: Colors.white),
           Row(
             children: [
               MText(text: 'user Name',fontWeight:FontWeight.normal,color: Colors.white,),
@@ -78,7 +80,9 @@ class _HomePageState extends State<HomePage> {
           ),
           ],),
         ),
-     actions: [IconButton(onPressed: (){context.push(Routes.EditProfile);}, icon: Icon(Icons.person),color: Colors.white),],
+     actions: [IconButton(onPressed: (){
+       MotherListController.getMotherList(10);
+     }, icon: Icon(Icons.person),color: Colors.white),],
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -108,7 +112,7 @@ class _HomePageState extends State<HomePage> {
               ),
               InkWell(
                 hoverColor: Colors.transparent,
-                onTap: (){context.push(Routes.Form3One);},
+                onTap: (){context.push(Routes.Form1);},
                 child: Card(child: Column( mainAxisAlignment: MainAxisAlignment.center,children: [
                   Row(mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -121,8 +125,10 @@ class _HomePageState extends State<HomePage> {
             ],
             ),
             MText(text: 'Forms By sections',),
+            Space(),
+          FilledButton(onPressed: (){context.push(Routes.Quetionnarie);}, child: Text('Quetionnarie Form')),
           Space(),
-          FilledButton(onPressed: (){context.push(Routes.Form1);}, child: Text('Form A')),
+          FilledButton(onPressed: (){context.push(Routes.Form1, {'isFromPatientDetails': false});}, child: Text('Form A')),
           Space(),
           FilledButton(onPressed: (){context.push(Routes.Form2);}, child: Text('Form B')),
           Space(),

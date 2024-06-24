@@ -11,7 +11,8 @@ class MrowTextTextFieldWidget extends StatefulWidget {
   final String? title;
   final String? initialValue;
   final Function(String)? onChanged;
-  const MrowTextTextFieldWidget({super.key,this.title,this.onChanged, this.initialValue, this.type, this.isneedDivider = true});
+  final bool? enabled;
+  const MrowTextTextFieldWidget({super.key,this.title,this.onChanged, this.initialValue, this.type, this.isneedDivider = true, this.enabled});
 
   @override
   State<MrowTextTextFieldWidget> createState() => _MrowTextTextFieldWidgetState();
@@ -31,7 +32,7 @@ class _MrowTextTextFieldWidgetState extends State<MrowTextTextFieldWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(widget.title ?? ''),
-                 MTextField(
+                 MTextField(enabled: widget.enabled ?? false,
                    required: true,
                    onChanged: widget.onChanged,initalValue:widget.initialValue ?? '',type: widget.type ?? MInputType.text ,)
                 ],

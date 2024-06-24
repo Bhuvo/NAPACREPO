@@ -11,9 +11,7 @@ class FormH4 extends StatefulWidget {
 class _FormH4State extends State<FormH4> {
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'H. PERIPARTUM VISIT PAGE (FORM H)',),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MText(text: 'H6.1.2 SECONDARY CARDIAC OUTCOME',),
         Space(),
         MText(text: 'Components of Secondary Cardiac Outcome Cardiac',),
@@ -25,8 +23,7 @@ class _FormH4State extends State<FormH4> {
         FormH3Common(title: '5. Duration of Stay in ICU',TextField1OnChanged: (val){},TextField2OnChanged: (val){},radioiOnChanged: (val){},),
         MSmallText(text: 'Signature of the PI / Chief Investigator of Cardiology: ',),
         Space(),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH5);},)
-      ],),
-    );
+        //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH5);},)
+      ],);
   }
 }

@@ -5,9 +5,11 @@ import 'package:npac/common_widget/MCheckBox.dart';
 class MRadioButtonList<T> extends StatefulWidget {
   final List<T>? options;
   final List<T>? CheckBoxOptions;
+  final String? initialValue;
   final Function(String )? onChanged;
   final String? selectedValue;
-  const MRadioButtonList({super.key, this.options, this.onChanged, this.selectedValue, this.CheckBoxOptions});
+  final bool? enabled;
+  const MRadioButtonList({super.key, this.options, this.onChanged, this.selectedValue, this.CheckBoxOptions, this.initialValue, this.enabled});
 
   @override
   State<MRadioButtonList> createState() => _MRadioButtonListState();
@@ -33,7 +35,7 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
 
   @override
   void initState() {
-    _selectedOption =widget.selectedValue ?? '';
+    _selectedOption =widget.initialValue ?? '';
     super.initState();
   }
   @override
@@ -49,7 +51,7 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
           title: Text(manualOptions[index]),
           value: manualOptions[index],
           groupValue: _selectedOption,
-          onChanged: _handleRadioValueChange,
+          onChanged: (widget.enabled ?? false) ?_handleRadioValueChange :(val){ print('comming 1 st  lsit');},
         );
       },
     ) : ListView.builder(
@@ -58,7 +60,7 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
       shrinkWrap: true,
       itemCount: widget.options?.length,
       itemBuilder: (context, index) {
-          return RadioListTile<String>(
+        return RadioListTile<String>(
           key: ValueKey(widget.options?[index]),
           title: Text(widget.options?[index]),
           // subtitle: widget.options?[index] == "Cardiomyopathy (Tick the applicable)" ?ListView.builder(
@@ -68,8 +70,8 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
           //     return MCheckBox(title: '${widget.CheckBoxOptions?[index]}',onChanged: (val){},); },
           // ): Container(),
           value: widget.options?[index],
-          groupValue: _selectedOption,
-          onChanged: _handleRadioValueChange,
+          groupValue:_selectedOption,
+          onChanged:(widget.enabled ?? false) ?_handleRadioValueChange : (val){ print('comming 2 st  lsit');},
         );
       },
     );

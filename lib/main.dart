@@ -1,13 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:npac/Hive/Box.dart';
 import 'package:npac/Route/routes.dart';
+import 'package:npac/SharedPreference/sharedPreference_helper.dart';
 import 'package:npac/app/app_scroll.dart';
 import 'package:npac/theme/theme.dart';
 import 'package:npac/Route/router.dart';
 import 'package:npac/utils/navigator_utils.dart';
 import 'package:npac/widgets/loading_widget.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+ await  SharePreferencesHelper.initialize();
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+  Boxes.init();
   runApp(const MyApp());
 }
 
@@ -41,7 +50,8 @@ class _spalshScreenState extends State<spalshScreen> {
   void load() async {
     ///Fake load
     await Future.delayed(const Duration(seconds: 1));
-      context.push(Routes.login);
+    var user = SharePreferencesHelper.getUserString(SharePreferencesHelper.User);
+     (user.isLogin?? false) ? context.push(Routes.Home) : context.push(Routes.login);
   }
 
   @override
@@ -54,8 +64,6 @@ class _spalshScreenState extends State<spalshScreen> {
     return Center(child: LoadingWidget(),);
   }
 }
-
-
 
 
 // isExpanded ?  Column(

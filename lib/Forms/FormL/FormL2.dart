@@ -14,9 +14,7 @@ class _FormL2State extends State<FormL2> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'L. POST PARTUM VISIT PAGE SECOND POST PARTUM VISIT (6 WEEKS)',),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MSmallText(text: 'L4 On Medications: (Kindly fill form O)',),
         Space(),
         MRowTextRadioWidget(title: 'L5 Hospitalisations after discharge:',onChanged: (val){
@@ -53,7 +51,6 @@ MrowTextTextFieldWidget(title: 'L8.1 Neonatal weight(Kg):', onChanged: (val){},i
         MrowTextDatePickerWidget(title: 'L10 Date of next follow up:',onChanged: (val){},),
         MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
 
-      ],),
-    );
+      ],);
   }
 }

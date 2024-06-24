@@ -20,10 +20,7 @@ class _FormH2State extends State<FormH2> {
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'H. PERIPARTUM VISIT PAGE (FORM H)',),
-
-      body: MFormBody(Childrens: [
+    return Column(children: [
         MRowTextRadioWidget(title: 'H5. PERIPARTUM DETAILS (tick applicable)',onChanged: (val){
           if(val =='Yes'){
             setState(() {
@@ -126,10 +123,7 @@ class _FormH2State extends State<FormH2> {
           MRowTextRadioWidget(title: 'H9 Blood Transfusion',onChanged: (val){},)
 
        ],): Container(),
-        MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH3);},)
-
-
-      ],),
-    );
+       // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormH3);},)
+      ],);
   }
 }
