@@ -33,6 +33,7 @@ class _MrowTextSingleOptionState<T> extends State<MrowTextSingleOption<T>> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Space(),
                   Text(widget.title ?? ''),
                   SheetDown<T>(
                     enabled: widget.enabled,

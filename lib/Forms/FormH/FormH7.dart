@@ -1,7 +1,8 @@
 import 'package:npac/app/export.dart';
 
 class FormH7 extends StatefulWidget {
-  const FormH7({super.key});
+  final bool? enabled;
+  const FormH7({super.key, this.enabled});
 
   @override
   State<FormH7> createState() => _FormH7State();
@@ -11,11 +12,12 @@ class _FormH7State extends State<FormH7> {
   bool isDead = false;
   bool isDischarge = false;
   bool isOther = false;
+  bool isEstablished = false;
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-        MRowTextRadioWidget(title: 'H7. FINAL OUTCOME ',onChanged: (val){
+        MRowTextRadioWidget(enabled: widget.enabled,title: 'K9. FINAL OUTCOME ',onChanged: (val){
           if(val =='Death'){
             setState(() {
               isDead = true;
@@ -35,13 +37,21 @@ class _FormH7State extends State<FormH7> {
             });
           }
         },options: ['Death', 'Discharge'],isneedDivider: false,),
-        isDead? MrowTextTextFieldWidget(title: 'H8. DEATH DETAILS: (Death Summary)',onChanged: (val){}):  Container(),
+        isDead? Column(
+          children: [
+            MrowTextDatePickerWidget(enabled: widget.enabled,title: 'K 9.2.1 Date of death:',onChanged: (val){},),
+            MrowTextTextFieldWidget(enabled: widget.enabled,title: 'K9.2.2 DEATH DETAILS: (Death Summary)',onChanged: (val){}),
+          ],
+        ):  Container(),
         isDischarge?Column(children: [
-          MSmallText(text: 'H9. DISCHARGE DETAILS',),
+          MSmallText(text: 'K9.1. DISCHARGE DETAILS',),
           Space(),
-          MrowTextTextFieldWidget(title: 'H9. DISCHARGE DETAILS',onChanged: (val){},type: MInputType.numeric,),
-          MRowTextRadioWidget(title: 'H9.2 Functional Class at discharge',onChanged: (val){},options: List_items.NYHAClass,),
-          MRowTextRadioWidget(title: 'H9.3 Mode of Contraception advised / provided: ',onChanged: (val){
+          MSmallText(text: 'K 9.1 Discharge Details',),
+          Space(),
+          MrowTextDatePickerWidget(enabled: widget.enabled,title: 'K 9.1.1 Date of Discharge: ',onChanged: (val){},),
+          MrowTextTextFieldWidget(enabled: widget.enabled,title: 'K 9.1.2 Duration of stay:',onChanged: (val){},),
+          MRowTextRadioWidget(enabled: widget.enabled,title: 'K 9.1.3 Functional Class at discharge',onChanged: (val){},options: List_items.NYHAClass,),
+          MRowTextRadioWidget(enabled: widget.enabled,title: 'K 9.1.4 Mode of Contraception advised / provided: ',onChanged: (val){
             if(val =='Others'){
               setState(() {
                 isOther = true;
@@ -52,13 +62,17 @@ class _FormH7State extends State<FormH7> {
               });
             }
           },options:['Nil','IUCD','OCP','Barrier method','Tubectomy','Others'],),
-          isOther? MTextField(label: 'If Other Specify',onChanged: (val){},): Container(),
-          MrowTextDatePickerWidget(title: 'H9.4 Follow up date:',onChanged: (val){},),
-          MRowTextRadioWidget(title: 'H9.5 Breast feeding:',onChanged: (val){},options: ['Established (duration)','Not established'],),
-          MrowTextTextFieldWidget(title: 'H10 Any other relevant information/ remarks:',onChanged: (val){},),
-          MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
+          isOther? MTextField(enabled: widget.enabled,label: 'If Other Specify',onChanged: (val){},): Container(),
+          MrowTextDatePickerWidget(enabled: widget.enabled,title: 'K 9.1.5  Next follow up date advised',onChanged: (val){},),
+          MRowTextRadioWidget(enabled: widget.enabled,title: 'H9.5 Breast feeding:',onChanged: (val){
+            val =='Established'? isEstablished = true : isEstablished = false;
+            setState(() {});
+          },options: ['Established','Not established'],),
+          isEstablished ? MTextField(label: 'Postnatal day at which established',onChanged: (val){},): Container(),
+          MrowTextTextFieldWidget(enabled: widget.enabled,title: 'H10 Any other relevant information/ remarks:',onChanged: (val){},),
+         // MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
         ],):  Container(),
-        MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
+       // MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
       ],);
   }
 }

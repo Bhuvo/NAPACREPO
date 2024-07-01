@@ -14,6 +14,7 @@ class FormE2 extends StatefulWidget {
 class _FormE2State extends State<FormE2> {
    bool isObstetric = false;
    bool isNonObstetric = false;
+   bool isAge = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +30,13 @@ class _FormE2State extends State<FormE2> {
           widget.formEData?.value.maternalDeathFourTwo = val;
         },options: ['Cardiac','Non-Cardiac'],isneedDivider: false,),
         MRowTextRadioWidget(enabled : widget.enabled,initialValue: widget.formEData?.value.maternalDeathFourTwoValue,onChanged: (val){
+          val == 'Yes'? isAge = true : isAge = false;
           widget.formEData?.value.maternalDeathFourTwoValue = val;
+          setState(() {});
         },isneedDivider: false,),
-        MTextField(label: 'Gest Age',initalValue: widget.formEData?.value.maternalDeathFourTwoDetails,onChanged: (val){
+      isAge ? MTextField(label: 'Gest Age',initalValue: widget.formEData?.value.maternalDeathFourTwoDetails,onChanged: (val){
           widget.formEData?.value.maternalDeathFourTwoDetails = val;
-        },),
+        },): Container(),
         MDivider(),
         FromE2Common(enabled : widget.enabled ,radioInitialValue: widget.formEData?.value.resuscitatedCardiacArrest,TextInitialValue: widget.formEData?.value.resuscitatedCardiacArrestDetails,title: '10.2.2 Resuscitated cardiac arrest',radioiOnChanged: (val){
           widget.formEData?.value.resuscitatedCardiacArrest = val;

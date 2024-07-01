@@ -1,16 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
+import 'package:npac/common_widget/MRowTextRadioWidget.dart';
 import 'package:npac/utils/navigator_utils.dart';
 
 class FormD7 extends StatefulWidget {
-  const FormD7({super.key});
+  final bool? isEnabled;
+  const FormD7({super.key, this.isEnabled});
 
   @override
   State<FormD7> createState() => _FormD7State();
 }
 
 class _FormD7State extends State<FormD7> {
+
+  bool isHypertrophy =false;
+  bool isObstruction=false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,60 +26,77 @@ class _FormD7State extends State<FormD7> {
 
           MText(text: 'PARAMETERS ',),
           Space(),
-          Text('LVIDd/LVIDs'),
+          MSmallText(text: '1st AN Visit',),
           Space(),
-          MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.1 LVIDd/LVIDs (mm)',onChanged: (val){},isneedDivider: false,),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.2 LVEF (%)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.3 RV TAPSE (mm)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.4 RV S’ (cm/sec)',onChanged: (val){}),
 
           Space(),
-          Text('LVEF (%)'),
+          MSmallText(text: '2nd AN Visit',),
           Space(),
-          MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.1 LVIDd/LVIDs (mm)',onChanged: (val){},isneedDivider: false,),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.2 LVEF (%)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.3 RV TAPSE (mm)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.4 RV S’ (cm/sec)',onChanged: (val){}),
 
           Space(),
-          Text('RV TAPSE (mm)'),
+          MSmallText(text: 'Peripartum',),
           Space(),
-          MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.1 LVIDd/LVIDs (mm)',onChanged: (val){},isneedDivider: false,),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.2 LVEF (%)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.3 RV TAPSE (mm)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.4 RV S’ (cm/sec)',onChanged: (val){}),
 
           Space(),
-          Text('RV Sa’ (mm)'),
+          MSmallText(text: '1st PN Visit',),
           Space(),
-          MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.1 LVIDd/LVIDs (mm)',onChanged: (val){},isneedDivider: false,),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.2 LVEF (%)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.3 RV TAPSE (mm)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.4 RV S’ (cm/sec)',onChanged: (val){}),
 
           Space(),
-          Text('Others'),
+          MSmallText(text: '2nd PN Visit',),
           Space(),
-          MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-          MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.1 LVIDd/LVIDs (mm)',onChanged: (val){},isneedDivider: false,),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.2 LVEF (%)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.3 RV TAPSE (mm)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.4 RV S’ (cm/sec)',onChanged: (val){}),
           Space(),
-          Text('LV Hypertrophy '),
+          MSmallText(text: '3nd PN Visit',),
           Space(),
-          MrowTextTextFieldWidget(title: 'IVS (mm)',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: 'PW (mm)',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: 'SAM (mm)',onChanged: (val){},isneedDivider: false,),
-          Text('LVOT gradient:'),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.1 LVIDd/LVIDs (mm)',onChanged: (val){},isneedDivider: false,),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.2 LVEF (%)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.3 RV TAPSE (mm)',onChanged: (val){},isneedDivider: false),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'D10.4 RV S’ (cm/sec)',onChanged: (val){}),
           Space(),
-          MrowTextTextFieldWidget(title: 'Resting Gradient',onChanged: (val){},isneedDivider: false,),
-          MrowTextTextFieldWidget(title: 'Provoked gradient:',onChanged: (val){},),
-          MrowTextTextFieldWidget(title: 'Other relevant echo findings:',onChanged: (val){},),
+
+          MRowTextRadioWidget(enabled:widget.isEnabled,title: 'D10.5 LV Hypertrophy',onChanged: (val){
+            val =='Yes' ?isHypertrophy =true : isHypertrophy= false;
+            setState(() {
+
+            });},isneedDivider: false,),
+          isHypertrophy ? Column(children: [
+            MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'IVS (mm)',onChanged: (val){},isneedDivider: false,),
+            MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'Post Wall (mm)',onChanged: (val){},isneedDivider: false,),
+            MRowTextRadioWidget(enabled:widget.isEnabled,title: 'SAM',onChanged: (val){},isneedDivider: false,),
+          ],): Container(),
+          MDivider(),
+          Space(),
+
+          MRowTextRadioWidget(enabled:widget.isEnabled,title: 'D10.6 LVOT Obstruction :',onChanged: (val){
+            val =='Yes' ?isObstruction =true : isObstruction= false;
+            setState(() {
+
+            });},isneedDivider: false,),
+          isObstruction ?  Column(children: [
+            MSmallText(text: ' LVOT gradient (mmHg)',),
+            MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'Resting Gradient',onChanged: (val){},isneedDivider: false,),
+            MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'Provoked gradient:',onChanged: (val){},),
+          ],): Container(),
+          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'Other relevant echo findings:',onChanged: (val){},),
           //MFilledButton(text: 'Next',onPressed: (){ context.push(Routes.FormD8);}),
 
         ],

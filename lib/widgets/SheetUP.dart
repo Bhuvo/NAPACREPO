@@ -14,10 +14,11 @@ class SheetDown<T> extends StatelessWidget {
   final ValueChanged<T>? onChanged;
   final List<T> items;
   final bool required;
+  final bool? enabled;
   final String Function(T) itemLabel;
   final IconData Function(T)? itemIcon;
   final Function(List<T>)? onSelectedList;
-  const SheetDown({super.key,this.label, this.itemIcon, required this.itemLabel, this.value, this.onChanged, required this.items, this.required = true, this.onSelectedList, this.initialSelectedValue});
+  const SheetDown({super.key,this.label, this.itemIcon, required this.itemLabel, this.value, this.onChanged, required this.items, this.required = true, this.onSelectedList, this.initialSelectedValue, this.enabled});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class SheetDown<T> extends StatelessWidget {
       icon = itemIcon?.call(value as T);
     }
 
-    return MTextField(
+    return MTextField(enabled:enabled ?? true,
       required: required,
       prefixIcon: icon != null ? Icon(icon, color: context.dividerColor, size: 18,) : null,
       key: ValueKey('sheet_down::$label${value != null ? itemLabel(value as T) : ''}'),

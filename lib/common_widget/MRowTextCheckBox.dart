@@ -63,7 +63,7 @@ class _ListCheckBoxState extends State<ListCheckBox> {
   }
   @override
   Widget build(BuildContext context) {
-    print(widget.selectedlist);
+    //print(widget.selectedlist);
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,

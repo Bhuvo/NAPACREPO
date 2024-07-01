@@ -8,9 +8,19 @@ import 'package:npac/Forms/FormD/FormD6.dart';
 import 'package:npac/Forms/FormD/FormD7.dart';
 import 'package:npac/Forms/FormD/FormD8.dart';
 import 'package:npac/Forms/FormD/FormD9.dart';
+import 'package:npac/Forms/FormE/FormE1.dart';
+import 'package:npac/Forms/FormF/FormF1.dart';
+import 'package:npac/Forms/FormI/FormI1.dart';
+import 'package:npac/Forms/FormI/FormI2.dart';
+import 'package:npac/Forms/FormJ/FormJ1.dart';
+import 'package:npac/Forms/FormL/FormL1.dart';
+import 'package:npac/Forms/FormL/FormL2.dart';
+import 'package:npac/Forms/Formk/FormK1.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
+import 'package:npac/common_widget/MRowTextDropDown.dart';
 import 'package:npac/common_widget/MRowTextRadioWidget.dart';
+import 'package:npac/common_widget/MrowTextTextfieldWidget.dart';
 import 'package:npac/utils/navigator_utils.dart';
 
 class FormD1 extends StatefulWidget {
@@ -21,9 +31,27 @@ class FormD1 extends StatefulWidget {
 }
 
 class _FormD1State extends State<FormD1> {
-
+  bool isEnabled = false;
   bool AntenatalCheck =false;
   bool isinterventions = false;
+  bool AbnormalEcg = false;
+
+
+  bool isPrimaryDiagnosisCongenital = false;
+  bool isPrimaryDiagnosisAortopathies = false;
+  bool isPrimaryDiagnosisCardiomyopathy = false;
+  bool isPrimaryDiagnosisVenous = false;
+
+  bool isMitralProsthetic = false;
+  bool isAorticProsthetic = false;
+  bool isTricuspidProsthetic = false;
+  bool isPulmonaryProsthetic = false;
+  bool isAortaAbnormal = false;
+
+  bool isAnEcoagulant = false;
+  bool isAssessment = false;
+
+  bool isEcho = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,36 +61,59 @@ class _FormD1State extends State<FormD1> {
           child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
 
       body: MFormBody(Childrens: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('For all patients (Tick theapplicable)'),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    isEnabled = !isEnabled;
+                  });
+                },
+                icon: isEnabled ? Icon(Icons.save) : Icon(Icons.edit))
+          ],
+        ),
         Space(),
         Text('PRESENT PREGNANCY DETAILS', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
         Space(),
         Text('D1 ANTENATAL DETAILS', style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
         Space(),
         const Divider(thickness: 1,height: 3,),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D1.1 Conception:',options: List_items.conception,),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D1.2 Preconception counselling: '),
+        MRowTextDropDown(enabled: isEnabled,title: 'D1.1 Gestational age at registration(Weeks)',onChanged: (val){},),
+        MrowTextDatePickerWidget(enabled: isEnabled,title: ' D1.2 Date:',onChanged: (val){},),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.3 Conception:',options: List_items.conception,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.4 Preconception counselling: '),
         Column(
           children: [
-            Text('D1.3 Obstetric score :'),
-            MrowTextTextFieldWidget( onChanged: (val){},title: 'G :',isneedDivider: false,type: MInputType.numeric,),
-            MrowTextTextFieldWidget( onChanged: (val){},title: 'P :',isneedDivider: false,type: MInputType.numeric,),
-            MrowTextTextFieldWidget( onChanged: (val){},title: 'L :',isneedDivider: false,type: MInputType.numeric,),
-            MrowTextTextFieldWidget( onChanged: (val){},title: 'A :',isneedDivider: false,type: MInputType.numeric,),
+            Row(
+              children: [
+                Text('D1.5 Obstetric score :'),
+              ],
+            ),
+            MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'G :',isneedDivider: false,type: MInputType.numeric,),
+            MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'P :',isneedDivider: false,type: MInputType.numeric,),
+            MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'L :',isneedDivider: false,type: MInputType.numeric,),
+            MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'A :',isneedDivider: false,type: MInputType.numeric,),
+            MDivider()
           ],
         ),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D1.4 Pregnancy type:',options: List_items.YesNoDetails,),
-        MrowTextDatePickerWidget(onChanged: (val){},title: 'D1.5 LMP:',initialDate: DateTime.now(),),
-        MrowTextDatePickerWidget(onChanged: (val){},title: 'D1.6 EDD:',initialDate: DateTime.now(),),
-        // MRowTextCheck(title: 'D1.7 Antenatal check-ups (tick applicable)',checkboxvalue: AntenatalCheck,onChanged: (val){setState(() {
-        //   AntenatalCheck = val!;
-        // });},),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.6 Pregnancy type:',options: List_items.YesNoDetails,),
+        MrowTextDatePickerWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.7 LMP:',initialDate: DateTime.now(),),
+        MrowTextDatePickerWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.8 EDD:',initialDate: DateTime.now(),),
+       MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){
+         setState(() {
+           AntenatalCheck = val == 'Yes' ? true : false;
+         });
+       },title: 'D1.9 Antenatal Check up:',isneedDivider: false,),
        if(AntenatalCheck) Column(children: [
-         MrowTextDatePickerWidget( onChanged: (val){},title: 'D1.7.1 When was the first AN visit done ',initialDate: DateTime.now(),),
-         MRowTextRadioWidget( onChanged: (val){},title: 'D1.7.2 Where was the first AN visit done:', options:List_items.AntenatalCheckUpPlace,),
-         MrowTextDatePickerWidget( onChanged: (val){},title: 'D1.7.3 When first visit to a centre with cardiac support done(weeks): ',initialDate: DateTime.now(),),
+         MrowTextDatePickerWidget(enabled: isEnabled, onChanged: (val){},title: 'D1.9.1 When was the first AN visit done ',initialDate: DateTime.now(),isneedDivider: false,),
+         MRowTextRadioWidget(enabled: isEnabled, onChanged: (val){},title: 'D1.9.2 Where was the first AN visit done:', options:List_items.AntenatalCheckUpPlace,isneedDivider: false),
+         MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D1.9.3 When first visit to a centre with cardiac support done(weeks): ',isneedDivider: false,),
        ],),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D1.8 Present pregnancy continued Against Medical Advice: ',),
-        MRowTextRadioWidget(onChanged: (val){setState(() {
+        MDivider(),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.10 Current pregnancy con:nued Against Medical Advice:  ',),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){setState(() {
           if(val == 'Yes'){
             setState(() {
               isinterventions = true;
@@ -72,44 +123,128 @@ class _FormD1State extends State<FormD1> {
               isinterventions = false;
             });
           }
-        });},isneedDivider: isinterventions ? false : true ,title: 'D1.9 Any antenatal interventions done during current pregnancy (If yes, kindly specify):',),
-        isinterventions ? MTextField(onChanged: (val){},label:'(If yes, kindly specify)' ,) : Container(),
-      MRowTextRadioWidget(onChanged: (val){},title: 'D2 NYHA SYMPTOMS CLASS: ',options: List_items.NYHAClass,),
-        Text('D3 CLINICAL SIGNS'),
+        });},isneedDivider: isinterventions ? false : true ,title: 'D1.11  Any antenatal interventions done during current pregnancy (If yes, kindly specify):',),
+        isinterventions ? MTextField(enabled: isEnabled,onChanged: (val){},label:'(If yes, kindly specify)' ,) : Container(),
+      MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D2 NYHA SYMPTOMS CLASS: ',options: List_items.NYHAClass,),
+        Row(
+          children: [
+            Text('D3 CLINICAL SIGNS'),
+          ],
+        ),
         Space(),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D3.1 Height (cm):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D3.2 Weight (kg):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D3.3 SPO2 (%):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D3.4 HR (/min):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D3.5 BP (mm Hg):',isneedDivider: false,type: MInputType.numeric,),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D3.6 CCF: ',isneedDivider: false,),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D3.7 Cyanosis: ',isneedDivider: false,),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D3.8 Cardiac murmur:',isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.1 Height (cm):',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.2 Weight (kg):',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.3 SPO2 (%):',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.4 HR (/min):',isneedDivider: false,type: MInputType.numeric,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.5 Per abdomen examination and foetal assessment:', options: List_items.assessment,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.6 BP (mm Hg):',isneedDivider: false,type: MInputType.numeric,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.7 CCF: ',isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.8 Cyanosis: ',isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.9 Cardiac murmur:',isneedDivider: false,),
         const Divider(thickness: 1,height: 3,),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D3.9 Per abdomen examination and foetal assessment:', options: List_items.assessment,),
-      Text('D4 BASELINE INVESTIGATIONS:'),
+      Row(
+        children: [
+          Text('D4 BASELINE INVESTIGATIONS:'),
+        ],
+      ),
         Space(),
-        MRowTextRadioWidget(onChanged: (val){},title: 'D4.1 GTT ', options: List_items.GTT,isneedDivider: false,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.2 Blood Urea (mg/dl):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.3 Sr. Creatinine (mg/dl):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.4a BNP (pg/ml):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.4b NT-pro BNP (pg/ml):',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.5 Hb(g/dl) ',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.6 Hct/PCV:',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.7 TSH (uIU/mL): ',isneedDivider: false,type: MInputType.numeric,),
-        MrowTextTextFieldWidget( onChanged: (val){},title: 'D4.8 Other relevant investigations (if any)',isneedDivider: false,type: MInputType.numeric,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D4.1 GTT ', options: List_items.GTT,isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D4.2 Blood Urea (mg/dl):',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D4.3 Sr. Creatinine (mg/dl):',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D4.4 TSH (IU/mL):',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget( enabled: isEnabled,onChanged: (val){},title: 'D4.5 Hb(g/dl) ',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D4.6 Hct/PCV:',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D4.7 BNP (pg/ml):',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget( enabled: isEnabled,onChanged: (val){},title: 'D4.8 NT-pro BNP (pg/ml)',isneedDivider: false,type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D4.9 Other relevant investigations (if any)',isneedDivider: false,type: MInputType.numeric,),
        const Divider(thickness: 1,height: 3,),
-        MrowTextDatePickerWidget(onChanged: (val){},title: 'D4.9 ECG Date:',isneedDivider: false,),
-        MRowTextRadioWidget(onChanged: (val){},title: '', options: ['Normal','Abnormal Upload ECG'],isneedDivider: false,),
+        MrowTextDatePickerWidget(enabled: isEnabled,onChanged: (val){},title: 'D4.9 ECG Date:',isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){
+          setState(() {
+            AbnormalEcg = val == 'Abnormal' ? true : false;
+          });
+        },title: 'ECG status', options: ['Normal','Abnormal'],isneedDivider: false,),
+        AbnormalEcg ? MFilledButton(text: 'Upload ECG',onPressed: (){},): Container(),
+     Space(),
+     MDivider(),
+     Space(),
      // Container(width:  double.infinity, child: FilledButton(onPressed: (){context.push(Routes.FormD2);}, child: Text('Next')))
-        FormD2(),
-        FormD3(),
-        FormD4(),
-        FormD5(),
-        FormD6(),
-        FormD7(),
-        FormD8(),
-        FormD9(),
+        FormD2(enabled: isEnabled,isPrimaryDiagnosisAortopathies: (val){
+          setState(() {
+            isPrimaryDiagnosisAortopathies = val;
+          });
+        },isPrimaryDiagnosisCardiomyopathy: (val){
+          setState(() {
+            isPrimaryDiagnosisCardiomyopathy = val;
+          });
+        },isPrimaryDiagnosisCongenital: (val){
+          setState(() {
+            isPrimaryDiagnosisCongenital = val;
+          });
+        }, isPrimaryDiagnosisVenous: (val){
+          setState(() {
+            isPrimaryDiagnosisVenous = val;
+          });
+        },),
+         FormD3(enabled: isEnabled,isAortaAbnormal: (val){
+           setState(() {
+             isAortaAbnormal = val;
+           });
+         },isAorticProsthetic: (val){
+           setState(() {
+             isAorticProsthetic = val;
+           });
+         },isMitralProsthetic: (val){
+           setState(() {
+             isMitralProsthetic = val;
+           });
+         },isPulmonaryProsthetic: (val){
+           setState(() {
+             isPulmonaryProsthetic = val;
+           });
+         },isTricuspidProsthetic: (val){
+           setState(() {
+             isTricuspidProsthetic = val;
+           });
+         },),
+        // FormD4(),
+        // FormD5(),
+        // FormD6(),
+        // FormD7(),
+        // FormD8(),
+        // FormD9(),
+        Space(),
+        isMitralProsthetic || isAorticProsthetic || isTricuspidProsthetic || isPulmonaryProsthetic ?Column(
+          children: [
+            FormD4(isEnabled: isEnabled),
+            FormI1(isEnabled: isEnabled,isAnEcoagulant: (val){
+              setState(() {
+                isAnEcoagulant= val;
+              });
+            },isAssessment: (val){
+              setState(() {
+                isAssessment = val;
+              });
+            },),
+          ],
+        ) : Container(),
+        isPrimaryDiagnosisCongenital? Column(
+          children: [
+            FormD5(isEnabled: isEnabled),
+            FormJ1(enabled: isEnabled),
+          ],
+        ) : Container(),
+        isPrimaryDiagnosisAortopathies|| isAortaAbnormal ? FormD6(isEnabled:isEnabled ): Container(),
+        isPrimaryDiagnosisAortopathies? FormK1(isEnabled: isEnabled,isEcho: (val){
+          setState(() {
+            isEcho = val;
+          });
+        },) : Container(),
+        isPrimaryDiagnosisCardiomyopathy ||isEcho? FormD7(isEnabled: isEnabled,) : Container(),
+        isPrimaryDiagnosisVenous ||isAnEcoagulant? FormI2(isEnabled:isEnabled,) : Container(),
+        FormD8(isEnabled: isEnabled,),
+        FormD9(isEnabled: isEnabled),
+        MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},),
       ],
       ),
     ));

@@ -4,6 +4,7 @@ import 'package:npac/Forms/FormE/FormEModel/FormEModel.dart';
 import 'package:npac/Forms/FormE/controller/FormEController.dart';
 import 'package:npac/Views/MothersList/MotherListModel.dart';
 import 'package:npac/app/export.dart';
+import 'package:npac/common_widget/MRowTextDropDown.dart';
 import 'package:npac/widgets/loading_widget.dart';
 
 class FormE1 extends StatefulWidget {
@@ -86,7 +87,7 @@ RxList<String> selectedlist = <String>[].obs;
   @override
   Widget build(BuildContext context) {
    print(widget.data?.toString());
-   print('jdggvcdhsv ${widget.data?.tNPHDRNOID}');
+   // print('jdggvcdhsv ${widget.data?.tNPHDRNOID}');
     return MScaffold(
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(60),
@@ -110,15 +111,17 @@ RxList<String> selectedlist = <String>[].obs;
                       : Icon(Icons.edit))
             ],
           ) : Container(),
+          MText(text: ' H. ABORTION / MTP PAGE (FORM H)',),
           MRowTextRadioWidget(enabled : isEnabled,title: 'H1 AbortType',initialValue: formEData.value.abortType,options: const ['Spontaneous', 'Induced'],onChanged: (val){
             formEData.value.abortType = val;
           },),
-          MrowTextDatePickerWidget(enabled : isEnabled,title: 'H2 Date of abor:on:',initialDate: stringToDate(formEData.value.visitDate ?? ''),onChanged: (val){
+          MrowTextDatePickerWidget(enabled : isEnabled,title: 'H2 Date of abortion:',initialDate: stringToDate(formEData.value.visitDate ?? ''),onChanged: (val){
             formEData.value.visitDate = dateToString(val);
           },),
-          MrowTextTextFieldWidget(enabled : isEnabled,title: 'H3. Period of gestation  (in completed weeks) :',initialValue: formEData.value.periodOfGestation,onChanged: (val){
-            formEData.value.periodOfGestation = val;
-          },type: MInputType.numeric,),
+          MRowTextDropDown(enabled: isEnabled,title: 'H3. Period of gestation  (in completed weeks) :',initialValue: formEData.value.periodOfGestation,),
+          // MrowTextTextFieldWidget(enabled : isEnabled,title: 'H3. Period of gestation  (in completed weeks) :',initialValue: formEData.value.periodOfGestation,onChanged: (val){
+          //   formEData.value.periodOfGestation = val;
+          // },type: MInputType.numeric,),
           MRowTextRadioWidget(enabled : isEnabled,title: 'H4 Indication for MTP: ',initialValue: formEData.value.indicationForMtp,options: const ['Maternal', 'Fetal'],onChanged: (val){
             formEData.value.indicationForMtp = val;
           },),

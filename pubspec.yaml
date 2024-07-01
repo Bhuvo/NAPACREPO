@@ -47,6 +47,7 @@ dependencies:
   shimmer: ^3.0.0
   pinput: ^4.0.0
   circle_nav_bar: ^2.0.1+1
+  file_picker: ^8.0.5
 
 
 dev_dependencies:

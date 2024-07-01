@@ -5,9 +5,10 @@ import 'package:npac/Forms/FormI/Widget/ThreeTextField.dart';
 import 'package:npac/Forms/FormI/Widget/YesNo.dart';
 
 class Heading_widget extends StatefulWidget {
+  final bool? enabled;
   final String? title;
   final Widget? switchingWidget;
-  const Heading_widget({super.key, this.title, this.switchingWidget});
+  const Heading_widget({super.key, this.title, this.switchingWidget, this.enabled});
 
   @override
   State<Heading_widget> createState() => _Heading_widgetState();
@@ -36,19 +37,26 @@ class _Heading_widgetState extends State<Heading_widget> {
         ],
       ),
       Space(),
-      ThreeTextField(title: 'ACITROM',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
-      ThreeTextField(title: 'WARFARIN',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
-      MRowTextRadioWidget(title: 'PARENTAL ANTI-COAGULANTS: ',onChanged: (val){},options: ['Given','Not Given'],),
-      ThreeTextField(title: 'UFH',isneedDivider: false,isOptionNeeded: true,onOptionChanged: (val){},onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},),
-      MRowTextRadioWidget(title: 'LMWH', options: ['FONDA','ENOX','DALTE'],onChanged: (val){
-        setState(() {
-          option = val;
-        });
-      },isneedDivider: false,),
-      option != ''? ThreeTextField(title: option,text2: 'Anti XA level',isOptionNeeded: true,onOptionChanged: (val){},onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isneedDivider: false,): Container(),
-      MDivider(),
+      ThreeTextField(enabled: widget.enabled,title: 'VKAs',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
+      ThreeTextField(enabled: widget.enabled,title: 'ACITROM',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
+      ThreeTextField(enabled: widget.enabled,title: 'WARFARIN',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
+      MSmallText(text: 'Parenteral',),
       Space(),
-      YesNo(title: 'ASPIRIN',onDoseChanged: (val){},),
+      ThreeTextField(enabled: widget.enabled,title: 'Enoxaparin',text2: 'Anti XA level',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
+      ThreeTextField(enabled: widget.enabled,title: 'Dalteparin',text2: 'Anti XA level',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
+      ThreeTextField(enabled: widget.enabled,title: 'Fondaparinux',text2: 'Anti XA level',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
+
+      // MRowTextRadioWidget(title: 'PARENTAL ANTI-COAGULANTS: ',onChanged: (val){},options: ['Given','Not Given'],),
+      ThreeTextField(enabled: widget.enabled,title: 'UFH',isneedDivider: false,isOptionNeeded: true,onOptionChanged: (val){},onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},),
+      // MRowTextRadioWidget(title: 'LMWH', options: ['FONDA','ENOX','DALTE'],onChanged: (val){
+      //   setState(() {
+      //     option = val;
+      //   });
+      // },isneedDivider: false,),
+      // option != ''? ThreeTextField(title: option,text2: 'Anti XA level',isOptionNeeded: true,onOptionChanged: (val){},onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isneedDivider: false,): Container(),
+      // MDivider(),
+      // Space(),
+      YesNo(enabled: widget.enabled,title: 'ASPIRIN',onDoseChanged: (val){},),
       Row(
         children: [
           MText(text: 'Details of AC switching',),
@@ -56,9 +64,9 @@ class _Heading_widgetState extends State<Heading_widget> {
       ),
       Space(),
       widget.switchingWidget ??MRowTextRadioWidget(title: 'Switching done',onChanged: (val){},),
-      YesNo(title: 'Vitamin K',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
-      YesNo(title: 'Trenaxa',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
-      YesNo(title: 'Protamine',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
+      YesNo(enabled: widget.enabled,title: 'Vitamin K',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
+      YesNo(enabled: widget.enabled,title: 'Trenaxa',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
+      YesNo(enabled: widget.enabled,title: 'Protamine',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
     ],);
   }
 }

@@ -2,8 +2,9 @@ import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MRowTextCheckBox.dart';
 
 class valueFunction extends StatefulWidget {
+  final bool? isEnabled;
   final String? title;
-  const valueFunction({super.key, this.title});
+  const valueFunction({super.key, this.title, this.isEnabled});
 
   @override
   State<valueFunction> createState() => _valueFunctionState();
@@ -20,9 +21,9 @@ class _valueFunctionState extends State<valueFunction> {
         ],
       ),
       Space(),
-      MrowTextTextFieldWidget(title: 'I2.2 Valve size(mm)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
-      MrowTextTextFieldWidget(title: 'I2.3 Post-op gradient (mmHg)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
-      MRowTextCheckBox(title: 'I2.4 Type of valve',result: (val){
+      MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'G2.2 Valve size(mm)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
+      MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'G2.3 Post-op gradient (mmHg)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
+      MRowTextCheckBox(enabled:widget.isEnabled,title: 'G2.4 Type of valve',result: (val){
         if(val.contains('Other')) {
           setState(() {
             isOther = true;
@@ -33,9 +34,7 @@ class _valueFunctionState extends State<valueFunction> {
           });
         }
       },list: ['Bio prosthetic','Single tilting disc','Bi-leaflet','Other'],isneedDivider: false,),
-      isOther ? MTextField(label: 'If Others specify:',onChanged: (val){},) : Container(),
-      MRowTextRadioWidget(title: 'I2.5 Post op OAC', onChanged: (val){},options: ['Warfarin','Acitrom'],isneedDivider: false,),
-      MRowTextRadioWidget(title: 'I2.5 Post op Aspirin ', onChanged: (val){},isneedDivider: false,),
+      isOther ? MTextField(enabled:widget.isEnabled,label: 'If Others specify:',onChanged: (val){},) : Container(),
       MDivider()
     ],);
   }

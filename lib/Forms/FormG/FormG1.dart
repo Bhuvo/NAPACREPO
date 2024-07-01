@@ -1,9 +1,11 @@
 import 'package:npac/Forms/FormF/widget/ValueFunction.dart';
 import 'package:npac/app/export.dart';
+import 'package:npac/common_widget/MRowTextDropDown.dart';
 import 'package:npac/common_widget/MSmallText.dart';
 
 class FormG1 extends StatefulWidget {
-  const FormG1({super.key});
+  final bool? enabled;
+  const FormG1({super.key, this.enabled});
 
   @override
   State<FormG1> createState() => _FormG1State();
@@ -15,24 +17,24 @@ class _FormG1State extends State<FormG1> {
   @override
   Widget build(BuildContext context) {
     return MScaffold(
-      appBar: MAppBar(title: 'G. THIRD VISIT PAGE (FORM G)',),
+      appBar: MAppBar(title: 'FORM J- ANTENATAL REVISIT-2 ',),
 
       body: MFormBody(Childrens: [
-        MrowTextTextFieldWidget(title: 'Period of gestation (in completed weeks):',onChanged: (val){},type: MInputType.numeric,),
-        MRowTextRadioWidget(title: 'Trimester:',onChanged: (val){},options: ['First','Second','Third']),
-        MRowTextRadioWidget(title: 'G1 NYHA SYMPTOMS CLASS:',onChanged: (val){},options:List_items.NYHAClass),
-        MSmallText(text: 'G2 CLINICAL SIGNS & ECG',),
+        MRowTextDropDown(enabled: widget.enabled,title: 'J1 Period of gestation (in completed weeks):',onChanged: (val){
+        },),        MRowTextRadioWidget(title: 'J2 Trimester:',onChanged: (val){},options: ['First','Second','Third']),
+        MRowTextRadioWidget(title: 'J3 NYHA SYMPTOMS CLASS:',onChanged: (val){},options:List_items.NYHAClass),
+        MSmallText(text: 'J4 CLINICAL SIGNS & ECG',),
         Space(),
-        MrowTextTextFieldWidget( title: 'G2.1 Weight (Kg):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget( title: 'G2.2 HR (/min):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget( title: 'G2.3 SPO2 (%):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget( title: 'G2.4 BP (mm Hg):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
-        MRowTextRadioWidget(title: 'G2.5 CCF:',isneedDivider: false,onChanged: (val){},),
-        MRowTextRadioWidget(title: 'G2.6 Cyanosis:',isneedDivider: false,onChanged: (val){},),
-        MRowTextRadioWidget(title: 'G2.7 Cardiac murmur:',isneedDivider: false,onChanged: (val){},),
-        MrowTextDatePickerWidget(title: 'G2.8 ECG Date:',onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget( title: 'J4.1 Weight (Kg):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget( title: 'J4.2 HR (/min):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget( title: 'J4.3 SPO2 (%):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget( title: 'J4.4 BP (mm Hg):',type: MInputType.numeric,onChanged: (val){},isneedDivider: false,),
+        MRowTextRadioWidget(title: 'J4.5 CCF:',isneedDivider: false,onChanged: (val){},),
+        MRowTextRadioWidget(title: 'J4.6 Cyanosis:',isneedDivider: false,onChanged: (val){},),
+        MRowTextRadioWidget(title: 'J4.7 Cardiac murmur:',isneedDivider: false,onChanged: (val){},),
+        MrowTextDatePickerWidget(title: 'J5 ECG Date:',onChanged: (val){},isneedDivider: false,),
         MRowTextRadioWidget(options:List_items.NormalAbnormal ,onChanged: (val){},),
-        MSmallText(text:'G3 ECHOCARDIOGRAPHIC ASSESSMENT'),
+        MSmallText(text:'J6 ECHOCARDIOGRAPHIC ASSESSMENT'),
         Space(),
         MRowTextRadioWidget(title: 'Any significant change from previous echo',onChanged: (val){},),
         MText(text: 'Ventricular Function',),
@@ -93,7 +95,7 @@ class _FormG1State extends State<FormG1> {
         ValueFunction(title: 'Aortic',checkboxValue: (val){},MG: (val){},PG: (val){},RegurgitantradioOnchange: (val){},StenoticradioOnchange: (val){},radioValue: (val){},),
         ValueFunction(title: 'Tricuspid',checkboxValue: (val){},MG: (val){},PG: (val){},RegurgitantradioOnchange: (val){},StenoticradioOnchange: (val){},radioValue: (val){},),
         ValueFunction(title: 'Pulmonary',checkboxValue: (val){},MG: (val){},PG: (val){},RegurgitantradioOnchange: (val){},StenoticradioOnchange: (val){},radioValue: (val){},),
-        MRowTextRadioWidget(title: 'G4. Any outcome identified in this visit:',onChanged: (val){},),
+        MRowTextRadioWidget(title: 'J7.  Did the paEent develop any complicaEon (study outcome) Ell this visit:',onChanged: (val){},),
         MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
       ],),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:npac/Forms/FormM/FormM2.dart';
 import 'package:npac/app/export.dart';
 
@@ -11,60 +12,60 @@ class FormM1 extends StatefulWidget {
 class _FormM1State extends State<FormM1> {
   bool isHospitalisations = false;
   bool isOther = false;
-  bool isYes = false;
+  bool isWallAbnormal = false;
+  bool isEnabled = false;
+
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(appBar: MAppBar(title: 'M. POST PARTUM VISIT PAGE',),
+    return MScaffold(appBar: MAppBar(title: 'SECOND POST PARTUM VISIT FORM',),
     body: MFormBody(Childrens: [
-      MRowTextRadioWidget(title: 'M1. NYHA SYMPTOMS CLASS:', options: List_items.NYHAClass,onChanged: (val){},),
-      MRowTextRadioWidget(title: 'M2 Hospitalisations after discharge:',onChanged: (val){},),
-      isHospitalisations ? MTextField(label: 'If Yes, Reason',onChanged: (val){},): Container(),
-      MRowTextRadioWidget(title: 'M3 Follow up in Cardiology:',onChanged: (val){},),
-      MRowTextRadioWidget(title: 'Specific treatment plans: :',onChanged: (val){},),
-      MrowTextTextFieldWidget(title: 'M4 On Medications: (Kindly mention the drugs in the space provided below)',onChanged: (val){},),
-      MRowTextRadioWidget(title: 'M5 Mode of Contraception used: ',onChanged: (val){
-        if(val == 'Others'){
-          setState(() {
-            isOther = true;
-          });
-        }else{
-          setState(() {
-            isOther = true;
-          });
-        }
-      },options: ['Nil','IUCD','OCP','Barrier method','Tubectomy','Others'],),
-      isOther ? MTextField(label: 'If Others, Specify:',onChanged: (val){},): Container(),
-      MText(text: 'M6 NEONATAL OUTCOME',),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('For all patients (Tick theapplicable)'),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isEnabled = !isEnabled;
+                });
+              },
+              icon: isEnabled ? Icon(Icons.save) : Icon(Icons.edit))
+        ],
+      ),
+      MRowTextRadioWidget( enabled: isEnabled,title: 'M1. NYHA SYMPTOMS CLASS:', options: List_items.NYHAClass,onChanged: (val){},),
+      MSmallText(text: 'M2 CLINICAL SIGNS & ECG',),
       Space(),
-      MrowTextTextFieldWidget(title: 'M6.1 Neonatal weight (kg):',onChanged: (val){},),
-      MRowTextRadioWidget(title: 'M6.2 Echocardiographic evaluation (if any):',onChanged: (val){
-        if(val == 'Yes'){
+      MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.1 Weight (Kg):',onChanged: (val){},type: MInputType.numeric,),
+      MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.2 HR (/min): ',onChanged: (val){},type: MInputType.numeric,),
+      MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.3 SPO2 (%): ',onChanged: (val){},type: MInputType.numeric,),
+      MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.4 BP (mm Hg): ',onChanged: (val){},type: MInputType.numeric,),
+      MRowTextRadioWidget(enabled: isEnabled,title: 'M2.5 CCF: ',onChanged: (val){},),
+      MRowTextRadioWidget(enabled: isEnabled,title: 'M2.6 Cyanosis:  ',onChanged: (val){},),
+      MRowTextRadioWidget(enabled: isEnabled,title: 'M2.7 Cardiac murmur:',onChanged: (val){},),
+      MrowTextDatePickerWidget(enabled: isEnabled,title: 'M2.8 ECG Date:',onChanged: (val){},isneedDivider: false,),
+      MRowTextRadioWidget(enabled: isEnabled,options:List_items.NormalAbnormal ,onChanged: (val){},),
+      MSmallText(text: 'M3 ECHOCARDIOGRAPHIC ASSESSMENT',),
+      Space(),
+      MSmallText(text: 'Ventricular function ',),
+      Space(),
+      MRowTextRadioWidget(enabled: isEnabled,title: 'Wall Motion', options: ['Normal','Hypokinesia','Akinesia'],isneedDivider: false,onChanged: (val){
+        if(val != 'Normal'){
           setState(() {
-            isYes = true;
+            isWallAbnormal = true;
           });
         }else{
           setState(() {
-            isYes = true;
+            isWallAbnormal = false;
           });
         }
-      }, isneedDivider: false,),
-      isYes ? MRowTextRadioWidget(title: 'If Yes',onChanged: (val){}, options: ['Normal','Cong HD'],): Container(),
+      },),
+      isWallAbnormal?MRowTextCheckBox(enabled: isEnabled,list: ['Global','Regional'],): Container(),
       MDivider(),
-      MRowTextRadioWidget(title: 'M6.3 Adverse neonatal outcome:',options: ['Neonatal death','Cardiac lesion','Malnourishment'],onChanged: (val){},),
-      MSmallText(text: 'M7 CLINICAL SIGNS & ECG',),
-      Space(),
-      MrowTextTextFieldWidget(title: 'M7.1 Weight (Kg):',onChanged: (val){},type: MInputType.numeric,),
-      MrowTextTextFieldWidget(title: 'M7.2 HR (/min): ',onChanged: (val){},type: MInputType.numeric,),
-      MrowTextTextFieldWidget(title: 'M7.3 SPO2 (%): ',onChanged: (val){},type: MInputType.numeric,),
-      MrowTextTextFieldWidget(title: 'M7.4 BP (mm Hg): ',onChanged: (val){},type: MInputType.numeric,),
-      MRowTextRadioWidget(title: 'M7.5 CCF: ',onChanged: (val){},),
-      MRowTextRadioWidget(title: 'M7.6 Cyanosis:  ',onChanged: (val){},),
-      MRowTextRadioWidget(title: 'M7.7 Cardiac murmur:',onChanged: (val){},),
-      MrowTextDatePickerWidget(title: 'M7.8 ECG Date:',onChanged: (val){},isneedDivider: false,),
-      MRowTextRadioWidget(options:List_items.NormalAbnormal ,onChanged: (val){},),
+      // MRowTextRadioWidget(title: 'M6.3 Adverse neonatal outcome:',options: ['Neonatal death','Cardiac lesion','Malnourishment'],onChanged: (val){},),
+
       //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormM2);},),
-      FormM2()
+      FormM2(enabled: isEnabled,)
     ],),
     );
   }

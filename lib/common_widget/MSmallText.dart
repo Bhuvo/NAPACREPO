@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:npac/app/export.dart';
 
 class MSmallText extends StatelessWidget {
   final String? text;
@@ -6,6 +7,10 @@ class MSmallText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text ?? '');
+    return Row(
+      children: [
+        Flexible(child: Text(text ?? '')),
+      ],
+    );
   }
 }

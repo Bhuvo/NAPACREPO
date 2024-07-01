@@ -4,7 +4,7 @@ class FormFModel {
   int? doctorId;
   int? patientId;
   String? visitDate;
-  String? periodOfGestation;
+  int? periodOfGestation;
   String? trimester;
   String? nyhaSymptomsClass;
   String? clinicalSignWeight;
@@ -18,6 +18,8 @@ class FormFModel {
   String? ecgNormalAbnormal;
   String? significantChanges;
   String? wallMotion;
+  bool? wallMotionHypoGlobal;
+  bool? wallMotionHypoRegional;
   String? lVIDDiastole;
   String? lVIDSystole;
   String? lVEfPercent;
@@ -26,7 +28,7 @@ class FormFModel {
   String? rvRvs;
   String? pericardialEffusion;
   bool? othersVegetations;
-  Null? othersThrombus;
+  bool? othersThrombus;
   String? otherEchoFindings;
   bool? valveMitralNormal;
   bool? valveMitralStenotic;
@@ -41,12 +43,12 @@ class FormFModel {
   bool? valveAorticNormal;
   bool? valveAorticStenotic;
   bool? valveAorticRegurgitant;
-  String? valveAorticStenoticMild;
+  bool? valveAorticStenoticMild;
   bool? valveAorticStenoticModerate;
   Null? valveAorticStenoticSevere;
   String? avgMg;
   String? avgPg;
-  String? valveAorticRegurgitantMild;
+  bool? valveAorticRegurgitantMild;
   Null? valveAorticRegurgitantModerate;
   Null? valveAorticRegurgitantSevere;
   bool? valveTricuspidNormal;
@@ -72,8 +74,7 @@ class FormFModel {
   Null? valvePulmonaryRegurgitantModerate;
   Null? valvePulmonaryRegurgitantSevere;
   String? outComeIdentified;
-  bool? wallMotionHypoGlobal;
-  bool? wallMotionHypoRegional;
+
 
   FormFModel(
       {this.antenatalId,

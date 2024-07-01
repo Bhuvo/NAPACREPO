@@ -47,10 +47,38 @@ class MotherDetails extends StatelessWidget {
             ),
             InkWell(
               onTap: (){
+                context.push(Routes.FormD1 );
+              },
+              child: Card(
+                child: Center(child: Text('First visit Form')),),
+            ),
+            InkWell(
+              onTap: (){
                 context.push(Routes.FormE1, {'isFromPatientDetails': true, 'data': data});
               },
               child: Card(
                 child: Center(child: Text('Abortions MTP Form')),),
+            ),
+            InkWell(
+              onTap: (){
+                context.push(Routes.FormF1);
+              },
+              child: Card(
+                child: Center(child: Text('ANTENATAL REVISIT-1')),),
+            ),
+            InkWell(
+              onTap: (){
+                context.push(Routes.FormG1);
+              },
+              child: Card(
+                child: Center(child: Text('ANTENATAL REVISIT-2')),),
+            ),
+            InkWell(
+              onTap: (){
+                context.push(Routes.FormH1);
+              },
+              child: Card(
+                child: Center(child: Text('FORM K- PERIPARTUM VISIT FORM')),),
             ),
           ],
           )

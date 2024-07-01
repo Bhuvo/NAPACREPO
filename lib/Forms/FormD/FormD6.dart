@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
+import 'package:npac/common_widget/MSmallText.dart';
 import 'package:npac/utils/navigator_utils.dart';
 
 class FormD6 extends StatefulWidget {
-  const FormD6({super.key});
+    final bool? isEnabled;
+    const FormD6({super.key, this.isEnabled});
 
   @override
   State<FormD6> createState() => _FormD6State();
@@ -17,67 +19,69 @@ class _FormD6State extends State<FormD6> {
     return Column(children: [
         MText(text: 'D9. AORTOPATHY ECHO PAGE',),
         Space(),
-        MRowTextCheckBox(title: 'Aorta',result: (val){},list: ['Dilated','Aneurysm  ','Coarctation','Stenotic','Others'],isneedDivider: false,),
-        MTextField(label: 'Details',onChanged: (val){},),
-        MDivider(),
+        MRowTextCheckBox(enabled :widget.isEnabled,title: 'D9.1 Aorta',result: (val){},list: ['Dilated','Aneurysm  ','Coarctation','Stenotic','Others'],isneedDivider: false,),
+        MTextField(enabled :widget.isEnabled,label: 'Details',onChanged: (val){},),
+        MRowTextRadioWidget(enabled :widget.isEnabled,title: 'Location of abnormality:',onChanged: (val){},options: ['Ascending aorta','Aortic arch','Descending Aorta','Aortic Root','Abdominal Aorta'],),
         Space(),
-        MText(text: 'Aortic Dimensions',),
+        MSmallText(text: 'Aortic Dimensions',),
         Space(),
-        Text('Annulus'),
+        MSmallText(text: '1st Trimester',),
         Space(),
-        MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.4 ST Junction',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.5 Asc Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
 
         Space(),
-        Text('Sinus'),
+        MSmallText(text: '2nd Trimester',),
         Space(),
-        MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.4 ST Junction',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.5 Asc Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
 
         Space(),
-        Text('STJ'),
+        MSmallText(text: '3nd Trimester',),
         Space(),
-        MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.4 ST Junction',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.5 Asc Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
 
         Space(),
-        Text('Asc Aorta'),
+        MSmallText(text: 'Peripartum',),
         Space(),
-        MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.4 ST Junction',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.5 Asc Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
 
         Space(),
-        Text('Arch'),
+        MSmallText(text: 'Post Natal',),
         Space(),
-        MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
-
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.4 ST Junction',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.5 Asc Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
         Space(),
-        Text('Desc thoracic aorta'),
-        Space(),
-        MrowTextTextFieldWidget(title: '1st Trimester',onChanged: (val){},isneedDivider: false,),
-        MrowTextTextFieldWidget(title: '2nd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: '3rd Trimester',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PERIPARTUM',onChanged: (val){},isneedDivider: false),
-        MrowTextTextFieldWidget(title: 'PN',onChanged: (val){},),
-
-        MrowTextTextFieldWidget( title: 'Other relevant echo findings:',onChanged: (val){}),
-       // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD7);}),
+        // Text('Desc thoracic aorta'),
+        // Space(),
+        // MrowTextTextFieldWidget(title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
+        // MrowTextTextFieldWidget(title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
+        // MrowTextTextFieldWidget(title: 'D9.4 ST Junction',onChanged: (val){},isneedDivider: false),
+        // MrowTextTextFieldWidget(title: 'D9.5 Asc Aorta',onChanged: (val){},isneedDivider: false),
+        // MrowTextTextFieldWidget(title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
+        // MrowTextTextFieldWidget(title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
       ],);
   }
 }

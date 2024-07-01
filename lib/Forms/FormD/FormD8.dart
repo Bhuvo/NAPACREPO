@@ -4,7 +4,8 @@ import 'package:npac/app/export.dart';
 import 'package:npac/utils/navigator_utils.dart';
 
 class FormD8 extends StatefulWidget {
-  const FormD8({super.key});
+  final bool? isEnabled;
+  const FormD8({super.key, this.isEnabled});
 
   @override
   State<FormD8> createState() => _FormD8State();
@@ -16,7 +17,7 @@ class _FormD8State extends State<FormD8> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-        MRowTextRadioWidget( title: 'D 11. Fetal echocardiogram',onChanged: (val){if(val== 'Abnormal'){
+        MRowTextRadioWidget( enabled: widget.isEnabled,title: 'D 11. Fetal echocardiogram',onChanged: (val){if(val== 'Abnormal'){
           setState(() {
             isEchocardiogramAbnormal = true;
           });
@@ -26,9 +27,9 @@ class _FormD8State extends State<FormD8> {
           });
         }
         },isneedDivider:isEchocardiogramAbnormal? false: true,options: ['Normal','Abnormal','Not done'],),
-        isEchocardiogramAbnormal ? MrowTextTextFieldWidget( title: 'If abnormal details:',onChanged: (val){}) : Container(),
+        isEchocardiogramAbnormal ? MrowTextTextFieldWidget(enabled: widget.isEnabled, title: 'If abnormal details:',onChanged: (val){}) : Container(),
 
-        MRowTextRadioWidget( title: 'D 12. Fetal anomaly scan',onChanged: (val){if(val== 'Abnormal'){
+        MRowTextRadioWidget(enabled: widget.isEnabled, title: 'D 12. Fetal anomaly scan',onChanged: (val){if(val== 'Abnormal'){
           setState(() {
             isAnomalyAbnormal = true;
           });
@@ -38,7 +39,7 @@ class _FormD8State extends State<FormD8> {
           });
         }
         },isneedDivider:isAnomalyAbnormal? false: true,options: ['Normal','Abnormal','Not done'],),
-        isAnomalyAbnormal ? MrowTextTextFieldWidget( title: 'If abnormal details:',onChanged: (val){}) : Container(),
+        isAnomalyAbnormal ? MrowTextTextFieldWidget( enabled: widget.isEnabled,title: 'If abnormal details:',onChanged: (val){}) : Container(),
        // MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormD9);},),
       ],);
   }

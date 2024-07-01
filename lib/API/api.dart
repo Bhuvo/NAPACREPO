@@ -24,6 +24,9 @@ class Api{
   static const String getMTP ='VRAPI/GetMtpFormDetails';
 
   static const String getAntenatalVisitOne ='VRAPI/GetAntenatalVisitFormDetails';
+  static const String updateAntenatalVisitOne ='VRAPI/SaveAntenatalVisitForm';
+  static const String uploadEcho ='VRAPI/Save_Echo_Images';
+  static const String getEcho ='VRAPI/Get_Echo_Images';
 
 
 

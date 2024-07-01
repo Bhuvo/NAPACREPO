@@ -4,9 +4,10 @@ import 'package:npac/app/export.dart';
 class MN1Body extends StatefulWidget {
   final String? title;
   final String? textTitle;
+  final bool? isEnable ;
   final List<String>? options;
   final Function(Map<String, String>)? drugMap ;
-  const MN1Body({super.key, this.title, this.options, this.drugMap, this.textTitle});
+  const MN1Body({super.key, this.title, this.options, this.drugMap, this.textTitle, this.isEnable});
 
   @override
   State<MN1Body> createState() => _MN1BodyState();
@@ -35,7 +36,7 @@ class _MN1BodyState extends State<MN1Body> {
       ),
         isExpanded?  Column(children: [
         Space(),
-        MrowTextOptionPickerwidget(initialSelectedValue: drugList,onSelectedList: (e){
+        MrowTextOptionPickerwidget(enabled: widget.isEnable,initialSelectedValue: drugList,onSelectedList: (e){
           setState(() {
             drugList = e;
           });
@@ -46,7 +47,7 @@ class _MN1BodyState extends State<MN1Body> {
             return Column(
               children: [
                 wantText.contains(e)?  MrowTextTextFieldWidget(title: 'Specify',type: MInputType.text,onChanged: (val){},isneedDivider: false,): Container(),
-                MrowTextTextFieldWidget(title: '$e Dose',type: MInputType.numeric,onChanged: (val){
+                MrowTextTextFieldWidget(enabled: widget.isEnable,title: '$e Dose',type: MInputType.numeric,onChanged: (val){
                   setState(() {
                     drugMap[e] = val;
                   });

@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:npac/app/export.dart';
 
 class FormJ1 extends StatefulWidget {
-  const FormJ1({super.key});
+  final bool? enabled;
+  const FormJ1({super.key, this.enabled});
 
   @override
   State<FormJ1> createState() => _FormJ1State();
@@ -17,12 +18,10 @@ bool isInterventionalOther = false;
 
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-
-      appBar: MAppBar(title: 'J. CONGENITAL HEART DISEASES (FORM J)',),
-
-      body: MFormBody(Childrens: [
-        MRowTextCheckBox(title: 'J1 Disease specific (tick the relevant)',list: List_items.Disease,result: (val){
+    return Column(children: [
+      MText(text: 'FORM E-CONGENITAL HEART DISESASE FORM',),
+        Space(),
+        MRowTextCheckBox(enabled:widget.enabled,title: 'E1 Disease specific (tick the relevant)',list: List_items.Disease,result: (val){
           if(val.contains('Other')){
             setState(() {
               isOthers = true;
@@ -32,8 +31,9 @@ bool isInterventionalOther = false;
               isOthers = false;
             });
           }
-        },isneedDivider: false,),
-        MRowTextRadioWidget(options: ['Post-surgical','Post-interventional'],isneedDivider: false,onChanged: (val){
+        }),
+        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'Other Heart Disease – Specify', onChanged: (val){},isneedDivider: false),
+        MRowTextRadioWidget(enabled:widget.enabled,options: ['Post-surgical','Post-interventional'],isneedDivider: false,onChanged: (val){
           if(val =='Post-surgical'){
             setState(() {
               isSurgical = true;
@@ -46,7 +46,7 @@ bool isInterventionalOther = false;
             });
           }
         },),
-        isSurgical ?MRowTextCheckBox(result: (val){
+        isSurgical ?MRowTextCheckBox(enabled:widget.enabled,result: (val){
           if(val.contains('Other')){
             setState(() {
               isSurgicalOther = true;
@@ -57,8 +57,8 @@ bool isInterventionalOther = false;
             });
           }
         },list: ['ICR','Fontan','RV-PA Conduit','BDG shunt','BT Shunt','Arterial','Prosthetic Valve','Others'],): Container(),
-        isSurgicalOther ? MTextField(label: 'If Others Specify',onChanged: (val){}): Container(),
-        isInterventional ?MRowTextCheckBox(result: (val){
+        isSurgicalOther ? MTextField(enabled:widget.enabled,label: 'If Others Specify',onChanged: (val){}): Container(),
+        isInterventional ?MRowTextCheckBox(enabled:widget.enabled,result: (val){
           if(val.contains('Other')){
             setState(() {
               isInterventionalOther = true;
@@ -69,24 +69,23 @@ bool isInterventionalOther = false;
             });
           }
         },list: ['ASD DC','VSD DC','PDA DC','BPV','BAV','Others'],): Container(),
-        isInterventionalOther ? MTextField(label: 'If Others Specify',onChanged: (val){}): Container(),
+        isInterventionalOther ? MTextField(enabled:widget.enabled,label: 'If Others Specify',onChanged: (val){}): Container(),
 
-        MSmallText(text: 'isInterventionalOther',),
+        MSmallText(text: 'E2 Clinical findings in the current pregnancy',),
         Space(),
-        MRowTextCheckBox(title: 'J2.1 Symptoms',result: (val){},list: ['Headache','Visual disturbance','Dizziness','Altered mental status','CNS symptoms','Arthritis','Renal dysfunction','Cyanosis','Bleeding tendency'],),
-        MRowTextRadioWidget(title: 'J2.2 Polycythemia',onChanged: (val){},),
-        MRowTextRadioWidget(title: 'J2.3 Anemia',onChanged: (val){},),
-        MSmallText(text: 'J2.4 SPo2 (%) all four limbs :',),
+        MRowTextCheckBox(enabled:widget.enabled,title: 'E2.1 Symptoms',result: (val){},list: ['Headache','Visual disturbance','Dizziness','Altered mental status','CNS symptoms','Arthritis','Renal dysfunction','Cyanosis','Bleeding tendency'],),
+        MRowTextRadioWidget(enabled:widget.enabled,title: 'E2.2 Polycythemia',onChanged: (val){},),
+        MRowTextRadioWidget(enabled:widget.enabled,title: 'E2.3 Anemia',onChanged: (val){},),
+        MSmallText(text: 'E2.4 SPo2 (%) all four limbs :',),
         Space(),
-        MTextField(label: 'RUL: ',onChanged: (val){},type: MInputType.numeric,),
-        MTextField(label: 'RLL: ',onChanged: (val){},type: MInputType.numeric,),
-        MTextField(label: 'LUL: ',onChanged: (val){},type: MInputType.numeric,),
-        MTextField(label: 'LLL: ',onChanged: (val){},type: MInputType.numeric,),
-        MrowTextTextFieldWidget(title: 'J2.5 HCT (%) ',type: MInputType.numeric,onChanged: (val){},),
-        MrowTextTextFieldWidget(title: 'J2.6 S. Ferritin: ',type: MInputType.numeric,onChanged: (val){},),
-        MrowTextTextFieldWidget(title: 'J3 Any other relevant information/ remarks: ',onChanged: (val){},),
-        MFilledButton(text: 'Submit',onPressed: (){ context.push(Routes.Home);},)
-      ],),
-    );
+        MTextField(enabled:widget.enabled,label: 'RUL: ',onChanged: (val){},type: MInputType.numeric,),
+        MTextField(enabled:widget.enabled,label: 'RLL: ',onChanged: (val){},type: MInputType.numeric,),
+        MTextField(enabled:widget.enabled,label: 'LUL: ',onChanged: (val){},type: MInputType.numeric,),
+        MTextField(enabled:widget.enabled,label: 'LLL: ',onChanged: (val){},type: MInputType.numeric,),
+        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E2.5 HCT (%) ',type: MInputType.numeric,onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E2.6 S. Ferritin: ',type: MInputType.numeric,onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E3 Any other relevant information/ remarks: ',onChanged: (val){},),
+       // MFilledButton(text: 'Submit',onPressed: (){ context.push(Routes.Home);},)
+      ],);
   }
 }

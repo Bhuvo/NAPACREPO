@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:npac/Forms/Form3/FormThree2Page.dart';
 import 'package:npac/Forms/Form3/FormThree3Page.dart';
 import 'package:npac/Forms/Form3/Model/Form3Model.dart';
 import 'package:npac/Forms/Form3/Model/RegistrationPregnancyModel.dart';
 import 'package:npac/Forms/Form3/controller/Form3Controller.dart';
+import 'package:npac/Forms/FormN/widget/MN1body.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/Views/MothersList/MotherListModel.dart';
 import 'package:npac/app/export.dart';
@@ -62,7 +64,7 @@ class _FormThreePageState extends State<FormThreePage> {
   Rx<int> count =0.obs;
   bool isLoading = false;
 
-  Form3Controller controller = Get.put(Form3Controller());
+  Rx<Form3Controller> controller =Form3Controller().obs;
   Rx<RegistrationModel> registrationModelData = RegistrationModel().obs;
   RxList<RegistrationPregnancyModel> registrationPregnancyModelData = <RegistrationPregnancyModel>[].obs;
 
@@ -77,8 +79,8 @@ class _FormThreePageState extends State<FormThreePage> {
      setState(() {
        isLoading = true;
      }),
-     registrationModelData.value = await controller.getRegistrationData(context, int.parse(widget.data?.tNPHDRNOID ?? '')),
-     registrationPregnancyModelData.value = await controller.getRegistrationPregnancydata(context, int.parse(widget.data?.tNPHDRNOID ?? '')),
+     registrationModelData.value = await controller.value.getRegistrationData(context, int.parse(widget.data?.tNPHDRNOID ?? '')),
+     registrationPregnancyModelData.value = await controller.value.getRegistrationPregnancydata(context, int.parse(widget.data?.tNPHDRNOID ?? '')),
 
    Future.delayed(Duration(seconds: 1)),
      registrationModelData.value.arrhthymiasAF ?? false ? selectedlist.add('AF'): null,
@@ -114,7 +116,8 @@ class _FormThreePageState extends State<FormThreePage> {
           child: MAppBar(
             title: 'REGISTRATION DETAILS-REGISTRATION PAGE (FORM C)',
           )),
-      body:isLoading ? Center(child: LoadingWidget(),) : Obx(()=>   MFormBody(
+      body:isLoading ? Center(child: LoadingWidget(),) :
+      Obx(()=>   MFormBody(
           Childrens: [
            (widget.isFromPatientDetails ?? false) ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -158,7 +161,8 @@ class _FormThreePageState extends State<FormThreePage> {
                 registrationModelData.value.gestAgeAtDiagnosis = val;
               },
             ),
-            MText(
+            Space(),
+            MSmallText(
               text:
                   'C.2 PRE-PREGNANCY CARDIAC / NON-CARDIAC DISEASE DETAILS (includes details before present pregnancy)',
             ),
@@ -198,7 +202,7 @@ class _FormThreePageState extends State<FormThreePage> {
               options: YesNoDetails,
             ),
             isYes
-                ? MRowTextCheckBox(selectedlist: selectedlist,
+                ? MRowTextCheckBox(enabled: isEnabled,selectedlist: selectedlist,
                     result: (val) {
                       registrationModelData.value.arrhthymiasAF =
                           val.contains('AF');
@@ -294,24 +298,39 @@ class _FormThreePageState extends State<FormThreePage> {
             MRowTextRadioWidget(
                 enabled: isEnabled,initialValue: registrationModelData.value.priorAnticoagulantUse,
             onChanged: (val) {
-                registrationModelData.value.priorAnticoagulantUse= val;
+              registrationModelData.update((model) {
+                model?.priorAnticoagulantUse = val;
+              });
+               // registrationModelData.value.priorAnticoagulantUse= val;
               },
               title: 'C2.5 Prior Anticoagulant use: ',
               options: YesNoDetails,
             ),
             MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.priorCardiacDrugsUse,
             onChanged: (val) {
-                registrationModelData.value.priorCardiacDrugsUse = val;
+              registrationModelData.update((model) {
+                model?.priorCardiacDrugsUse = val;
+              });
+               // registrationModelData.value.priorCardiacDrugsUse = val;
               },
               title: 'C2.6 Prior Cardiac drugs use (other than OAC): ',
               options: YesNoDetails,
             ),
             MRowTextRadioWidget(enabled: isEnabled,initialValue:  registrationModelData.value.priorNonCardiacMedications,
             onChanged: (val) {
-                registrationModelData.value.priorNonCardiacMedications = val;
+              registrationModelData.update((model) {
+                model?.priorNonCardiacMedications = val;
+              });
+                //registrationModelData.value.priorNonCardiacMedications = val;
               },
               title: 'C2.7 Prior non-cardiac medications: ',
               options: YesNoDetails,
+            ),
+            Obx(
+                  ()=> registrationModelData.value.priorNonCardiacMedications=='Yes'||registrationModelData.value.priorAnticoagulantUse=='Yes' ||registrationModelData.value.priorCardiacDrugsUse=='Yes' ?
+              MN1Body(isEnable: isEnabled,title: 'Drugs PRE-PREGNANCY',options: List_items.Drugs,drugMap: (e){
+                print('Value from map $e');
+              },): Container(),
             ),
             MRowTextRadioWidget(
                 enabled: isEnabled,initialValue: registrationModelData.value.riskFactors,
@@ -420,7 +439,7 @@ class _FormThreePageState extends State<FormThreePage> {
                   //  count.value = index + 1;
                   registrationPregnancyModelData[index].prevPregDetailsId =registrationPregnancyModelData[index].prevPregDetailsId ?? 0;
                   registrationPregnancyModelData[index].previousPregNo =index;
-                  
+
                   return  Obx(
                     ()=> Column(
                       children: [
@@ -428,7 +447,7 @@ class _FormThreePageState extends State<FormThreePage> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                           IconButton(onPressed: () async {
-                            await controller.deletePregnancy(context, registrationPregnancyModelData[index].prevPregDetailsId ?? 0);
+                            await controller.value.deletePregnancy(context, registrationPregnancyModelData[index].prevPregDetailsId ?? 0);
                             registrationPregnancyModelData.removeAt(index);
                           }, icon: Icon(Icons.delete)),
                           ],
@@ -450,7 +469,7 @@ class _FormThreePageState extends State<FormThreePage> {
             Space(),
             (widget.isFromPatientDetails ?? false )? MFilledButton(text:isEnabled ? 'Save': 'Edit',onPressed: () async {
               if(isEnabled)  {
-                controller.registerForm(context,registrationModelData.value,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? ''));
+                controller.value.registerForm(context,registrationModelData.value,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? ''));
                 setState(() {
                   isEnabled = !isEnabled;
                 });
@@ -462,7 +481,7 @@ class _FormThreePageState extends State<FormThreePage> {
               }
              // print(registrationModelData.value.toJson());
             },):  MFilledButton(text: 'Submit',onPressed: (){
-              controller.registerForm(context,RegistrationModel(),[],int.parse(widget.data?.tNPHDRNOID ?? ''));
+              controller.value.registerForm(context,RegistrationModel(),[],int.parse(widget.data?.tNPHDRNOID ?? ''));
               //print(formEData.value.toJson());
             }),
           // MFilledButton(onPressed: (){ controller.registerForm(context,RegistrationModel());},text: 'Submit',)
