@@ -96,6 +96,7 @@ class _FormA1State extends State<FormA1> {
   void initState() {
      formA1Data.value = BaseLineData();
     controller.getStateList();
+    formA1Controller.getNpacNumber();
     Future.delayed(const Duration(seconds: 1));
      (widget.isFromPatientDetails ?? false) ? {
         getBaseLineData(),
@@ -163,9 +164,10 @@ class _FormA1State extends State<FormA1> {
           formA1Data.value.antenatalorpostnatal = val;
         }),
 
-        MrowTextTextFieldWidget(title:'A4. NPAC No:',enabled: isEnabled,onChanged: (val){
+        MrowTextTextFieldWidget(key :ValueKey('Npacno${formA1Controller.npacNumber.value}'),title:'A4. NPAC No:',initialValue: formA1Controller.npacNumber.value,enabled: isEnabled,onChanged: (val){
+          formA1Controller.npacNumber.value = val;
             },),
-            MRowTextRadioWidget(title: 'A5. RCH. No',options: ['Available','Not Available'],onChanged: (val){
+            MRowTextRadioWidget(title: 'A5. RCH No',options: ['Available','Not Available'],onChanged: (val){
               val =='Available' ? hasRch = true : hasRch = false;
               setState(() {});
             },),

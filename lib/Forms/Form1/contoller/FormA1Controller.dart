@@ -10,6 +10,7 @@ import 'package:npac/API/api.dart';
 class FormA1Controller extends GetxController{
   // Rx<BaseLineData>  formA1Data = BaseLineData().obs;
   RxInt age =0 .obs;
+  RxString npacNumber =''.obs;
   Future<BaseLineData?> getBaseLineData(int patientId)async{
     patientId = 102;
     var response = await http.get(Uri.parse('${Api.baseUrl}${Api.getBaseLineData}$patientId'));
@@ -22,6 +23,15 @@ class FormA1Controller extends GetxController{
     }
   }
 
+  void getNpacNumber()async{
+    var response = await http.get(Uri.parse('${Api.baseUrl}${Api.getNpacNumber}'));
+    if(response.statusCode == 200){
+      npacNumber.value = jsonDecode(response.body)['Concatstring'];
+      print('Response data: ${response.body}');
+    }else{
+      print('Request failed while fetching FormA Npac Number: ${response.statusCode}${response.body}.');
+    }
+  }
   void updateFormA1Data(BaseLineData data,BuildContext context)async{
     String url ='${Api.baseUrl}${Api.updatePatient}';
     data.docid = '10';

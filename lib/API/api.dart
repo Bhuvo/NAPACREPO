@@ -2,6 +2,8 @@ class Api{
   static const String baseUrl = "http://npac.timesmed.in/";
 
   static const String login = "Login/Login?";
+  static const String getNpacNumber = "TNPHDR/GetTNPHDRNO";
+
 
   static const String getStateList = "Baselinedata/LoadState";
   static const String getDistrict= "Baselinedata/LoadCity?state_id=";
@@ -27,6 +29,8 @@ class Api{
   static const String updateAntenatalVisitOne ='VRAPI/SaveAntenatalVisitForm';
   static const String uploadEcho ='VRAPI/Save_Echo_Images';
   static const String getEcho ='VRAPI/Get_Echo_Images';
+  static const String getOutcome='VRAPI/GetAntenatalOutcomeImages';
+  static const String uploadOutcome='VRAPI/SaveAntenatalOutComeImages';
 
 
 

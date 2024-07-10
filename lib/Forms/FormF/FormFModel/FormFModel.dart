@@ -30,6 +30,9 @@ class FormFModel {
   bool? othersVegetations;
   bool? othersThrombus;
   String? otherEchoFindings;
+  String? Trpg;
+  String? PeakPr;
+  String? Pat;
   bool? valveMitralNormal;
   bool? valveMitralStenotic;
   bool? valveMitralRegurgitant;
@@ -106,6 +109,9 @@ class FormFModel {
         this.othersVegetations,
         this.othersThrombus,
         this.otherEchoFindings,
+        this.Trpg,
+        this.PeakPr,
+        this.Pat,
         this.valveMitralNormal,
         this.valveMitralStenotic,
         this.valveMitralRegurgitant,
@@ -183,6 +189,9 @@ class FormFModel {
     othersVegetations = json['OthersVegetations'];
     othersThrombus = json['OthersThrombus'];
     otherEchoFindings = json['OtherEchoFindings'];
+    Trpg = json['Trpg'];
+    PeakPr = json['PeakPr'];
+    Pat = json['Pat'];
     valveMitralNormal = json['ValveMitralNormal'];
     valveMitralStenotic = json['ValveMitralStenotic'];
     valveMitralRegurgitant = json['ValveMitralRegurgitant'];
@@ -264,6 +273,9 @@ class FormFModel {
     data['OthersVegetations'] = this.othersVegetations;
     data['OthersThrombus'] = this.othersThrombus;
     data['OtherEchoFindings'] = this.otherEchoFindings;
+    data['Trpg'] = this.Trpg;
+    data['PeakPr'] = this.PeakPr;
+    data['Pat'] = this.Pat;
     data['ValveMitralNormal'] = this.valveMitralNormal;
     data['ValveMitralStenotic'] = this.valveMitralStenotic;
     data['ValveMitralRegurgitant'] = this.valveMitralRegurgitant;

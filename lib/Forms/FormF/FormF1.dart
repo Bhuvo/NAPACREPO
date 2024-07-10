@@ -42,6 +42,7 @@ class _FormF1State extends State<FormF1> {
 void getdatas()async{
   await formFController.getFormFData(context,7964);
   await formFController.getEcho();
+  await formFController.getOutCome();
   formFController.FormIData.value.valveMitralStenotic ?? false ? isMitralStenotic = true :null;
   formFController.FormIData.value.valveMitralRegurgitant ?? false ? isMitralRegurgitant = true :null;
   formFController.FormIData.value.valveMitralStenotic ?? false ? MitralSelectedList.add('Stenotic') :null;
@@ -163,7 +164,7 @@ void getdatas()async{
                 }
             )).toList(),
           ),
-          MFilledButton(text: 'Upload ECG',onPressed: (){
+          MFilledButton(text: 'Upload ECG',isLoading: formFController.isEcoLoading.value,onPressed: (){
             formFController.uploadEcho();
           },),
         ],): Container(),
@@ -210,6 +211,7 @@ setState(() {
            MrowTextTextFieldWidget(enabled:isEnabled,title: 'Sa’',initialValue: formFController.FormIData.value.rvRvs,onChanged: (val){
              formFController.FormIData.value.rvRvs = val;
            },type: MInputType.numeric),
+
            MRowTextRadioWidget(enabled:isEnabled,title: 'Pericardial effusion',initialValue: formFController.FormIData.value.pericardialEffusion,onChanged: (val){
              formFController.FormIData.value.pericardialEffusion = val;
            },options: ['Mild','Moderate','Massive','Tamponade'],),
@@ -226,9 +228,15 @@ setState(() {
            //   formFController.FormIData.value.valveTricuspidRegurgitant = val;
            // },isneedDivider: false,),
            // MrowTextTextFieldWidget(title: 'Pulmonary regurgitation ',onChanged: (val){},isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'TRPG (mmHg):',onChanged: (val){},isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'Peak PR (mmHg):',onChanged: (val){},isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'PAT(msec)',onChanged: (val){},),
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'TRPG (mmHg):',initialValue: formFController.FormIData.value.Trpg,onChanged: (val){
+             formFController.FormIData.value.Trpg = val;
+           },isneedDivider: false,),
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'Peak PR (mmHg):',initialValue: formFController.FormIData.value.PeakPr,onChanged: (val){
+             formFController.FormIData.value.PeakPr = val;
+           },isneedDivider: false,),
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'PAT(msec)',initialValue: formFController.FormIData.value.Pat,onChanged: (val){
+             formFController.FormIData.value.Pat = val;
+           },),
            MText(text: 'VALVE FUNCTION',),
            Space(),
            MRowTextRadioWidget(enabled:isEnabled,title: 'Mitral',onChanged: (val ){
@@ -341,9 +349,51 @@ setState(() {
              },),
          ],): Container(),
           MDivider(),
-          MRowTextRadioWidget(enabled:isEnabled,title: 'I7. Did the paEent develop any complicaEon (study outcome) Ell this visit: ',initialValue: formFController.FormIData.value.outComeIdentified,onChanged: (val){
-            formFController.FormIData.value.outComeIdentified = val;
+          MRowTextRadioWidget(enabled:isEnabled,isneedDivider: false,title: 'I7. Did the patient develop any complication (study outcome) Ell this visit: ',initialValue: formFController.FormIData.value.outComeIdentified,onChanged: (val){
+            setState(() {
+              formFController.FormIData.value.outComeIdentified = val;
+            });
           },),
+        formFController.FormIData.value.outComeIdentified == 'Yes' ? Column(children: [
+          ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: formFController.outCome.map((element) => Builder(
+                builder: (context) {
+                  return InkWell(
+                    // onTap:(){
+                    //   showModalBottomSheet(
+                    //       constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*0.6),
+                    //       context: context, builder: (context)=>ImageViewer<EchoImageModel>(data: formFController.echoModel));
+                    // },
+                    onTap: (){
+                      showModalBottomSheet(
+                          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*0.6,minWidth: MediaQuery.of(context).size.width),
+                          context: context, builder: (context)=>SingleImage(
+                        URL: element.filePath,
+                      )
+                      );
+                    },
+                    child: Container(
+                        height: 30,
+                        // padding:  EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(7),
+                        ),
+                        margin: EdgeInsets.all(4),
+                        child: Center(child: Text(element.name ?? ''))),
+                  );
+                }
+            )).toList(),
+          ),
+          MFilledButton(text: 'Upload study outcome',isLoading: formFController.isOutComeUploadLoading.value,onPressed: (){
+            formFController.UploadOutCome();
+          },),
+        ],): Container(),
+        Space(),
+        MDivider(),
+        Space(),
         isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
           if(await formFController.upLoadData()){
             setState(() {
