@@ -8,8 +8,8 @@ class List_items{
   static const  List<String> OtheCardiacEvents =['CVA/TIA','PVT','Other Thrombotic/ Embolic Manifestation','Major Bleed ','Minor Bleed','Hemoptysis','Cerebral Abscess','CVT','Other'];
   static const  List<String> currentEXNever =['Current', 'EX', 'Never'];
   static const  List<String> pregnancyType =['Singleton', 'Twin', 'Others'];
-  static const  List<String> AntenatalCheckUpPlace =['PHC', 'Private clinic', 'PNH','DH','Private Hospital','TCC'];
-  static const  List<String> assessment =['LIVE', 'IUF', 'AGA','SGA'];
+  static const  List<String> AntenatalCheckUpPlace =['Primary Health Centre', 'Private clinic', 'Private Nursing Home','District Hospital','Private Hospital','Tertiary Care Centre'];
+  static const  List<String> assessment =['LIVE', 'IUF', 'AGA','SGA','Not Done'];
   static const  List<String> GTT =['Normal', 'Impaired'];
   static const  List<String> NormalAbnormal =['Normal', 'Abnormal'];
   static const  List<String> NormalDilated =['Normal', 'Dilated'];

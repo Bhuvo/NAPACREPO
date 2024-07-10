@@ -5,6 +5,7 @@ import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MAppBar.dart';
 import 'package:npac/common_widget/MFormBody.dart';
+import 'package:npac/common_widget/MRowTextDropDown.dart';
 import 'package:npac/common_widget/MrowTextDatePicker.dart';
 import 'package:npac/common_widget/MrowTextTextfieldWidget.dart';
 import 'package:npac/utils/navigator_utils.dart';
@@ -13,8 +14,9 @@ import 'package:npac/widgets/m_scaffold.dart';
 class FormThree2Page extends StatefulWidget {
   final RegistrationPregnancyModel? Modeldata;
   final int? index;
+  final formKey;
   final bool? isEnabled;
-  const FormThree2Page({super.key, this.Modeldata, this.index, this.isEnabled});
+  const FormThree2Page({super.key, this.Modeldata, this.index, this.isEnabled, this.formKey});
 
   @override
   State<FormThree2Page> createState() => _FormThree2PageState();
@@ -34,6 +36,8 @@ class _FormThree2PageState extends State<FormThree2Page> {
     super.initState();
   }
 
+  // final formKey = GlobalKey<FormState>();
+
   void getdata() async{
     widget.Modeldata?.molarPregnancy??false ?  pregnancySelected.add('Molar'): null;
     widget.Modeldata?.ectopicPregnancy??false ?pregnancySelected.add('Ectopic'): null;
@@ -52,6 +56,8 @@ class _FormThree2PageState extends State<FormThree2Page> {
       Text('C3.1 Previous Pregnancy ${widget.index}', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
       Space(),
       const Divider(thickness: 1,height: 3,),
+      MRowTextDropDown(title: 'Pregnancy year',items:  List.generate(DateTime.now().year - 2000 + 1, (index) => (2000 + index).toString()),onChanged: (val){
+      }),
       MRowTextRadioWidget(enabled: widget.isEnabled,initialValue: widget.Modeldata?.againstMedicalAdvice,title: 'C3.${widget.index}.1 Was the previous pregnancy continued Against Medical Advice:',onChanged: (val){
         widget.Modeldata?.againstMedicalAdvice = val;
       },),

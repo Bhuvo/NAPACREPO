@@ -27,11 +27,35 @@ export 'package:npac/API/api.dart';
 export 'package:npac/SharedPreference/sharedPreference_helper.dart';
 export 'package:npac/common_widget/MRowTextSingleOption.dart';
 export 'package:get/get.dart';
+export 'package:npac/common_widget/SingleImageViewer.dart';
+
 
 
 var apiHeader = {
   'Content-Type': 'application/json'
 };
+
+String calculateAge(DateTime dob) {
+  print('coming inside');
+  DateTime currentDate = DateTime.now();
+
+  int age = currentDate.year - dob.year;
+  int month1 = currentDate.month;
+  int month2 = dob.month;
+  if (month2 > month1) {
+    age--;
+  } else if (month1 == month2) {
+    int day1 = currentDate.day;
+    int day2 = dob.day;
+    if (day2 > day1) {
+      age--;
+    }
+  }
+  print('Age is $age');
+
+  return age.toString();
+}
+
 
 
 Map<String, dynamic> removeNulls(Map<String, dynamic> original) {

@@ -35,7 +35,7 @@ class _MRowTextRadioWidgetState extends State<MRowTextRadioWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Space(),
+                  (widget.isneedDivider ?? true )?   Space() : Container(),
                   Text(widget.title ?? ''),
                   // SheetDown<String>(
                   //   value: widget.initialvalue,

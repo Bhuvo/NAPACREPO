@@ -133,9 +133,8 @@ class MDateTimePickerState extends State<MDateTimePicker> {
           value.second,
         );
       });
-
-      widget.onChanged!(value);
     }
+    widget.onChanged!.call(value);
   }
 
   pickTime() async {
@@ -156,8 +155,8 @@ class MDateTimePickerState extends State<MDateTimePicker> {
           value.second,
         );
       });
-
-      widget.onChanged!(value);
+      widget.onChanged!.call(value);
     }
+
   }
 }

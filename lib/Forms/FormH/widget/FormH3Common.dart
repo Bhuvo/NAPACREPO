@@ -14,6 +14,10 @@ class FormH3Common extends StatefulWidget {
 class _FormH3CommonState extends State<FormH3Common> {
   bool isYes = false;
 
+  bool isAn = false;
+  bool isIP = false;
+  bool isPA = false;
+
   @override
   Widget build(BuildContext context) {
   return  Column(
@@ -32,10 +36,17 @@ class _FormH3CommonState extends State<FormH3Common> {
           }
           widget.radioiOnChanged;
         },),
-        isYes? MTextField(enabled: widget.enabled,label: 'AN',onChanged:widget.TextField1OnChanged ,): Container(),
-        isYes? MTextField(enabled: widget.enabled,label: 'IP',onChanged:widget.TextField1OnChanged ,): Container(),
-        isYes? MTextField(enabled: widget.enabled,label: 'PA',onChanged:widget.TextField1OnChanged ,): Container(),
-        isYes? MTextField(enabled: widget.enabled,label: 'Time (Gest. age / Postnatal day',onChanged:widget.TextField2OnChanged ,): Container(),
+        isYes? MRowTextRadioWidget(enabled: widget.enabled ,title: 'If yes, specify',options: ['AN' , 'IP', 'PA'],onChanged: (val){
+          val== 'AN' ? isAn = true : isAn = false;
+          val== 'IP' ? isIP = true : isIP = false;
+          val== 'PA' ? isPA = true : isPA = false;
+          setState(() {
+          });
+        },isneedDivider: false,): Container(),
+        isYes && isAn? MTextField(enabled: widget.enabled,label: 'AN Time(in Weeks)',onChanged:widget.TextField1OnChanged ,): Container(),
+        isYes && isIP ? MTextField(enabled: widget.enabled,label: 'IP',onChanged:widget.TextField1OnChanged ,): Container(),
+        isYes && isPA? MTextField(enabled: widget.enabled,label: 'PA Time(in days)',onChanged:widget.TextField1OnChanged ,): Container(),
+        // isYes? MTextField(enabled: widget.enabled,label: 'Time',onChanged:widget.TextField2OnChanged ,): Container(),
         isYes? MDivider(): Container(),
       ],);
   }

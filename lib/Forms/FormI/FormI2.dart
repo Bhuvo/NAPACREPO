@@ -33,9 +33,9 @@ class _FormI2State extends State<FormI2> {
           MDivider(),
           Heading_widget(enabled:widget.isEnabled,title: 'Intrapartum',switchingWidget: MRowTextRadioWidget(title: '36th week AC switch',onChanged: (val){},options: ['OAC to LMWH','OAC to LMWH'],),),
           MDivider(),
-          Heading_widget(enabled:widget.isEnabled,title: 'Postpartum',switchingWidget:MRowTextRadioWidget(title: 'Before Delviery (LMWH/ bolus UFH to UFH infusion)',onChanged: (val){},) ,),
+          Heading_widget(enabled:widget.isEnabled,title: 'Postpartum(1st week)',switchingWidget:MRowTextRadioWidget(title: 'Before Delviery (LMWH/ bolus UFH to UFH infusion)',onChanged: (val){},) ,),
           MDivider(),
-          Heading_widget(enabled:widget.isEnabled,title: 'Follow up',switchingWidget:MRowTextRadioWidget(title: 'Post Delviery (UFH to OAC)',onChanged: (val){},)  ,),
+          Heading_widget(enabled:widget.isEnabled,title: 'Follow up(After 1 week)',switchingWidget:MRowTextRadioWidget(title: 'Post Delviery (UFH to OAC)',onChanged: (val){},)  ,),
           //MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
       ],);
   }

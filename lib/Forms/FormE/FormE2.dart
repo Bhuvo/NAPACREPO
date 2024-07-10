@@ -23,7 +23,7 @@ class _FormE2State extends State<FormE2> {
         // Space(),
         // MText(text: 'E9.1 MATERNAL CARDIAC OUTCOME',),
         // Space(),
-        Text('H10.2 PRIMARY CARDIAC OUTCOME '),
+        Text('H10.2 Cardiac outcome up to MTP'),
         Space(),
        // MDivider(),
         MRowTextRadioWidget(enabled : widget.enabled,initialValue: widget.formEData?.value.maternalDeathFourTwo,title: '10.2.1 Maternal Death# < 42 days',onChanged: (val){
@@ -34,7 +34,7 @@ class _FormE2State extends State<FormE2> {
           widget.formEData?.value.maternalDeathFourTwoValue = val;
           setState(() {});
         },isneedDivider: false,),
-      isAge ? MTextField(label: 'Gest Age',initalValue: widget.formEData?.value.maternalDeathFourTwoDetails,onChanged: (val){
+      isAge ? MTextField(label: 'Gestational age',initalValue: widget.formEData?.value.maternalDeathFourTwoDetails,onChanged: (val){
           widget.formEData?.value.maternalDeathFourTwoDetails = val;
         },): Container(),
         MDivider(),

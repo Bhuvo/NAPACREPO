@@ -106,8 +106,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text('Mothers List'),
                   Icon(Icons.handshake_outlined),
-                ],
-                            )
+                ],)
                 ],),),
               ),
               InkWell(
@@ -133,7 +132,13 @@ class _HomePageState extends State<HomePage> {
           FilledButton(onPressed: (){context.push(Routes.Form3One);}, child: Text('RegisterForm')),
           Space(),
           FilledButton(onPressed: (){context.push(Routes.FormD1);}, child: Text('FIRST VISIT FORM')),
-          Space(),
+            Space(),
+            FilledButton(onPressed: (){context.push(Routes.FormE);}, child: Text('FORM E-CONGENITAL HEART DISESASE FORM')),
+            Space(),
+            FilledButton(onPressed: (){context.push(Routes.FormF);}, child: Text('FORM F- CARDIOMYOPATHY FORM')),
+            Space(),
+            FilledButton(onPressed: (){context.push(Routes.FormG);}, child: Text('FORM G-PROSTHETIC VALVE FORM')),
+            Space(),
           FilledButton(onPressed: (){context.push(Routes.FormE1);}, child: Text('ABORTION / MTP PAGE (FORM H)')),
           Space(),
           FilledButton(onPressed: (){context.push(Routes.FormF1);}, child: Text('ANTENATAL REVISIT-1')),
@@ -141,20 +146,10 @@ class _HomePageState extends State<HomePage> {
           FilledButton(onPressed: (){context.push(Routes.FormG1);}, child: Text('ANTENATAL REVISIT-2')),
           Space(),
           FilledButton(onPressed: (){context.push(Routes.FormH1);}, child: Text('PERIPARTUM VISIT PAGE (FORM K)')),
-
-
             Space(),
-            // FilledButton(onPressed: (){context.push(Routes.FormI1);}, child: Text('Form G')),
-            // Space(),
-            // FilledButton(onPressed: (){context.push(Routes.FormJ1);}, child: Text('Form E')),
-            // Space(),
-            // FilledButton(onPressed: (){context.push(Routes.FormK1);}, child: Text('Form F')),
-            // Space(),
-
-
-            FilledButton(onPressed: (){context.push(Routes.FormL1);}, child: Text('FIRST POST PARTUM VISIT FORM (6 WEEKS)')),
+            FilledButton(onPressed: (){context.push(Routes.FormL1);}, child: Text('FORM L- FIRST POST PARTUM VISIT FORM (6 WEEKS)')),
             Space(),
-            FilledButton(onPressed: (){context.push(Routes.FormM1);}, child: Text('SECOND POST PARTUM VISIT FORM')),
+            FilledButton(onPressed: (){context.push(Routes.FormM1);}, child: Text('FORM M- SECOND POST PARTUM VISIT FORM (6 MONTHS)')),
             Space(),
             FilledButton(onPressed: (){context.push(Routes.FormN1);}, child: Text('Drug Page')),
             Space(80),

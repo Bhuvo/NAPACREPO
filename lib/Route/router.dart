@@ -24,8 +24,10 @@ import 'package:npac/Forms/FormH/FormH4.dart';
 import 'package:npac/Forms/FormH/FormH5.dart';
 import 'package:npac/Forms/FormH/FormH6.dart';
 import 'package:npac/Forms/FormH/FormH7.dart';
+import 'package:npac/Forms/FormI/FormG.dart';
 import 'package:npac/Forms/FormI/FormI1.dart';
 import 'package:npac/Forms/FormI/FormI2.dart';
+import 'package:npac/Forms/FormJ/FormE.dart';
 import 'package:npac/Forms/FormJ/FormJ1.dart';
 import 'package:npac/Forms/FormL/FormL1.dart';
 import 'package:npac/Forms/FormL/FormL2.dart';
@@ -34,6 +36,7 @@ import 'package:npac/Forms/FormM/FormM2.dart';
 import 'package:npac/Forms/FormN/FormN1.dart';
 import 'package:npac/Forms/FormN/FormN2.dart';
 import 'package:npac/Forms/FormN/FormN3.dart';
+import 'package:npac/Forms/Formk/FormF.dart';
 import 'package:npac/Forms/Formk/FormK1.dart';
 import 'package:npac/Forms/QuestionnaireForm/QuestionnaireForm.dart';
 import 'package:npac/Route/routes.dart';
@@ -146,6 +149,13 @@ class MRouter{
         return pageRoute(const MothersList(), settings);
       case Routes.MothersDetails:
         return pageRoute( MotherDetails(data: args?['data'],), settings);
+
+      case Routes.FormE:
+        return pageRoute( FormE(), settings);
+      case Routes.FormF:
+        return pageRoute(const FormF(), settings);
+      case Routes.FormG:
+        return pageRoute(const FormG(), settings);
 
       default:
         return pageRoute(MScaffold(

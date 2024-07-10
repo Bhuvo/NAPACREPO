@@ -33,7 +33,7 @@ class _AntibioticsBodyState extends State<AntibioticsBody> {
       ],
     ): Column(
       children: [
-        Space(),
+        // Space(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

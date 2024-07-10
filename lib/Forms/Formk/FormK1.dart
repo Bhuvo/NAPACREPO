@@ -27,7 +27,7 @@ class _FormK1State extends State<FormK1> {
             });
           }else{
             setState(() {
-              isOthers = true;
+              isOthers = false;
             });
           }
         },isneedDivider: false,),

@@ -52,13 +52,25 @@ class _FormD1State extends State<FormD1> {
   bool isAssessment = false;
 
   bool isEcho = false;
+  DateTime Lmp = DateTime.now();
+  DateTime addMonthsAndDays(DateTime inputDate) {
+    DateTime result = DateTime(
+      inputDate.year,
+      inputDate.month + 9,
+      inputDate.day,
+    );
+    result = result.add(Duration(days: 7));
+
+    return result;
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: MScaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
-          child: MAppBar(title: 'D. FIRST VISIT PAGE (FORM D)',)),
+          child: MAppBar(title: 'D. Current Pregnancy (FORM D)',)),
 
       body: MFormBody(Childrens: [
         Row(
@@ -74,13 +86,14 @@ class _FormD1State extends State<FormD1> {
                 icon: isEnabled ? Icon(Icons.save) : Icon(Icons.edit))
           ],
         ),
+        FormD4(isEnabled:isEnabled ,),
         Space(),
         Text('PRESENT PREGNANCY DETAILS', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
         Space(),
         Text('D1 ANTENATAL DETAILS', style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
         Space(),
         const Divider(thickness: 1,height: 3,),
-        MRowTextDropDown(enabled: isEnabled,title: 'D1.1 Gestational age at registration(Weeks)',onChanged: (val){},),
+        MRowTextDropDown(enabled: isEnabled,title: 'D1.1 Gestational age at  Enrolment(Weeks)',onChanged: (val){},),
         MrowTextDatePickerWidget(enabled: isEnabled,title: ' D1.2 Date:',onChanged: (val){},),
         MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.3 Conception:',options: List_items.conception,),
         MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.4 Preconception counselling: '),
@@ -99,8 +112,12 @@ class _FormD1State extends State<FormD1> {
           ],
         ),
         MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.6 Pregnancy type:',options: List_items.YesNoDetails,),
-        MrowTextDatePickerWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.7 LMP:',initialDate: DateTime.now(),),
-        MrowTextDatePickerWidget(enabled: isEnabled,onChanged: (val){},title: 'D1.8 EDD:',initialDate: DateTime.now(),),
+        MrowTextDatePickerWidget(enabled: isEnabled,onChanged: (val){
+          setState(() {
+            Lmp = val;
+          });
+        },title: 'D1.7 LMP:',initialDate: DateTime.now(),),
+        MrowTextDatePickerWidget( key: ValueKey('${ addMonthsAndDays(Lmp)}'),enabled: isEnabled,onChanged: (val){},title: 'D1.8 EDD:',initialDate: addMonthsAndDays(Lmp),),
        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){
          setState(() {
            AntenatalCheck = val == 'Yes' ? true : false;
@@ -136,11 +153,11 @@ class _FormD1State extends State<FormD1> {
         MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.2 Weight (kg):',isneedDivider: false,type: MInputType.numeric,),
         MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.3 SPO2 (%):',isneedDivider: false,type: MInputType.numeric,),
         MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.4 HR (/min):',isneedDivider: false,type: MInputType.numeric,),
-        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.5 Per abdomen examination and foetal assessment:', options: List_items.assessment,),
-        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.6 BP (mm Hg):',isneedDivider: false,type: MInputType.numeric,),
-        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.7 CCF: ',isneedDivider: false,),
-        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.8 Cyanosis: ',isneedDivider: false,),
-        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.9 Cardiac murmur:',isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled: isEnabled, onChanged: (val){},title: 'D3.5 BP (mm Hg):',isneedDivider: false,type: MInputType.numeric,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.6 CCF: ',isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.7 Cyanosis: ',isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.8 Cardiac murmur:',isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},title: 'D3.9 Fetal assessment (per abdomen exam): ', options: List_items.assessment,isneedDivider: false,),
         const Divider(thickness: 1,height: 3,),
       Row(
         children: [

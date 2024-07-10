@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/state_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:npac/Forms/Form1/contoller/FormA1Controller.dart';
 import 'package:npac/Forms/Form2/FormtwoPage.dart';
@@ -29,8 +32,13 @@ class _FormA1State extends State<FormA1> {
   bool A9 =false;
   bool isEnabled = false;
   bool isLoading = false;
+  bool hasRch = false;
+  bool isHealthCare = false;
+  bool isOtherOccupation = false;
+  bool isgardianOthers = false;
 
-  List<String> item =['Home Maker','Manual Labour','Semi-skilled Labourer','Professional','Other'];
+
+  List<String> item =['Home Maker','Manual Labour','Semi-skilled Labourer','Professional','Others'];
 
   Form2Controller controller = Get.put(Form2Controller());
   FormA1Controller formA1Controller = Get.put(FormA1Controller());
@@ -82,6 +90,7 @@ class _FormA1State extends State<FormA1> {
        isLoading = false;
      });
    }
+  String age = 'Enter Age';
 
   @override
   void initState() {
@@ -97,6 +106,10 @@ class _FormA1State extends State<FormA1> {
     });
     super.initState();
   }
+  final CustomTextEditingController _controller = CustomTextEditingController();
+  final _formatter = SplitTextInputFormatter();
+
+  // GetxController getController = Get.find();
   @override
   Widget build(BuildContext context) {
     return MScaffold(
@@ -121,49 +134,56 @@ class _FormA1State extends State<FormA1> {
               },),
             ],
           ): Container(),
-            MrowTextTextFieldWidget(title:'A1. NPAC No:',enabled: isEnabled,onChanged: (val){},),
-            Obx(()=> MrowTextTextFieldWidget(title:'A2. RCH. No:',initialValue: formA1Data.value.rCHNO ?? '',enabled: isEnabled,onChanged: (val){formA1Data.value.rCHNO = val;},)),
-            MrowTextDatePickerWidget(title: 'A3. DATE OF REGISTRATION:', initialDate:stringToDate(formA1Data.value.dateOfRegistration?? ''),enabled: isEnabled,onChanged: (val){
-               formA1Data.value.dateOfRegistration =dateToString(val);
-              },),
-            MrowTextDatePickerWidget(title: 'A4. DATE OF REFERRAL: ',initialDate:stringToDate(formA1Data.value.dateOfReferral?? ''),enabled: isEnabled,onChanged: (val){
-              formA1Data.value.dateOfReferral =dateToString(val);
-            },),
-            MrowTextTextFieldWidget(title: 'A5. PLACE OF FIRST REPORTING:',initialValue: formA1Data.value.placeOfFirstReporting,onChanged: (val){
-              formA1Data.value.placeOfFirstReporting = val;
-            },enabled: isEnabled,),
-            MrowTextTextFieldWidget(title: 'A6. WHEN SEEN BY THE CARDIOLOGIST:',initialValue: formA1Data.value.whenSeenByTheCardiologist,onChanged: (val){
-              formA1Data.value.whenSeenByTheCardiologist = val;
-            },enabled: isEnabled,),
-            MRowTextRadioWidget(enabled: isEnabled,title: 'A7',initialValue: formA1Data.value.antenatalorpostnatal,options: ['Antenatal',  'Post-partum (Up to 6 weeks)','Postnatal (up to 5 months, only for peri-partum cardiomyopathy)'],onChanged: (val){
-              setState(() {
-                A7= true;
-              });
-              formA1Data.value.antenatalorpostnatal = val;
-            }),
-            MRowTextRadioWidget(enabled: isEnabled,title: 'A8. Heart disease as per inclusion criteria',initialValue: formA1Data.value.heartDisease,onChanged: (val){
-              if(val == 'Yes'){
-              setState(() {
+        MRowTextRadioWidget(enabled: isEnabled,title: 'A1. Heart disease as per inclusion criteria',initialValue: formA1Data.value.heartDisease,onChanged: (val){
+          if(val == 'Yes'){
+            setState(() {
               A8 = true;
             });}else{
-                setState(() {
-                  A8 = false;
-                });
-              }
-              formA1Data.value.heartDisease = val;
-              },),
-            MRowTextRadioWidget(enabled: isEnabled,title: 'A9. Consented for the study',initialValue: formA1Data.value.consented,onChanged: (val){
-              if(val == 'Yes'){
-                setState(() {
-                  A9 = true;
-                });}else{
-                setState(() {
-                  A9 = false;
-                });
-              }
-              formA1Data.value.consented = val;
+            setState(() {
+              A8 = false;
+            });
+          }
+          formA1Data.value.heartDisease = val;
+        },),
+        MRowTextRadioWidget(enabled: isEnabled,title: 'A2. Consented for the study',initialValue: formA1Data.value.consented,onChanged: (val){
+          if(val == 'Yes'){
+            setState(() {
+              A9 = true;
+            });}else{
+            setState(() {
+              A9 = false;
+            });
+          }
+          formA1Data.value.consented = val;
+        },),
+        MRowTextRadioWidget(enabled: isEnabled,title: 'A3. Time of enrolment of the pa:ent in the study:',initialValue: formA1Data.value.antenatalorpostnatal,options: ['Antenatal',  'Post-partum (Up to 6 weeks)','Postnatal (up to 5 months, only for peri-partum cardiomyopathy)'],onChanged: (val){
+          setState(() {
+            A7= true;
+          });
+          formA1Data.value.antenatalorpostnatal = val;
+        }),
+
+        MrowTextTextFieldWidget(title:'A4. NPAC No:',enabled: isEnabled,onChanged: (val){
             },),
-          (A7 && A8 && A9) ? Column(
+            MRowTextRadioWidget(title: 'A5. RCH. No',options: ['Available','Not Available'],onChanged: (val){
+              val =='Available' ? hasRch = true : hasRch = false;
+              setState(() {});
+            },),
+        hasRch? Obx(()=> MrowTextTextFieldWidget(title:'RCH. No:',initialValue: formA1Data.value.rCHNO ?? '',enabled: isEnabled,onChanged: (val){formA1Data.value.rCHNO = val;},)): Container(),
+            MrowTextDatePickerWidget(title: 'A6. DATE OF REGISTRATION:', initialDate:stringToDate(formA1Data.value.dateOfRegistration?? ''),enabled: isEnabled,onChanged: (val){
+               formA1Data.value.dateOfRegistration =dateToString(val);
+              },),
+            MrowTextDatePickerWidget(title: 'A7. DATE OF REFERRAL: ',initialDate:stringToDate(formA1Data.value.dateOfReferral?? ''),enabled: isEnabled,onChanged: (val){
+              formA1Data.value.dateOfReferral =dateToString(val);
+            },),
+            MrowTextTextFieldWidget(title: 'A8. PLACE OF FIRST REPORTING:',initialValue: formA1Data.value.placeOfFirstReporting,onChanged: (val){
+              formA1Data.value.placeOfFirstReporting = val;
+            },enabled: isEnabled,),
+            MrowTextTextFieldWidget(title: 'A9. WHEN SEEN BY THE CARDIOLOGIST:',initialValue: formA1Data.value.whenSeenByTheCardiologist,onChanged: (val){
+              formA1Data.value.whenSeenByTheCardiologist = val;
+            },enabled: isEnabled,),
+
+           (A7 && A8 && A9) ? Column(
             children: [
               MrowTextTextFieldWidget(enabled: isEnabled,title: 'B1. Hospital/PIN number:',initialValue: formA1Data.value.pinNumber, onChanged: (val){
                 formA1Data.value.pinNumber = val;
@@ -173,13 +193,40 @@ class _FormA1State extends State<FormA1> {
               }),
               MrowTextTextFieldWidget(enabled: isEnabled,title: 'B3. Name of the Husband/Guardian:',initialValue: formA1Data.value.guardian,onChanged: (val){
                 formA1Data.value.guardian = val;
-              }),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B4. Age',initialValue: '${formA1Data.value.age}',onChanged:(val){
-               val.length >0 ?( formA1Data.value.age = int.parse(val)) : null;
-              } ,type: MInputType.numeric,),
-              MrowTextDatePickerWidget(enabled: isEnabled,title:'B5. DOB:',initialDate: stringToDate(formA1Data.value.dob??''),onChanged: (val){
-                formA1Data.value.dob = dateToString(val);
-              },),
+              },isneedDivider: false,),
+              MRowTextRadioWidget(enabled: isEnabled, options: ['Husband','Father','Mother','Others'],onChanged: (val){
+                val =='Others' ? isgardianOthers =true : isgardianOthers = false;
+                setState(() {});
+              },isneedDivider: false,),
+
+              isgardianOthers ? MTextField(label: 'Others ,Please specify:',enabled: isEnabled,onChanged: (val){},) :Container(),
+            MDivider(),
+             Obx(
+                 ()=> MrowTextTextFieldWidget(
+                 key:ValueKey('age${formA1Data.value.age}'),
+                 enabled: isEnabled,title: 'B4. Age',initialValue: '${formA1Data.value.age}',onChanged:(val){
+                   val.length >0 ?( formA1Data.value.age = int.parse(val)) : null;
+                  } ,type: MInputType.numeric,),
+             ),
+
+              Obx(
+                ()=> MrowTextDatePickerWidget(enabled: isEnabled,title:'B5. DOB:',initialDate: stringToDate(formA1Data.value.dob??''),onChanged: (val){
+                  formA1Data.update((model) {
+                    model?.age = int.parse(calculateAge(val));
+                    model?.dob = dateToString(val);
+                  });
+                  // formA1Controller.age.value = int.parse(calculateAge(val));
+                  // setState(() {
+                  //   age = calculateAge(val);
+                  // });
+                  formA1Data.value.age = int.parse(calculateAge(val));
+                  formA1Data.value.dob = dateToString(val);
+
+                  setState(() {
+
+                  });
+                },),
+              ),
               MrowTextTextFieldWidget(enabled: isEnabled,title: 'B6. House/Flat name or number:',initialValue: formA1Data.value.flatname,onChanged: (val){
                 formA1Data.value.flatname = val;
               },),
@@ -218,39 +265,77 @@ class _FormA1State extends State<FormA1> {
               MrowTextTextFieldWidget(enabled: isEnabled,title: 'B12. Patient’s mobile number: ',initialValue: '${formA1Data.value.mobilenumber??''}',onChanged: (val){
                 val.length >0 ?(formA1Data.value.mobilenumber = val) : null;
               },type: MInputType.phone,),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B13.Patient’s alternate number: ',initialValue: '${formA1Data.value.alternatemobilenumber??''}',onChanged: (val){
-               val.length >0 ? (formA1Data.value.alternatemobilenumber = val) : null;
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B13. Name of the Alternate Contact Person:',initialValue: '${formA1Data.value.alternatemobilenumber??''}',onChanged: (val){
+               val.length >0 ? (formA1Data.value.contactPersonName = val) : null;
               },type: MInputType.phone,),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B14. Alternate mobile number to contact (relative) (10 digit):',initialValue: '${formA1Data.value.relativemobilenumber}',onChanged: (val){
-                val.length >0 ?formA1Data.value.relativemobilenumber =  val : null;
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B13. Alternate contact person’s mobile number: ',initialValue: '${formA1Data.value.alternatemobilenumber??''}',onChanged: (val){
+                val.length >0 ? (formA1Data.value.alternatemobilenumber = val) : null;
               },type: MInputType.phone,),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B14. Name of the contact person/VNH/Asha worker: ',initialValue: '${formA1Data.value.contactPersonName}',onChanged: (val){
-                formA1Data.value.contactPersonName = val;
+              MRowTextRadioWidget(isneedDivider: false ,enabled: isEnabled,title: 'B13. Relationship',options: ['Husband','Father','Mother','Relative','Friend','Others'],onChanged: (val){
+                  setState(() {
+                 formA1Data.value.relativeRelation = val;
+                });
               },),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B14. Relationship: ',initialValue: formA1Data.value.relativeRelation ??'',onChanged: (val){
-                formA1Data.value.relativeRelation = val;
-              },),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B15 Total number of years of formal education:', initialValue: '${formA1Data.value.noofyeareducation}', onChanged: (val){
+              formA1Data.value.relativeRelation=='Others'? MTextField(label: 'If other, please specify',onChanged: (val){},): Container(),
+              MDivider(),
+              MRowTextRadioWidget(title: 'B14. Provide name of any Health care Contact person (VHN/ASHA worker equivalent):',onChanged: (val){
+                val =='Yes'? isHealthCare = true : isHealthCare = false;
+                setState(() {});
+              },isneedDivider: false,),
+              isHealthCare ? Column(children: [
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s name:',initialValue: '${formA1Data.value.contactPersonName}',onChanged: (val){
+                  formA1Data.value.contactPersonName = val;
+                },isneedDivider: false),
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s Mobile Number',initialValue: '${formA1Data.value.contactPersonName}',onChanged: (val){
+                  formA1Data.value.contactPersonName = val;
+                },isneedDivider: false),
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person designation : ',initialValue: formA1Data.value.relativeRelation ??'',onChanged: (val){
+                  formA1Data.value.relativeRelation = val;
+                },isneedDivider: false),
+              ],) : Container(),
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B15 Total number of years of formal education:',validator: (val){
+                if(val!=null && val.isNotEmpty){
+                  int.parse(val) <=31 ?  null: 'value should be less than 31';
+                }
+                return null;
+              } ,initialValue: '${formA1Data.value.noofyeareducation}', onChanged: (val){
                val.length >0 ? formA1Data.value.noofyeareducation = int.tryParse(val) : null;
               },type: MInputType.numeric,),
               MRowTextRadioWidget(enabled: isEnabled,title: 'B16 Occupation of patient: ',initialValue:formA1Data.value.occupation,options:item,onChanged:(val){
                 formA1Data.value.occupation = val;
               },),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B17 Total number of years of formal education of husband: (Zero for Illiterates)', initialValue: '33', onChanged: (val){
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B17 Total number of years of formal education of husband: (Zero for Illiterates)', validator: (val){
+                if(val!=null && val.isNotEmpty){
+                  int.parse(val) <=31 ?  null: 'value should be less than 31';
+                }
+                return null;
+              } ,initialValue: '${formA1Data.value.noofyeareducationHusband}', onChanged: (val){
                 val.length > 0 ?formA1Data.value.noofyeareducationHusband = int.tryParse(val) : null;
               },type: MInputType.numeric,),
               MRowTextRadioWidget(enabled: isEnabled,title: 'B18 Occupation of husband : ',initialValue: formA1Data.value.occupationHusband,options:item,onChanged:(val){
                 formA1Data.value.occupationHusband = val;
+                formA1Data.value.occupationHusband =='Others' ? isOtherOccupation = true : isOtherOccupation = false;
+                setState(() {});
               },),
+              isOtherOccupation? MTextField(enabled: isEnabled,label: 'Others specify',onChanged: (val){},): Container(),
               MRowTextRadioWidget(enabled: isEnabled,title: 'B19 Socio-economic status: ',initialValue: formA1Data.value.economicstatus,options:['Above Poverty Line', 'Below Poverty Line'],onChanged:(val){
                 formA1Data.value.economicstatus = val;
-              },),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B20. Mention any additional details: ',initialValue: 'No',onChanged: (val){
+                setState(() {
+                });
+              },isneedDivider: false,),
+
+              formA1Data.value.economicstatus != null? MRowTextRadioWidget(enabled: isEnabled,onChanged: (val){},isneedDivider: false,options: ['Ration card','kuppusamy scale'],): Container(),
+              MDivider(),
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B20. Mention any additional details: ',initialValue: formA1Data.value.additionalDetails,onChanged: (val){
                 formA1Data.value.additionalDetails = val;
               },),
               Space(20),
+              MFilledButton(text: 'Save & Continue',onPressed: (){
+                context.push(Routes.Form3One);
+              },),
+              Space(),
               ((widget.isFromPatientDetails?? false) == false) ? FilledButton(onPressed: (){
-               // print(formA1Data.value.toJson());
+               // print(formA1Data.value.toJson()); n
               formA1Controller.createFormA1Data(formA1Data.value,context);
               }, child:  Text('Submit')) : Container(),
               (widget.isFromPatientDetails ?? false) ? MFilledButton(text:isEnabled ? 'Save': 'Edit',onPressed: (){
@@ -259,11 +344,121 @@ class _FormA1State extends State<FormA1> {
                   isEnabled = !isEnabled;
                 });
               },): Container(),
+
             ],
           )
               :Container(),
+
         ],),
       ),
     );
+  }
+}
+
+class SplitTextField extends StatefulWidget {
+  @override
+  _SplitTextFieldState createState() => _SplitTextFieldState();
+}
+
+class _SplitTextFieldState extends State<SplitTextField> {
+  final _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _controller,
+      inputFormatters: [
+        SplitTextInputFormatter(),
+      ],
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Enter text',
+      ),
+    );
+  }
+}
+
+
+
+class SplitTextInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue,
+      TextEditingValue newValue,
+      ) {
+    final newText = newValue.text.replaceAll(' ', '');
+    final buffer = StringBuffer();
+
+    // First 3 characters as alphabets
+    if (newText.length > 3) {
+      buffer.write(newText.substring(0, 3));
+      buffer.write(' '); // add a space after the first 3 characters
+    } else {
+      buffer.write(newText);
+    }
+
+    // Next 1 character as number
+    if (newText.length > 3 && newText.length <= 4) {
+      buffer.write(newText.substring(3));
+    } else if (newText.length > 4) {
+      buffer.write(newText.substring(3, 4));
+      buffer.write(' '); // add a space after the next 1 character
+    }
+
+    // Next 4 characters as numbers
+    if (newText.length > 4) {
+      buffer.write(newText.substring(4, newText.length > 8 ? 8 : newText.length));
+    }
+
+    return TextEditingValue(
+      text: buffer.toString(),
+      selection: TextSelection.collapsed(offset: buffer.length),
+    );
+  }
+}
+
+class CustomTextEditingController extends TextEditingController {
+  @override
+  void addListener(VoidCallback listener) {
+    super.addListener(() {
+      final oldText = super.text;
+      final newText = _formatText(oldText);
+
+      if (oldText != newText) {
+        final oldSelection = selection;
+        value = value.copyWith(
+          text: newText,
+          selection: oldSelection.copyWith(
+            baseOffset: _getNewCursorPosition(oldText, newText, oldSelection.baseOffset),
+            extentOffset: _getNewCursorPosition(oldText, newText, oldSelection.extentOffset),
+          ),
+        );
+      }
+    });
+  }
+
+  String _formatText(String text) {
+    final strippedText = text.replaceAll(' ', '');
+
+    if (strippedText.length <= 3) {
+      return strippedText;
+    } else if (strippedText.length <= 5) {
+      return '${strippedText.substring(0, 3)} ${strippedText.substring(3)}';
+    } else if (strippedText.length <= 9) {
+      return '${strippedText.substring(0, 3)} ${strippedText.substring(3, 5)} ${strippedText.substring(5)}';
+    } else {
+      return '${strippedText.substring(0, 3)} ${strippedText.substring(3, 5)} ${strippedText.substring(5, 9)}';
+    }
+  }
+
+  int _getNewCursorPosition(String oldText, String newText, int oldPosition) {
+    int newPosition = oldPosition;
+    int removedSpaces = oldText.substring(0, oldPosition).split(' ').length - 1;
+    newPosition -= removedSpaces;
+
+    int insertedSpaces = newText.substring(0, newPosition).split(' ').length - 1;
+    newPosition += insertedSpaces;
+
+    return newPosition;
   }
 }

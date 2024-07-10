@@ -32,6 +32,8 @@ class FormThreePage extends StatefulWidget {
 }
 
 class _FormThreePageState extends State<FormThreePage> {
+  final formKey = GlobalKey<FormState>();
+
   RxList<String> selectedlist = <String>[].obs;
   bool isYes = false;
   bool isPriorRisk = false;
@@ -63,6 +65,7 @@ class _FormThreePageState extends State<FormThreePage> {
   bool isEnabled = false;
   Rx<int> count =0.obs;
   bool isLoading = false;
+  bool isOthercardiac = false;
 
   Rx<Form3Controller> controller =Form3Controller().obs;
   Rx<RegistrationModel> registrationModelData = RegistrationModel().obs;
@@ -132,12 +135,13 @@ class _FormThreePageState extends State<FormThreePage> {
                     icon: isEnabled ? Icon(Icons.save) : Icon(Icons.edit))
               ],
             ) : Container(),
-            MrowTextDatePickerWidget(enabled: isEnabled,
-              onChanged: (val) {},
-              title:
-                  'C.1 FIRST DIAGNOSIS OF HEART DISEASE (Time at which the heart disease was first diagnosed)',
-              initialDate: DateTime.now(),
-            ),
+            MText(text: 'C.1 FIRST DIAGNOSIS OF HEART DISEASE',),
+            // MrowTextDatePickerWidget(enabled: isEnabled,
+            //   onChanged: (val) {},
+            //   title:
+            //       'C.1 FIRST DIAGNOSIS OF HEART DISEASE',
+            //   initialDate: DateTime.now(),
+            // ),
             MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.heartdiseaseDiagnosisTime,
               onChanged: (val) {
                 registrationModelData.value.heartdiseaseDiagnosisTime = val;
@@ -145,6 +149,7 @@ class _FormThreePageState extends State<FormThreePage> {
               title: 'C.1.1 Time of heart disease diagnosis with pregnancy:',
               options: cOneList,
             ),
+            MSmallText(text: 'Age at Diagnosis of Heart Disease (HD',),
             MrowTextTextFieldWidget(enabled: isEnabled,initialValue: registrationModelData.value.chronologicalAgeAtDiagnosis ,
             title: 'C.1.2 Chronological age at diagnosis of HD (inyears):',
               type: MInputType.numeric,
@@ -179,19 +184,22 @@ class _FormThreePageState extends State<FormThreePage> {
               },
               title: 'C2.2 Prior Cardiac Event:  ',
             ),
-            MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.heartFailure,
+            MRowTextRadioWidget(enabled: isEnabled,isneedDivider: false,initialValue: registrationModelData.value.heartFailure,
             onChanged: (val) {
-                registrationModelData.value.heartFailure = val;
+                setState(() {
+                  registrationModelData.value.heartFailure = val;
+                });
               },
               title: 'C2.2.1 Heart Failure ',
               options: YesNoDetails,
             ),
-            MRowTextRadioWidget( enabled: isEnabled,initialValue: registrationModelData.value.heartFailureHospitalization,
+            (registrationModelData.value.heartFailure ?? 'No') == 'Yes' ?  MRowTextRadioWidget( enabled: isEnabled,isneedDivider: false,initialValue: registrationModelData.value.heartFailureHospitalization,
             onChanged: (val) {
                   registrationModelData.value.heartFailureHospitalization = val;
                 },
-                title: 'Required Hospitalization: '),
-            MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.priorCardiacArrhythmia,
+                title: 'Required Hospitalization: ') : Container(),
+            MDivider(),
+            MRowTextRadioWidget(enabled: isEnabled,isneedDivider: false,initialValue: registrationModelData.value.priorCardiacArrhythmia,
             onChanged: (val) {
                 registrationModelData.value.priorCardiacArrhythmia = val;
                 setState(() {
@@ -220,29 +228,35 @@ class _FormThreePageState extends State<FormThreePage> {
                   )
                 : Container(),
             isYes
-                ? MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.priorCardiacArrhythmiaHospitalization,
+                ? MRowTextRadioWidget(isneedDivider: false ,enabled: isEnabled,initialValue: registrationModelData.value.priorCardiacArrhythmiaHospitalization,
                     onChanged: (val) {
                       registrationModelData
                           .value.priorCardiacArrhythmiaHospitalization = val;
                     },
                     title: 'Required Hospitalization: ')
                 : Container(),
-            MRowTextRadioWidget(isneedDivider: false,enabled: isEnabled,initialValue: registrationModelData.value.otherPriorCardiac,
-            onChanged: (val) {
+            MDivider(),
+            MRowTextRadioWidget(enabled: isEnabled,title: 'C2.2.3 Other prior cardiac events /complicaƟons : ',onChanged: (val){
+              val =='Yes' ? isOthercardiac= true : isOthercardiac = false;
+              setState(() {});
+            },isneedDivider: false,),
+            isOthercardiac  ? MRowTextCheckBox(isneedDivider: false,enabled: isEnabled,
+            result: (val) {
                 setState(() {
-                  isOtherPriorCardiac = (val == 'Others' )? true : false;
+                  val.contains('Others') ? isOtherPriorCardiac = true : isOtherPriorCardiac = false;
+                  // isOtherPriorCardiac = (val == 'Others' )? true : false;
                 });
-                registrationModelData.value.otherPriorCardiac = val;
+                // registrationModelData.value.otherPriorCardiac = val;
               },
-              title: 'C2.2.3 Other priorcardiac events/complications',
-              options: OtheCardiacEvents,
-            ),
+              list: OtheCardiacEvents,
+            ): Container(),
             isOtherPriorCardiac ? MTextField(label: 'If other Specify',enabled: isEnabled,initalValue: registrationModelData.value.otherPriorCardiacOthersSpecify, onChanged: (val){
               registrationModelData.value.otherPriorCardiacOthersSpecify = val;
             },) : Container(),
-            MRowTextRadioWidget(title: 'Required Hospitalization',enabled: isEnabled,initialValue: registrationModelData.value.otherPriorCardiacHospitalization,onChanged: (val){
+            isOthercardiac ?MRowTextRadioWidget(title: 'Required Hospitalization',isneedDivider: false,enabled: isEnabled,initialValue: registrationModelData.value.otherPriorCardiacHospitalization,onChanged: (val){
               registrationModelData.value.otherPriorCardiacHospitalization = val;
-            },),
+            },): Container(),
+            MDivider(),
             MRowTextRadioWidget(
                 enabled: isEnabled,initialValue:
                 registrationModelData.value.cardiacSurgeriesDone,
@@ -253,16 +267,15 @@ class _FormThreePageState extends State<FormThreePage> {
                 registrationModelData.value.cardiacSurgeriesDone = val;
               },
               title: 'C 2.3 Prior cardiac surgeries done',
-              options: YesNoDetails,
             ),
             isCardiacSurgeries ? Column(children: [
-              MRowTextRadioWidget(title: 'C 2.3.1 Was it a valve Replacement',initialValue: registrationModelData.value.surgeriesValveReplacement,onChanged: (val){
+              MRowTextRadioWidget(title: 'C 2.3.1 Was it a valve Replacement',enabled: isEnabled,initialValue: registrationModelData.value.surgeriesValveReplacement,onChanged: (val){
                 registrationModelData.value.surgeriesValveReplacement = val;
               },isneedDivider: false,),
-              MrowTextTextFieldWidget(title: 'C 2.3.1 Name of the Procedure:',initialValue: registrationModelData.value.surgeriesProcedureName,onChanged: (val){
+              MrowTextTextFieldWidget(title: 'C 2.3.1 Name of the Procedure:',enabled: isEnabled,initialValue: registrationModelData.value.surgeriesProcedureName,onChanged: (val){
                 registrationModelData.value.surgeriesProcedureName = val;
               },isneedDivider: false,),
-              MrowTextTextFieldWidget(title: 'C 2.3.2 Month and Year of the Procedure:',initialValue: registrationModelData.value.surgeriesProcedureMonthandYear,isneedDivider: false,onChanged: (val){
+              MrowTextTextFieldWidget(title: 'C 2.3.2 Month and Year of the Procedure:',enabled: isEnabled,initialValue: registrationModelData.value.surgeriesProcedureMonthandYear,isneedDivider: false,onChanged: (val){
                 registrationModelData.value.surgeriesProcedureMonthandYear = val;
               },)
             ],): Container(),
@@ -301,6 +314,7 @@ class _FormThreePageState extends State<FormThreePage> {
               registrationModelData.update((model) {
                 model?.priorAnticoagulantUse = val;
               });
+              val =='Yes' ? context.showSnackBar('Please Fill Drug Form N'): null;
                // registrationModelData.value.priorAnticoagulantUse= val;
               },
               title: 'C2.5 Prior Anticoagulant use: ',
@@ -311,7 +325,8 @@ class _FormThreePageState extends State<FormThreePage> {
               registrationModelData.update((model) {
                 model?.priorCardiacDrugsUse = val;
               });
-               // registrationModelData.value.priorCardiacDrugsUse = val;
+              val =='Yes' ? context.showSnackBar('Please Fill Drug Form N'): null;
+              // registrationModelData.value.priorCardiacDrugsUse = val;
               },
               title: 'C2.6 Prior Cardiac drugs use (other than OAC): ',
               options: YesNoDetails,
@@ -321,7 +336,8 @@ class _FormThreePageState extends State<FormThreePage> {
               registrationModelData.update((model) {
                 model?.priorNonCardiacMedications = val;
               });
-                //registrationModelData.value.priorNonCardiacMedications = val;
+              val =='Yes' ? context.showSnackBar('Please Fill Drug Form N'): null;
+              //registrationModelData.value.priorNonCardiacMedications = val;
               },
               title: 'C2.7 Prior non-cardiac medications: ',
               options: YesNoDetails,
@@ -333,9 +349,9 @@ class _FormThreePageState extends State<FormThreePage> {
               },): Container(),
             ),
             MRowTextRadioWidget(
-                enabled: isEnabled,initialValue: registrationModelData.value.riskFactors,
+                enabled: isEnabled,initialValue: registrationModelData.value.riskFactors ?? 'No',
             onChanged: (val) {
-                if (val == 'yes') {
+                if (val == 'Yes') {
                   setState(() {
                     isPriorRisk = true;
                   });
@@ -351,68 +367,81 @@ class _FormThreePageState extends State<FormThreePage> {
             isPriorRisk
                 ? Column(
                     children: [
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.diabetes,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.diabetes ?? 'No',
                     onChanged: (val) {
                           registrationModelData.value.diabetes = val;
                         },
                         title: 'C2.8.1 Diabetes: ',
                       ),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hTN,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hTN ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.hTN = val;
                           }, title: 'C2.8.2 HTN '),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.psychIllness,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.psychIllness ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.psychIllness = val;
                           }, title: 'C2.8.3 Psych illness '),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.alcohol,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.alcohol ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.alcohol = val;
                           }, title: 'C2.8.4 Alcoho '),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.smoking,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.smoking ?? 'No',
                         onChanged: (val) {
                           registrationModelData.value.smoking = val;
                         },
                         title: 'C2.8.5 Smoking',
                         options: currentEXNever,
                       ),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.anemia,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.anemia ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.anemia = val;
                           }, title: 'C2.8.6 Anemia'),
-                      MRowTextRadioWidget( enabled: isEnabled,initialValue: registrationModelData.value.chewingTobacco,
+                      MRowTextRadioWidget( enabled: isEnabled,initialValue: registrationModelData.value.chewingTobacco ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.chewingTobacco = val;
                           }, title: 'C2.8.7 Chewing Tobacco'),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hypothyroid,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hypothyroid ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.hypothyroid = val;
                           }, title: 'C2.8.8 Hypothyroid'),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hyperthyroid,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hyperthyroid ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.hyperthyroid = val;
                           }, title: 'C2.8.9 Hyperthyroid'),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.epilepsy,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.epilepsy ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.epilepsy = val;
                           }, title: 'C2.8.10 Epilepsy'),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hIV,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.hIV ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.hIV = val;
                           }, title: 'C2.8.11 HIV'),
-                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.autoimmune,
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.autoimmune ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.autoimmune = val;
                           }, title: 'C2.8.12 Autoimmune'),
-                      MrowTextTextFieldWidget(enabled: isEnabled,initialValue: registrationModelData.value.riskFactorsOthersSpecify,
-                        title: 'Others',
-                        onChanged: (val) {
-                          registrationModelData.value.riskFactorsOthersSpecify = val;
-                        },
-                      ),
+                      MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.riskFactorsOthersSpecify ?? 'No',
+                          onChanged: (val) {
+                            registrationModelData.value.riskFactorsOthers = val;
+                            setState(() {
+
+                            });
+                          },isneedDivider: false, title: 'C2.8.13 Others'),
+                      registrationModelData.value.riskFactorsOthers == 'Yes'? MTextField(enabled: isEnabled,label: 'Others Specify',initalValue: registrationModelData.value.riskFactorsOthersSpecify,onChanged: (val){
+                        registrationModelData.value.riskFactorsOthersSpecify = val;
+                      },): Container(),
+                      MDivider(),
+                      // MrowTextTextFieldWidget(enabled: isEnabled,initialValue: registrationModelData.value.riskFactorsOthersSpecify,
+                      //   title: 'Others',
+                      //   onChanged: (val) {
+                      //     registrationModelData.value.riskFactorsOthersSpecify = val;
+                      //   },
+                      // ),
                     ],
                   )
                 : Container(),
+            MText(text: 'C3 PREVIOUS PREGNANCY DETAILS',),
+            Space(),
             MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.previousPregnancyFlag ?? 'No',title: 'Did patient have any previous pregnancy:',onChanged: (val){
               registrationModelData.value.previousPregnancyFlag = val;
               if(val == 'Yes'){
@@ -430,42 +459,49 @@ class _FormThreePageState extends State<FormThreePage> {
               }
             },),
             //FilledButton(onPressed: (){context.push(Routes.Form3Two);}, child: Text('Next'))
-            isPregnant? Obx(()=>ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: registrationPregnancyModelData.length >=1 ? registrationPregnancyModelData.length : 0,
-                itemBuilder: (context, index) {
-                  // index = count.value;
-                  //  count.value = index + 1;
-                  registrationPregnancyModelData[index].prevPregDetailsId =registrationPregnancyModelData[index].prevPregDetailsId ?? 0;
-                  registrationPregnancyModelData[index].previousPregNo =index;
+            isPregnant? Obx(()=>Form(
+              key: formKey,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: registrationPregnancyModelData.length >=1 ? registrationPregnancyModelData.length : 0,
+                  itemBuilder: (context, index) {
+                    // index = count.value;
+                    //  count.value = index + 1;
+                    registrationPregnancyModelData[index].prevPregDetailsId =registrationPregnancyModelData[index].prevPregDetailsId ?? 0;
+                    registrationPregnancyModelData[index].previousPregNo =index;
 
-                  return  Obx(
-                    ()=> Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                          IconButton(onPressed: () async {
-                            await controller.value.deletePregnancy(context, registrationPregnancyModelData[index].prevPregDetailsId ?? 0);
-                            registrationPregnancyModelData.removeAt(index);
-                          }, icon: Icon(Icons.delete)),
-                          ],
-                        ),
-                       // Space(),
-                        FormThree2Page( isEnabled: isEnabled,Modeldata: registrationPregnancyModelData[index],index: index+1),
-                        registrationPregnancyModelData.length -1 == index ? MFilledButton(text: 'Add Pregnancy',onPressed: (){
-
-                         // print(jsonEncode(registrationPregnancyModelData));
-                          //controller.registerPregnancyForm(context,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? '0'));
-                          registrationPregnancyModelData.add(RegistrationPregnancyModel());
-                        },): Container(),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                    return  Obx(
+                      ()=> Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                            IconButton(onPressed: () async {
+                              await controller.value.deletePregnancy(context, registrationPregnancyModelData[index].prevPregDetailsId ?? 0);
+                              registrationPregnancyModelData.removeAt(index);
+                            }, icon: Icon(Icons.delete)),
+                            ],
+                          ),
+                         // Space(),
+                          FormThree2Page( isEnabled: isEnabled,Modeldata: registrationPregnancyModelData[index],index: index+1),
+                          registrationPregnancyModelData.length -1 == index ? MFilledButton(text: 'Add Pregnancy',onPressed: (){
+                            if(formKey.currentState!.validate()){
+                              registrationPregnancyModelData.add(RegistrationPregnancyModel());
+                            }
+                           // print(jsonEncode(registrationPregnancyModelData));
+                            //controller.registerPregnancyForm(context,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? '0'));
+                            // registrationPregnancyModelData.add(RegistrationPregnancyModel());
+                          },): Container(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+            ),
             ):Container(),
+
+            MRowTextRadioWidget(enabled: isEnabled , title: 'Medications advised?',onChanged: (val){}, ),
             Space(),
             (widget.isFromPatientDetails ?? false )? MFilledButton(text:isEnabled ? 'Save': 'Edit',onPressed: () async {
               if(isEnabled)  {

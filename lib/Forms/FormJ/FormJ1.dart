@@ -47,7 +47,7 @@ bool isInterventionalOther = false;
           }
         },),
         isSurgical ?MRowTextCheckBox(enabled:widget.enabled,result: (val){
-          if(val.contains('Other')){
+          if(val.contains('Others')){
             setState(() {
               isSurgicalOther = true;
             });
@@ -59,7 +59,7 @@ bool isInterventionalOther = false;
         },list: ['ICR','Fontan','RV-PA Conduit','BDG shunt','BT Shunt','Arterial','Prosthetic Valve','Others'],): Container(),
         isSurgicalOther ? MTextField(enabled:widget.enabled,label: 'If Others Specify',onChanged: (val){}): Container(),
         isInterventional ?MRowTextCheckBox(enabled:widget.enabled,result: (val){
-          if(val.contains('Other')){
+          if(val.contains('Others')){
             setState(() {
               isInterventionalOther = true;
             });
@@ -73,17 +73,17 @@ bool isInterventionalOther = false;
 
         MSmallText(text: 'E2 Clinical findings in the current pregnancy',),
         Space(),
-        MRowTextCheckBox(enabled:widget.enabled,title: 'E2.1 Symptoms',result: (val){},list: ['Headache','Visual disturbance','Dizziness','Altered mental status','CNS symptoms','Arthritis','Renal dysfunction','Cyanosis','Bleeding tendency'],),
-        MRowTextRadioWidget(enabled:widget.enabled,title: 'E2.2 Polycythemia',onChanged: (val){},),
-        MRowTextRadioWidget(enabled:widget.enabled,title: 'E2.3 Anemia',onChanged: (val){},),
-        MSmallText(text: 'E2.4 SPo2 (%) all four limbs :',),
+        MRowTextCheckBox(enabled:widget.enabled,title: 'E2.1 Symptoms',result: (val){},list: ['Headache','Visual disturbance','Dizziness','Polycythemia','Anemia','Altered mental status','CNS symptoms','Arthritis','Renal dysfunction','Cyanosis','Bleeding tendency'],),
+        // MRowTextRadioWidget(enabled:widget.enabled,title: 'E2.2 Polycythemia',onChanged: (val){},),
+        // MRowTextRadioWidget(enabled:widget.enabled,title: 'E2.3 Anemia',onChanged: (val){},),
+        MSmallText(text: 'E2.2 SPo2 (%) all four limbs :',),
         Space(),
         MTextField(enabled:widget.enabled,label: 'RUL: ',onChanged: (val){},type: MInputType.numeric,),
         MTextField(enabled:widget.enabled,label: 'RLL: ',onChanged: (val){},type: MInputType.numeric,),
         MTextField(enabled:widget.enabled,label: 'LUL: ',onChanged: (val){},type: MInputType.numeric,),
         MTextField(enabled:widget.enabled,label: 'LLL: ',onChanged: (val){},type: MInputType.numeric,),
-        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E2.5 HCT (%) ',type: MInputType.numeric,onChanged: (val){},),
-        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E2.6 S. Ferritin: ',type: MInputType.numeric,onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E2.3 Hematocrit (%) ',type: MInputType.numeric,onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E2.4 S. Ferritin: ',type: MInputType.numeric,onChanged: (val){},),
         MrowTextTextFieldWidget(enabled:widget.enabled,title: 'E3 Any other relevant information/ remarks: ',onChanged: (val){},),
        // MFilledButton(text: 'Submit',onPressed: (){ context.push(Routes.Home);},)
       ],);

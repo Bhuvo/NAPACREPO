@@ -34,7 +34,7 @@ class _FromE2CommonState extends State<FromE2Common> {
               }
               widget.radioiOnChanged?.call(val);
             },),
-      isYes? MTextField( initalValue:widget.TextInitialValue,label: 'Gest Age',onChanged:widget.TextFieldOnChanged ,): Container(),
+      isYes? MTextField( initalValue:widget.TextInitialValue,label: 'Gestational Age',onChanged:widget.TextFieldOnChanged ,): Container(),
       isYes? MDivider(): Container(),
     ],);
   }

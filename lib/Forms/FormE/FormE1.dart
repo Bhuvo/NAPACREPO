@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:npac/Forms/FormE/FormE2.dart';
 import 'package:npac/Forms/FormE/FormEModel/FormEModel.dart';
 import 'package:npac/Forms/FormE/controller/FormEController.dart';
+import 'package:npac/Forms/FormN/FormN3.dart';
 import 'package:npac/Views/MothersList/MotherListModel.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MRowTextDropDown.dart';
@@ -118,7 +119,7 @@ RxList<String> selectedlist = <String>[].obs;
           MrowTextDatePickerWidget(enabled : isEnabled,title: 'H2 Date of abortion:',initialDate: stringToDate(formEData.value.visitDate ?? ''),onChanged: (val){
             formEData.value.visitDate = dateToString(val);
           },),
-          MRowTextDropDown(enabled: isEnabled,title: 'H3. Period of gestation  (in completed weeks) :',initialValue: formEData.value.periodOfGestation,),
+          MRowTextDropDown(enabled: isEnabled,title: 'H3. Gestational age (in weeks):',initialValue: formEData.value.periodOfGestation,),
           // MrowTextTextFieldWidget(enabled : isEnabled,title: 'H3. Period of gestation  (in completed weeks) :',initialValue: formEData.value.periodOfGestation,onChanged: (val){
           //   formEData.value.periodOfGestation = val;
           // },type: MInputType.numeric,),
@@ -270,11 +271,13 @@ RxList<String> selectedlist = <String>[].obs;
             });
           }
           formEData.value.antibioticProphylaxis = val;
-            },title: 'H8 Antibiotic Prophylaxis:',isneedDivider:isProphylaxis? false: true,),
+            },title: 'H8 Antibiotic Prophylaxis:',isneedDivider:false),
           isProphylaxis ? MTextField(label: 'If Yes details: ',initalValue: formEData.value.antibioticProphylaxisDetails,onChanged: (val){
             isProphylaxis ? formEData.value.antibioticProphylaxisDetails = val: null;
           },) : Container(),
-          isProphylaxis? const MDivider(): Container(),
+          // isProphylaxis? const MDivider(): Container(),
+          isProphylaxis ?FormN3() : Container(),
+          MDivider(),
           // MRowTextRadioWidget(title: 'E6 Contraception advised after MTP/Abortion:',),
           MRowTextRadioWidget(enabled : isEnabled,initialValue: formEData.value.contraceptionAdvisedAfterMtp,title: 'H9 Contraception advised after MTP/Abortion:',onChanged: (val){if(val =='Yes'){
             setState(() {
@@ -330,7 +333,7 @@ RxList<String> selectedlist = <String>[].obs;
           //     formEData.value.obstetricOutcome = null;
           //   }
           // },isneedDivider: false,) : Container(),
-          isObstetric ?MRowTextCheckBox(title:'H10.1 OBSTETRIC OUTCOME',enabled : isEnabled,result: (val){
+          isObstetric ?MRowTextCheckBox(title:'H10.1 Obstetric outcome related to MTP',enabled : isEnabled,result: (val){
             //formEData.value.obstetricOutcome = val.toString();
           },list: ['Perforation','Rupture','Hemorrhage','Retained products/Sepsis'],) : Container(),
          //MDivider(),

@@ -12,6 +12,10 @@ class Routes {
   static const String MothersList= '/MothersList';
   static const String MothersDetails= '/MothersDetails';
 
+  static const String FormE = '/FormE';
+  static const String FormF = '/FormF';
+  static const String FormG = '/FormG';
+
 
   static const String Form1 = '/Form1';
   static const String Form2 = '/Form2';

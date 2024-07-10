@@ -16,7 +16,7 @@ class _FormL1State extends State<FormL1> {
   bool isRVAbnormal = false;
   bool isOthers = false;
   bool isEnabled = false;
-
+  bool ecgAbnormal = false;
   @override
   Widget build(BuildContext context) {
     return MScaffold(
@@ -44,11 +44,15 @@ class _FormL1State extends State<FormL1> {
         MrowTextTextFieldWidget(enabled: isEnabled,title: 'L2.2 HR (/min): ',onChanged: (val){},type: MInputType.numeric,),
         MrowTextTextFieldWidget(enabled: isEnabled,title: 'L2.3 SPO2 (%): ',onChanged: (val){},type: MInputType.numeric,),
         MrowTextTextFieldWidget(enabled: isEnabled,title: 'L2.4 BP (mm Hg): ',onChanged: (val){},type: MInputType.numeric,),
-        MRowTextRadioWidget(enabled: isEnabled,title: 'L2.5 CCF: ',onChanged: (val){},),
+        MRowTextRadioWidget(enabled: isEnabled,title: 'L2.5 Heart failure: ',onChanged: (val){},),
         MRowTextRadioWidget(enabled: isEnabled,title: 'L2.6 Cyanosis:  ',onChanged: (val){},),
         MRowTextRadioWidget(enabled: isEnabled,title: 'L2.7 Cardiac murmur:',onChanged: (val){},),
         MrowTextDatePickerWidget(enabled: isEnabled,title: 'L2.8 ECG Date:',onChanged: (val){},isneedDivider: false,),
-        MRowTextRadioWidget(enabled: isEnabled,options:List_items.NormalAbnormal ,onChanged: (val){},),
+        MRowTextRadioWidget(enabled: isEnabled,options:List_items.NormalAbnormal ,onChanged: (val){
+          val == 'Abnormal' ? ecgAbnormal = true : ecgAbnormal =false;
+          setState(() {});
+        },),
+        ecgAbnormal?  MFilledButton(text: 'Upload ECG',onPressed: (){},): Container(),
         MSmallText(text: 'L3 ECHOCARDIOGRAPHIC ASSESSMENT',),
         Space(),
         MSmallText(text: 'Ventricular function ',),

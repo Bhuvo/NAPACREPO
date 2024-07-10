@@ -53,16 +53,16 @@ class _FormD9State extends State<FormD9> {
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '6 Mild mitral stenosis',onChanged: (val){},isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '7 Taking cardiac medications',onChanged: (val){}),
 
-        const MText(text: 'D13.5 TNPHDR Risk category: (Yes/NO) ',),
-        const Space(),
-        MRowTextRadioWidget(enabled: widget.isEnabled,title: '1 Low risk',onChanged: (val){},isneedDivider: false,),
-        MRowTextRadioWidget(enabled: widget.isEnabled,title: '2 High risk',onChanged: (val){}),
+        // const MText(text: 'D13.5 MPAC 4 Risk category: (Yes/NO) ',),
+        // const Space(),
+        MRowTextRadioWidget(enabled: widget.isEnabled,title: 'D13.5 MPAC 3 Risk category',onChanged: (val){},options: ['Low risk','Intermediate','High risk'],isneedDivider: false,),
+        // MRowTextRadioWidget(enabled: widget.isEnabled,title: '2 High risk',onChanged: (val){}),
 
-        const MText(text: 'D13.6 MPAC Risk category: (Yes/NO) ',),
-        const Space(),
-        MRowTextRadioWidget(enabled: widget.isEnabled,title: '1 Low risk',onChanged: (val){},isneedDivider: false,),
-        MRowTextRadioWidget(enabled: widget.isEnabled,title: '1 Intermediate',onChanged: (val){},isneedDivider: false,),
-        MRowTextRadioWidget(enabled: widget.isEnabled,title: '2 High risk',onChanged: (val){}),
+        // const MText(text: 'D13.6 MPAC 3 Risk category: (Yes/NO) ',),
+        // const Space(),
+        MRowTextRadioWidget(enabled: widget.isEnabled,title: 'D13.6 MPAC 4 Risk category ',onChanged: (val){},options: ['low risk','High risk','Moderate risk','Very high risk'],isneedDivider: false,),
+        // MRowTextRadioWidget(enabled: widget.isEnabled,title: '1 Intermediate',onChanged: (val){},isneedDivider: false,),
+        // MRowTextRadioWidget(enabled: widget.isEnabled,title: '2 High risk',onChanged: (val){}),
 
         MRowTextRadioWidget(enabled: widget.isEnabled,title: 'Any specific advice given in the visit: ',onChanged: (val){val=='Yes' ? setState(() {
           isAdvice = true;

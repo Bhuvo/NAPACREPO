@@ -56,7 +56,10 @@ class _MrowTextDatePickerWidgetState extends State<MrowTextDatePickerWidget> {
                   //     'Other'
                   //   ],
                   // ),
-                  MDateTimePicker(enabled:widget.enabled,start: DateTime.utc(1950), end: DateTime.now(),onChanged:widget.onChanged,initial:widget.initialDate,)
+                  MDateTimePicker(enabled:widget.enabled,start: DateTime.utc(1950), end: DateTime.now(),onChanged:(val){
+                    widget.onChanged!.call(val);
+                    setState(() {});
+                  },initial:widget.initialDate,)
 
                 ],
               ),

@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:npac/API/api.dart';
 class FormA1Controller extends GetxController{
   // Rx<BaseLineData>  formA1Data = BaseLineData().obs;
+  RxInt age =0 .obs;
   Future<BaseLineData?> getBaseLineData(int patientId)async{
     patientId = 102;
     var response = await http.get(Uri.parse('${Api.baseUrl}${Api.getBaseLineData}$patientId'));

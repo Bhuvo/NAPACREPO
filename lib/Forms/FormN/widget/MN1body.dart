@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:npac/app/export.dart';
+import 'package:npac/common_widget/MRowTextDropDown.dart';
 
 class MN1Body extends StatefulWidget {
   final String? title;
@@ -43,22 +44,29 @@ class _MN1BodyState extends State<MN1Body> {
           print('Selected drug list $e');},title: widget.textTitle ?? 'DRUG',options:widget.options ?? [],),
         ListView(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           children:drugList.map((e) {
             return Column(
               children: [
+                MText(text: '$e',),
                 wantText.contains(e)?  MrowTextTextFieldWidget(title: 'Specify',type: MInputType.text,onChanged: (val){},isneedDivider: false,): Container(),
-                MrowTextTextFieldWidget(enabled: widget.isEnable,title: '$e Dose',type: MInputType.numeric,onChanged: (val){
+                MrowTextTextFieldWidget(enabled: widget.isEnable,title: '$e Dose',isneedDivider: false,type: MInputType.numeric,onChanged: (val){
                   setState(() {
                     drugMap[e] = val;
                   });
                   widget.drugMap?.call(drugMap);
                 },),
+                MRowTextDropDown(title: '$e Frequency',items: ['OD','BID','TID','QID','Stat','SOS'],isneedDivider: false,onChanged: (val){},),
+                // MRowTextRadioWidget(title: '$e Frequency',onChanged: (val){},options: ['OD','BID','TID','QID','Stat','SOS'],),
+                MRowTextDropDown(title: '$e Route',isneedDivider: false,onChanged: (val){},items: ['Oral','IV Bolus','Infusion','Subcutaneous','Intramuscular',]),
+                MrowTextTextFieldWidget(title: 'Duration advised',isneedDivider: false,type: MInputType.numeric,onChanged: (val){},),
+                // Space(),
               ],
             );
           }).toList(),
         ),
       ],): Container(),
-
+        MDivider(),
     ],);
   }
 }

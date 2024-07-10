@@ -15,12 +15,7 @@ class _FormN3State extends State<FormN3> {
   int count = 1;
   @override
   Widget build(BuildContext context) {
-    return MScaffold(
-      appBar: MAppBar(title: 'N. DRUG PAGE-USE AND DOSAGE',),
-      floatingActionButton: IconButton(onPressed: () {setState(() {
-        count++;
-      });}, icon: Icon(Icons.add,size: 50,),color:context.primary,),
-      body: MFormBody(Childrens: [
+    return Column(children: [
         Row(
           children: [
             MText(text: 'Antibiotics Used (incl IE prophylaxis)',),
@@ -28,6 +23,7 @@ class _FormN3State extends State<FormN3> {
         ),
         Space(),
         ListView(
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
             for(int i = 1; i < count; i++)  AntibioticsBody(index: i,onChanged: (e){},onDelete: (){setState(() {
@@ -35,9 +31,15 @@ class _FormN3State extends State<FormN3> {
             });},),
           ],
         ),
+
        // AntibioticsBody(index: 1,)
-      MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
-      ],),
-    );
+      MFilledButton(text: 'ADD',onPressed: (){setState(() {
+        count++;
+      });},),
+      Space(),
+      // MDivider()
+      // Space(),
+      // MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
+      ],);
   }
 }

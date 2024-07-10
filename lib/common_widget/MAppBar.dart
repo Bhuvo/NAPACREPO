@@ -12,7 +12,7 @@ class MAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 60,
       //automaticallyImplyLeading: false,
       backgroundColor: context.primary,
-      title: Center(child: Text(title)),
+      title: Center(child: Text(title,maxLines: 3,)),
     );
   }
 
