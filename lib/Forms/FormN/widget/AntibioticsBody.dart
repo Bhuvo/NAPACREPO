@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:npac/Forms/FormE/FormEModel/AntiBodiesList.dart';
+import 'package:npac/Forms/FormE/controller/FormEController.dart';
 import 'package:npac/app/export.dart';
 
 class AntibioticsBody extends StatefulWidget {
+  final int? patientId;
+  final AntibioticsList? data;
+  final FormEController? controller;
   final int? index;
   final Function(Map<String, String>)? onChanged;
   final Function()? onDelete;
-  const AntibioticsBody({super.key, this.onChanged, this.index, this.onDelete});
+  const AntibioticsBody({super.key, this.onChanged, this.index, this.onDelete, this.data, this.controller, this.patientId});
 
   @override
   State<AntibioticsBody> createState() => _AntibioticsBodyState();
@@ -14,7 +19,7 @@ class AntibioticsBody extends StatefulWidget {
 class _AntibioticsBodyState extends State<AntibioticsBody> {
   Map<String , String> detailsMap = {};
   bool isExpanded = false;
-
+  bool isEdited = false;
   @override
   Widget build(BuildContext context) {
     return !isExpanded ? Column(
@@ -28,7 +33,7 @@ class _AntibioticsBodyState extends State<AntibioticsBody> {
               setState(() {
                 isExpanded = !isExpanded;
               });
-            }, icon: Icon(Icons.arrow_drop_down_sharp,))
+            }, icon: Icon(Icons.edit,))
           ],),
       ],
     ): Column(
@@ -39,29 +44,36 @@ class _AntibioticsBodyState extends State<AntibioticsBody> {
           children: [
           MText(text: 'Antibiotics Details ${widget.index}',),
           IconButton(onPressed: (){setState(() {
+            widget.controller?.saveAntibiotics(context, detailsMap['Name']?? '', detailsMap['Purpose']??'', detailsMap['GestWeeks']??'', detailsMap['DurationInDays']??'', widget.data?.abId, widget.patientId!);
             isExpanded = !isExpanded;
-          });}, icon: Icon(Icons.arrow_drop_up_sharp,))
+          });}, icon: Icon(Icons.save,))
         ],),
         Row(mainAxisAlignment: MainAxisAlignment.end,children: [IconButton(onPressed:widget.onDelete, icon: Icon(Icons.delete))],),
-        MrowTextTextFieldWidget(title: 'Name',onChanged: (val){setState(() {
+        MrowTextTextFieldWidget(enabled: isExpanded,initialValue: widget.data?.name,title: 'Name',onChanged: (val){
+          isEdited = true;
+          setState(() {
           detailsMap['Name'] = val;
         });
           widget.onChanged?.call(detailsMap);
           },isneedDivider: false,),
-        MrowTextTextFieldWidget(title: 'Trimester of use',onChanged: (val){
+        MrowTextTextFieldWidget(enabled: isExpanded,title: 'Gest weeks of use',initialValue: widget.data?.gestWeeks,onChanged: (val){
+          isEdited = true;
           setState(() {
-            detailsMap['Trimester of use'] = val;
+            detailsMap['GestWeeks'] = val;
           });
           widget.onChanged?.call(detailsMap);
         },isneedDivider: false,),
-        MrowTextTextFieldWidget(title: 'Purpose',onChanged: (val){
+        MrowTextTextFieldWidget(enabled: isExpanded,title: 'Purpose',initialValue: widget.data?.purpose,onChanged: (val){
+          isEdited = true;
           setState(() {
             detailsMap['Purpose'] = val;
           });
           widget.onChanged?.call(detailsMap);
         },isneedDivider: false,),
-        MrowTextTextFieldWidget(title: 'No of days',onChanged: (val){setState(() {
-          detailsMap['No of days'] = val;
+        MrowTextTextFieldWidget(enabled: isExpanded,title: 'Duration In Days',initialValue: widget.data?.durationInDays,onChanged: (val){
+          isEdited = true;
+          setState(() {
+          detailsMap['DurationInDays'] = val;
         });
         widget.onChanged?.call(detailsMap);
         },type: MInputType.numeric,isneedDivider: false,),

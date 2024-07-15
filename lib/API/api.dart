@@ -24,6 +24,9 @@ class Api{
 
   static const String saveMTP ='VRAPI/SaveAbortionMTPForm';
   static const String getMTP ='VRAPI/GetMtpFormDetails';
+  static const String getAntibiotics ='VRAPI/GetMtpAntibioticsDetails';
+  static const String saveAntibiotics ='VRAPI/SaveMtpAntiBioticsDetails';
+  static const String deleteAntibiotics ='VRAPI/DeleteAntibioticDetails?AbId=';
 
   static const String getAntenatalVisitOne ='VRAPI/GetAntenatalVisitFormDetails';
   static const String updateAntenatalVisitOne ='VRAPI/SaveAntenatalVisitForm';

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:npac/API/api.dart';
+import 'package:npac/Forms/FormE/FormEModel/AntiBodiesList.dart';
 import 'package:npac/Forms/FormE/FormEModel/FormEModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:npac/app/export.dart';
@@ -10,23 +11,26 @@ import 'package:npac/app/export.dart';
 class FormEController extends GetxController{
 
   Rx<FormEModel> formEModelData = FormEModel().obs;
+  RxList<AntibioticsList> antiBodiesListData= <AntibioticsList>[].obs;
 
-  Future<FormEModel> getMTPData(int patientId)async{
+  Future<FormEModel> getMTPData(BuildContext context,int patientId)async{
     var body= {
       "PatientId": patientId
     };
     var response = await http.post(Uri.parse('${Api.baseUrl}${Api.getMTP}'),headers: apiHeader,body: jsonEncode(body));
     if(response.statusCode==200){
       var result = FormEModel.fromJson(jsonDecode(response.body));
-      print(result.abortType);
+      // print(result.abortType);
+      context.showSnackBar('MTP data fetched successfully');
       return result;
     }else{
+      context.showSnackBar('Error while fetching MTP data');
       print(response.body);
     }
     return FormEModel();
   }
 
-  Future<void> saveData(FormEModel data, int patientId)async{
+  Future<void> saveData(BuildContext context ,FormEModel data, int patientId)async{
     data.doctorId =2;
     data.patientId = patientId;
     var bo ={
@@ -102,15 +106,65 @@ class FormEController extends GetxController{
       "MisoprostolDose": "4"//string or varchar
     };
     var fin =removeNulls(data.toJson());
-    print(jsonEncode(fin));
+    // print(jsonEncode(fin));
     // print(jsonEncode(data));
     var response = await http.post(Uri.parse('${Api.baseUrl}${Api.saveMTP}',),headers: {'Content-Type': 'application/json'},body:jsonEncode(fin));
     if(response.statusCode == 200){
-      print(response.body);
+      // print(response.body);
+      context.showSnackBar('MTP data saved successfully');
+      await getMTPData(context,patientId);
   }else{
-     // print(response.body);
+      context.showSnackBar('Error while saving MTP data');
       print('Error while saving MTP data');
     }
     }
+
+  Future<void> getAntibiotics(BuildContext context,int patientId) async {
+    var response = await http.post(
+      Uri.parse('${Api.baseUrl}${Api.getAntibiotics}'),
+      headers: apiHeader,
+      body: jsonEncode({
+        "PatientId": patientId,
+      }),
+    );
+    if (response.statusCode == 200) {
+      // print(response.body);
+      List<dynamic> responseBody = jsonDecode(response.body);
+      antiBodiesListData.value = responseBody.map((data) => AntibioticsList.fromJson(data)).toList();
+    } else {
+      // print(response.body);
+      context.showSnackBar('Error while fetching Antibodies data');
+    }
+  }
+
+  Future<void> saveAntibiotics(BuildContext context, String name, String purpose, String gestWeeks, String durationInDays,int? id,int patientId)async{
+    var response = await http.post(Uri.parse('${Api.baseUrl}${Api.saveAntibiotics}'),headers: apiHeader,body: jsonEncode({
+      "AbId": id,
+      "PatientId": patientId,
+      "DoctorId": 2,
+      "Name": name,
+      "Purpose": purpose,
+      "GestWeeks": gestWeeks,
+      "DurationInDays": durationInDays
+    }));
+    if(response.statusCode == 200){
+      context.showSnackBar('Antibiotics data saved successfully');
+      getAntibiotics(context,patientId);
+    }else{
+      context.showSnackBar('Error while saving Antibodies data');
+    }
+  }
+
+  Future<void> deleteAntibiotics(BuildContext context,int id,int patientId)async{
+    var response = await http.post(Uri.parse('${Api.baseUrl}${Api.deleteAntibiotics}$id'),headers: apiHeader);
+    if(response.statusCode == 200){
+      context.showSnackBar('Antibiotics data deleted successfully');
+      await getAntibiotics(context,patientId);
+    }else{
+      context.showSnackBar('Error while deleting Antibodies data');
+    }
+  }
+
+
 
 }

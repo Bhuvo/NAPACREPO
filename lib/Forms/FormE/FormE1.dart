@@ -5,6 +5,7 @@ import 'package:npac/Forms/FormE/controller/FormEController.dart';
 import 'package:npac/Forms/FormN/FormN3.dart';
 import 'package:npac/Views/MothersList/MotherListModel.dart';
 import 'package:npac/app/export.dart';
+import 'package:npac/common_widget/MRowTextCheckBox.dart';
 import 'package:npac/common_widget/MRowTextDropDown.dart';
 import 'package:npac/widgets/loading_widget.dart';
 
@@ -35,9 +36,11 @@ class _FormE1State extends State<FormE1> {
    bool isLoading = false;
 
 RxList<String> selectedlist = <String>[].obs;
+RxList<String> MTPselectedlist = <String>[].obs;
+
  @override
   void initState() {
-   selectedlist.value.add( 'Suction & evacuation');
+   // selectedlist.value.add( 'Suction & evacuation');
    getMTPData();
     super.initState();
   }
@@ -48,7 +51,8 @@ RxList<String> selectedlist = <String>[].obs;
    });
    if(widget.isFromPatientDetails ?? false){
    //await controller.getMTPData(8);
-   formEData.value = await controller.getMTPData(int.parse(widget.data?.tNPHDRNOID?? '0'));
+   formEData.value = await controller.getMTPData( context ,int.parse(widget.data?.tNPHDRNOID?? '0'));
+   await controller.getAntibiotics(context,int.parse(widget.data?.tNPHDRNOID?? '0') );
    Future.delayed(Duration(seconds: 1));
    print(formEData.value.methodSuctionEvacuation);
    formEData.value.methodSuctionEvacuation ?? false ?selectedlist.value.add( 'Suction & evacuation'): null;
@@ -60,6 +64,13 @@ RxList<String> selectedlist = <String>[].obs;
    formEData.value.methodDinoprostone  ?? false ?selectedlist.value.add( 'Dinoprostone'): null;
    formEData.value.methodMechanical ?? false ?selectedlist.value.add( 'Mechanical methods'): null;
    formEData.value.methodOxytocin ?? false ?selectedlist.value.add( 'Oxytocin'): null;
+
+   formEData.value.MtpCardiac?? false ?MTPselectedlist.value.add( 'Maternal - Cardiac'): null;
+   formEData.value.MtpObstetric?? false ?MTPselectedlist.value.add( 'Maternal- Obstetric'): null;
+   formEData.value.MtpFetal?? false ?MTPselectedlist.value.add( 'Fetal'): null;
+   formEData.value.MtpSocial?? false ?MTPselectedlist.value.add( 'Social / others'): null;
+
+
    print(formEData.value.methodSuctionEvacuation);
    setState(() {
      isEnabled = false;
@@ -119,12 +130,20 @@ RxList<String> selectedlist = <String>[].obs;
           MrowTextDatePickerWidget(enabled : isEnabled,title: 'H2 Date of abortion:',initialDate: stringToDate(formEData.value.visitDate ?? ''),onChanged: (val){
             formEData.value.visitDate = dateToString(val);
           },),
-          MRowTextDropDown(enabled: isEnabled,title: 'H3. Gestational age (in weeks):',initialValue: formEData.value.periodOfGestation,),
+          MRowTextDropDown(enabled: isEnabled,title: 'H3. Gestational age (in weeks):',initialValue: formEData.value.GestationalAge,onChanged: (val){
+            formEData.value.GestationalAge = val;
+          },),
           // MrowTextTextFieldWidget(enabled : isEnabled,title: 'H3. Period of gestation  (in completed weeks) :',initialValue: formEData.value.periodOfGestation,onChanged: (val){
           //   formEData.value.periodOfGestation = val;
           // },type: MInputType.numeric,),
-          MRowTextRadioWidget(enabled : isEnabled,title: 'H4 Indication for MTP: ',initialValue: formEData.value.indicationForMtp,options: const ['Maternal', 'Fetal'],onChanged: (val){
-            formEData.value.indicationForMtp = val;
+          MRowTextCheckBox(enabled : isEnabled,title: 'H4 Indication for MTP: ',selectedlist: MTPselectedlist,list: const ['Maternal - Cardiac','Maternal- Obstetric', 'Fetal','Social / others'],result: (val){
+            // formEData.value.indicationForMtp = val;
+            // MTPselectedlist.value = val;
+            val.contains('Maternal - Cardiac') ? formEData.value.MtpCardiac = true : formEData.value.MtpCardiac = false;
+            val.contains('Maternal- Obstetric') ? formEData.value.MtpObstetric = true : formEData.value.MtpObstetric = false;
+            val.contains('Fetal') ? formEData.value.MtpFetal = true : formEData.value.MtpFetal = false;
+            val.contains('Social / others') ? formEData.value.MtpSocial = true : formEData.value.MtpSocial = false;
+            setState(() {});
           },),
           MRowTextRadioWidget(enabled : isEnabled,title: 'H5 Gestation at which MTP performed: ',initialValue: formEData.value.gestationWeek,options: const ['Less than 12 weeks', 'Between 12 to 20 weeks','After 20 week'],onChanged: (val){
             formEData.value.gestationWeek = val;
@@ -272,11 +291,11 @@ RxList<String> selectedlist = <String>[].obs;
           }
           formEData.value.antibioticProphylaxis = val;
             },title: 'H8 Antibiotic Prophylaxis:',isneedDivider:false),
-          isProphylaxis ? MTextField(label: 'If Yes details: ',initalValue: formEData.value.antibioticProphylaxisDetails,onChanged: (val){
-            isProphylaxis ? formEData.value.antibioticProphylaxisDetails = val: null;
-          },) : Container(),
+          // isProphylaxis ? MTextField(label: 'If Yes details: ',initalValue: formEData.value.antibioticProphylaxisDetails,onChanged: (val){
+          //   isProphylaxis ? formEData.value.antibioticProphylaxisDetails = val: null;
+          // },) : Container(),
           // isProphylaxis? const MDivider(): Container(),
-          isProphylaxis ?FormN3() : Container(),
+          isProphylaxis ?FormN3(controller: controller,) : Container(),
           MDivider(),
           // MRowTextRadioWidget(title: 'E6 Contraception advised after MTP/Abortion:',),
           MRowTextRadioWidget(enabled : isEnabled,initialValue: formEData.value.contraceptionAdvisedAfterMtp,title: 'H9 Contraception advised after MTP/Abortion:',onChanged: (val){if(val =='Yes'){
@@ -340,7 +359,7 @@ RxList<String> selectedlist = <String>[].obs;
          // MFilledButton(onPressed: (){context.push(Routes.FormE2);},text: 'Next',)
           isObstetric? FormE2(formEData: formEData,enabled: isEnabled,) : Container(),
          (widget.isFromPatientDetails ?? false )? MFilledButton(text:isEnabled ? 'Save': 'Edit',onPressed: () async {
-           isEnabled ? { await controller.saveData(formEData.value,int.parse(widget.data?.tNPHDRNOID ?? '')),
+           isEnabled ? { await controller.saveData(context,formEData.value,int.parse(widget.data?.tNPHDRNOID ?? '')),
            setState(() {
            isEnabled = !isEnabled;
            })
@@ -348,7 +367,7 @@ RxList<String> selectedlist = <String>[].obs;
              isEnabled = !isEnabled;
            });
          },):  MFilledButton(text: 'Submit',onPressed: (){
-           controller.saveData(formEData.value,int.parse(widget.data?.tNPHDRNOID ?? ''));
+           controller.saveData(   context,formEData.value,int.parse(widget.data?.tNPHDRNOID ?? ''));
            //print(formEData.value.toJson());
          }),
         ],),

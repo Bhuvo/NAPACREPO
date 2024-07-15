@@ -4,8 +4,11 @@ class FormEModel {
   int? doctorId;
   String? abortType;
   String? visitDate;
-  String? periodOfGestation;
-  String? indicationForMtp;
+  String? GestationalAge;
+  bool? MtpCardiac;
+  bool? MtpObstetric;
+  bool? MtpFetal;
+  bool? MtpSocial;
   String? gestationWeek;
   String? methodAdoptedForMtp;
   bool? methodSuctionEvacuation;
@@ -46,6 +49,8 @@ class FormEModel {
   String? venousThromboembolism;
   String? venousThromboembolismDetails;
   String? bleedingMajorMinor;
+  String? bleedingMajorMinorObestric;
+  String? bleedingMajorMinorNonObestric;
   String? bleedingMajorMinorValue;
   String? bleedingMajorMinorDetails;
   String? infectiveEndocarditis;
@@ -77,9 +82,12 @@ class FormEModel {
         this.doctorId,
         this.abortType,
         this.visitDate,
-        this.periodOfGestation,
-        this.indicationForMtp,
+        this.GestationalAge,
         this.gestationWeek,
+        this.MtpCardiac,
+        this.MtpObstetric,
+        this.MtpFetal,
+        this.MtpSocial,
         this.methodAdoptedForMtp,
         this.methodSuctionEvacuation,
         this.methodDilationCurettage,
@@ -119,6 +127,8 @@ class FormEModel {
         this.venousThromboembolism,
         this.venousThromboembolismDetails,
         this.bleedingMajorMinor,
+        this.bleedingMajorMinorObestric,
+        this.bleedingMajorMinorNonObestric,
         this.bleedingMajorMinorValue,
         this.bleedingMajorMinorDetails,
         this.infectiveEndocarditis,
@@ -150,8 +160,11 @@ class FormEModel {
     doctorId = json['DoctorId'];
     abortType = json['AbortType'];
     visitDate = json['VisitDate'];
-    periodOfGestation = json['PeriodOfGestation'];
-    indicationForMtp = json['IndicationForMtp'];
+    GestationalAge = json['GestationalAge'];
+    MtpCardiac = json['MtpCardiac'];
+    MtpObstetric = json['MtpObstetric'];
+    MtpFetal = json['MtpFetal'];
+    MtpSocial = json['MtpSocial'];
     gestationWeek = json['GestationWeek'];
     methodAdoptedForMtp = json['MethodAdoptedForMtp'];
     methodSuctionEvacuation = json['MethodSuctionEvacuation'];
@@ -193,6 +206,8 @@ class FormEModel {
     venousThromboembolism = json['VenousThromboembolism'];
     venousThromboembolismDetails = json['VenousThromboembolismDetails'];
     bleedingMajorMinor = json['BleedingMajorMinor'];
+    bleedingMajorMinorObestric = json['BleedingMajorMinorObestric'];
+    bleedingMajorMinorNonObestric = json['BleedingMajorMinorNonObestric'];
     bleedingMajorMinorValue = json['BleedingMajorMinorValue'];
     bleedingMajorMinorDetails = json['BleedingMajorMinorDetails'];
     infectiveEndocarditis = json['InfectiveEndocarditis'];
@@ -229,8 +244,11 @@ class FormEModel {
     data['DoctorId'] = this.doctorId;
     data['AbortType'] = this.abortType;
     data['VisitDate'] = this.visitDate;
-    data['PeriodOfGestation'] = this.periodOfGestation;
-    data['IndicationForMtp'] = this.indicationForMtp;
+    data['GestationalAge'] = this.GestationalAge;
+    data['MtpCardiac'] = this.MtpCardiac;
+    data['MtpObstetric'] = this.MtpObstetric;
+    data['MtpFetal'] = this.MtpFetal;
+    data['MtpSocial'] = this.MtpSocial;
     data['GestationWeek'] = this.gestationWeek;
     data['MethodAdoptedForMtp'] = this.methodAdoptedForMtp;
     data['MethodSuctionEvacuation'] = this.methodSuctionEvacuation;
@@ -276,6 +294,8 @@ class FormEModel {
     data['VenousThromboembolism'] = this.venousThromboembolism;
     data['VenousThromboembolismDetails'] = this.venousThromboembolismDetails;
     data['BleedingMajorMinor'] = this.bleedingMajorMinor;
+    data['BleedingMajorMinorObestric'] = this.bleedingMajorMinorObestric;
+    data['BleedingMajorMinorNonObestric'] = this.bleedingMajorMinorNonObestric;
     data['BleedingMajorMinorValue'] = this.bleedingMajorMinorValue;
     data['BleedingMajorMinorDetails'] = this.bleedingMajorMinorDetails;
     data['InfectiveEndocarditis'] = this.infectiveEndocarditis;

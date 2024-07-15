@@ -94,9 +94,11 @@ class _FormE2State extends State<FormE2> {
          }
          widget.formEData?.value.bleedingMajorMinor = val;
        },isneedDivider: false,options: ['Obstetric','Non-Obstetric'],),
-        isObstetric? MTextField(enabled : widget.enabled,label: 'Obstetric Details',onChanged: (val){
+        isObstetric? MTextField(enabled : widget.enabled, initalValue: widget.formEData?.value.bleedingMajorMinorObestric,label: 'Obstetric Details',onChanged: (val){
+          widget.formEData?.value.bleedingMajorMinorObestric;
         },): Container(),
-        isNonObstetric? MTextField(enabled : widget.enabled,label: 'Non-Obstetric Details',onChanged: (val){
+        isNonObstetric? MTextField(enabled : widget.enabled,initalValue: widget.formEData?.value.bleedingMajorMinorNonObestric,label: 'Non-Obstetric Details',onChanged: (val){
+          widget.formEData?.value.bleedingMajorMinorNonObestric;
         },): Container(),
         FromE2Common(enabled : widget.enabled,radioInitialValue: widget.formEData?.value.bleedingMajorMinorValue, TextInitialValue: widget.formEData?.value.bleedingMajorMinorDetails,title: '',radioiOnChanged: (val){
           widget.formEData?.value.bleedingMajorMinorValue = val;
