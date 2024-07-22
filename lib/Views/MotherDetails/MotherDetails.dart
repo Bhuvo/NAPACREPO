@@ -83,6 +83,20 @@ class MotherDetails extends StatelessWidget {
                 child: Card(
                   child: Center(child: Text('FORM K- PERIPARTUM VISIT FORM')),),
               ),
+              InkWell(
+                onTap: (){
+                  context.push(Routes.FormL1);
+                },
+                child: Card(
+                  child: Center(child: Text('FORM L- FIRST POST PARTUM VISIT FORM')),),
+              ),
+              InkWell(
+                onTap: (){
+                  context.push(Routes.FormM1);
+                },
+                child: Card(
+                  child: Center(child: Text('FORM M- SECOND POST PARTUM VISIT FORM')),),
+              ),
             ],
             ),
           )

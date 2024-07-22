@@ -12,6 +12,7 @@ import 'package:npac/app/export.dart';
 class AntenalFormJController extends GetxController{
 
   RxList<EchoImageModel> echoModel = <EchoImageModel>[].obs;
+  Rx<EchoAssignmentModel> FormJEchoAssignmentData = EchoAssignmentModel().obs;
   Rx<FormFModel> FormJData = FormFModel().obs;
   Rx<bool> isLoading = false.obs;
   RxList<EchoImageModel> outCome = <EchoImageModel>[].obs;

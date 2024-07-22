@@ -158,6 +158,9 @@ class _FormE2State extends State<FormE2> {
       MrowTextTextFieldWidget(enabled : widget.enabled,initialValue: widget.formEData?.value.otherComplications,title: '10.3.6 Other Complications/Outcome',onChanged: (val){
         widget.formEData?.value.otherComplications = val;
       },),
+        MrowTextTextFieldWidget(title: 'Signature of Site PI/ I - Cardiology',enabled : widget.enabled,initialValue: widget.formEData?.value.cardiologyVerifiedBy,onChanged: (val){
+          widget.formEData?.value.cardiologyVerifiedBy = val;
+        },),
         MrowTextTextFieldWidget(enabled : widget.enabled, initialValue: widget.formEData?.value.totalHospitalStayDuration,title: 'H11 Total duration of hospital stay: Number of days: ',onChanged: (val){
           widget.formEData?.value.totalHospitalStayDuration = val;
         },type: MInputType.numeric,),

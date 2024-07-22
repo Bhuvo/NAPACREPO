@@ -93,7 +93,7 @@ class _FormThree2PageState extends State<FormThree2Page> {
           val.contains('Ectopic pregnancy') ? widget.Modeldata?.ectopicPregnancy = true : widget.Modeldata?.ectopicPregnancy = false;
         });
       },isneedDivider: false,) : Container(),
-      widget.Modeldata?.previousPregnancyOutcome == 'Induced Abortion' || widget.Modeldata?.previousPregnancyOutcome == 'Spontaneous Abortion' ?
+      widget.Modeldata?.previousPregnancyOutcome == 'Induced Abortion' ?
       MRowTextCheckBox(enabled: widget.isEnabled,selectedlist: indicationSelected,title: 'Indication for induced abortion:',isneedDivider: false,result: (val){
         setState(() {
           val.contains('Maternal - Cardiac') ? widget.Modeldata?.maternalCardiac = true : widget.Modeldata?.maternalCardiac = false;

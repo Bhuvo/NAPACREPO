@@ -1,7 +1,6 @@
 class RegistrationModel {
   int? prePregDetailId;
   int? tNPHDRNoId;
-  String? firstDiagnosedOfHeartDisease;
   String? heartdiseaseDiagnosisTime;
   String? chronologicalAgeAtDiagnosis;
   String? gestAgeAtDiagnosis;
@@ -17,8 +16,6 @@ class RegistrationModel {
   bool? arrhthymiasOthers;
   String? arrhthymiasOthersSpecify;
   String? priorCardiacArrhythmiaHospitalization;
-  String? otherPriorCardiac;
-  String? otherPriorCardiacOthersSpecify;
   String? otherPriorCardiacHospitalization;
   String? priorAnticoagulantUse;
   String? priorCardiacDrugsUse;
@@ -44,16 +41,30 @@ class RegistrationModel {
   String? cardiacSurgeriesDone;
   String? surgeriesValveReplacement;
   String? surgeriesProcedureName;
-  String? surgeriesProcedureMonthandYear;
+  String? surgeriesProcedureMonth;
+  String? surgeriesProcedureYear;
   String? cardiacInterventions;
   String? interventionsProcedureName;
-  String? interventionsProcedureMonthandYear;
+  String? interventionsProcedureMonth;
+  String? interventionsProcedureYear;
   String? interventionsProcedureAntenatal;
+  String? otherCardiacEvents;
+  bool? cVATIA;
+  bool? majorBleed;
+  bool? cerebralAbscess;
+  bool? pVT;
+  bool? minorBleed;
+  bool? hemoptysis;
+  bool? cVT;
+  bool? otherThrombotic;
+  bool? otherCardiacEventsbool;
+  String? otherCardiacEventsSpecify;
+  String? procedureAntenatal;
+  String? medicationAdvised;
 
   RegistrationModel(
       {this.prePregDetailId,
         this.tNPHDRNoId,
-        this.firstDiagnosedOfHeartDisease,
         this.heartdiseaseDiagnosisTime,
         this.chronologicalAgeAtDiagnosis,
         this.gestAgeAtDiagnosis,
@@ -69,8 +80,6 @@ class RegistrationModel {
         this.arrhthymiasOthers,
         this.arrhthymiasOthersSpecify,
         this.priorCardiacArrhythmiaHospitalization,
-        this.otherPriorCardiac,
-        this.otherPriorCardiacOthersSpecify,
         this.otherPriorCardiacHospitalization,
         this.priorAnticoagulantUse,
         this.priorCardiacDrugsUse,
@@ -96,16 +105,30 @@ class RegistrationModel {
         this.cardiacSurgeriesDone,
         this.surgeriesValveReplacement,
         this.surgeriesProcedureName,
-        this.surgeriesProcedureMonthandYear,
+        this.surgeriesProcedureMonth,
+        this.surgeriesProcedureYear,
         this.cardiacInterventions,
         this.interventionsProcedureName,
-        this.interventionsProcedureMonthandYear,
-        this.interventionsProcedureAntenatal});
+        this.interventionsProcedureMonth,
+        this.interventionsProcedureYear,
+        this.interventionsProcedureAntenatal,
+        this.otherCardiacEvents,
+        this.cVATIA,
+        this.majorBleed,
+        this.cerebralAbscess,
+        this.pVT,
+        this.minorBleed,
+        this.hemoptysis,
+        this.cVT,
+        this.otherThrombotic,
+        this.otherCardiacEventsbool,
+        this.otherCardiacEventsSpecify,
+        this.procedureAntenatal,
+        this.medicationAdvised});
 
   RegistrationModel.fromJson(Map<String, dynamic> json) {
     prePregDetailId = json['pre_preg_detail_id'];
     tNPHDRNoId = json['TNPHDR_No_Id'];
-    firstDiagnosedOfHeartDisease = json['FirstDiagnosed_Of_HeartDisease'];
     heartdiseaseDiagnosisTime = json['Heartdisease_diagnosis_Time'];
     chronologicalAgeAtDiagnosis = json['Chronological_age_at_Diagnosis'];
     gestAgeAtDiagnosis = json['Gest_age_at_Diagnosis'];
@@ -122,8 +145,6 @@ class RegistrationModel {
     arrhthymiasOthersSpecify = json['Arrhthymias_Others_Specify'];
     priorCardiacArrhythmiaHospitalization =
     json['Prior_Cardiac_Arrhythmia_Hospitalization'];
-    otherPriorCardiac = json['Other_Prior_Cardiac'];
-    otherPriorCardiacOthersSpecify = json['Other_Prior_Cardiac_Others_Specify'];
     otherPriorCardiacHospitalization =
     json['Other_Prior_Cardiac_Hospitalization'];
     priorAnticoagulantUse = json['Prior_Anticoagulant_Use'];
@@ -150,19 +171,32 @@ class RegistrationModel {
     cardiacSurgeriesDone = json['Cardiac_Surgeries_Done'];
     surgeriesValveReplacement = json['Surgeries_Valve_Replacement'];
     surgeriesProcedureName = json['Surgeries_ProcedureName'];
-    surgeriesProcedureMonthandYear = json['Surgeries_Procedure_MonthandYear'];
+    surgeriesProcedureMonth = json['Surgeries_Procedure_Month'];
+    surgeriesProcedureYear = json['Surgeries_Procedure_Year'];
     cardiacInterventions = json['Cardiac_Interventions'];
     interventionsProcedureName = json['Interventions_ProcedureName'];
-    interventionsProcedureMonthandYear =
-    json['Interventions_Procedure_MonthandYear'];
+    interventionsProcedureMonth = json['Interventions_Procedure_Month'];
+    interventionsProcedureYear = json['Interventions_Procedure_Year'];
     interventionsProcedureAntenatal = json['Interventions_Procedure_Antenatal'];
+    otherCardiacEvents = json['Other_Cardiac_Events'];
+    cVATIA = json['CVA_TIA'];
+    majorBleed = json['Major_Bleed'];
+    cerebralAbscess = json['Cerebral_Abscess'];
+    pVT = json['PVT'];
+    minorBleed = json['Minor_Bleed'];
+    hemoptysis = json['Hemoptysis'];
+    cVT = json['CVT'];
+    otherThrombotic = json['Other_Thrombotic'];
+    otherCardiacEventsbool = json['Other_CardiacEvents'];
+    otherCardiacEventsSpecify = json['Other_CardiacEvents_Specify'];
+    procedureAntenatal = json['Procedure_Antenatal'];
+    medicationAdvised = json['Medication_Advised'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['pre_preg_detail_id'] = '${this.prePregDetailId}';
     data['TNPHDR_No_Id'] = '${this.tNPHDRNoId}';
-    data['FirstDiagnosed_Of_HeartDisease'] = this.firstDiagnosedOfHeartDisease;
     data['Heartdisease_diagnosis_Time'] = this.heartdiseaseDiagnosisTime;
     data['Chronological_age_at_Diagnosis'] = this.chronologicalAgeAtDiagnosis;
     data['Gest_age_at_Diagnosis'] = this.gestAgeAtDiagnosis;
@@ -171,17 +205,14 @@ class RegistrationModel {
     data['Heart_Failure'] = this.heartFailure;
     data['Heart_Failure_Hospitalization'] = this.heartFailureHospitalization;
     data['Prior_Cardiac_Arrhythmia'] = this.priorCardiacArrhythmia;
-    data['Arrhthymias_AF'] = '${this.arrhthymiasAF}';
-    data['Arrhthymias_AT'] = '${this.arrhthymiasAT}';
-    data['Arrhthymias_SVT'] = '${this.arrhthymiasSVT}';
-    data['Arrhthymias_VT_VF'] = '${this.arrhthymiasVTVF}';
-    data['Arrhthymias_Others'] = '${this.arrhthymiasOthers}';
+    data['Arrhthymias_AF'] = this.arrhthymiasAF;
+    data['Arrhthymias_AT'] = this.arrhthymiasAT;
+    data['Arrhthymias_SVT'] = this.arrhthymiasSVT;
+    data['Arrhthymias_VT_VF'] = this.arrhthymiasVTVF;
+    data['Arrhthymias_Others'] = this.arrhthymiasOthers;
     data['Arrhthymias_Others_Specify'] = this.arrhthymiasOthersSpecify;
     data['Prior_Cardiac_Arrhythmia_Hospitalization'] =
         this.priorCardiacArrhythmiaHospitalization;
-    data['Other_Prior_Cardiac'] = this.otherPriorCardiac;
-    data['Other_Prior_Cardiac_Others_Specify'] =
-        this.otherPriorCardiacOthersSpecify;
     data['Other_Prior_Cardiac_Hospitalization'] =
         this.otherPriorCardiacHospitalization;
     data['Prior_Anticoagulant_Use'] = this.priorAnticoagulantUse;
@@ -208,14 +239,27 @@ class RegistrationModel {
     data['Cardiac_Surgeries_Done'] = this.cardiacSurgeriesDone;
     data['Surgeries_Valve_Replacement'] = this.surgeriesValveReplacement;
     data['Surgeries_ProcedureName'] = this.surgeriesProcedureName;
-    data['Surgeries_Procedure_MonthandYear'] =
-        this.surgeriesProcedureMonthandYear;
+    data['Surgeries_Procedure_Month'] = this.surgeriesProcedureMonth;
+    data['Surgeries_Procedure_Year'] = this.surgeriesProcedureYear;
     data['Cardiac_Interventions'] = this.cardiacInterventions;
     data['Interventions_ProcedureName'] = this.interventionsProcedureName;
-    data['Interventions_Procedure_MonthandYear'] =
-        this.interventionsProcedureMonthandYear;
+    data['Interventions_Procedure_Month'] = this.interventionsProcedureMonth;
+    data['Interventions_Procedure_Year'] = this.interventionsProcedureYear;
     data['Interventions_Procedure_Antenatal'] =
         this.interventionsProcedureAntenatal;
+    data['Other_Cardiac_Events'] = this.otherCardiacEvents;
+    data['CVA_TIA'] = this.cVATIA;
+    data['Major_Bleed'] = this.majorBleed;
+    data['Cerebral_Abscess'] = this.cerebralAbscess;
+    data['PVT'] = this.pVT;
+    data['Minor_Bleed'] = this.minorBleed;
+    data['Hemoptysis'] = this.hemoptysis;
+    data['CVT'] = this.cVT;
+    data['Other_Thrombotic'] = this.otherThrombotic;
+    data['Other_CardiacEvents'] = this.otherCardiacEventsbool;
+    data['Other_CardiacEvents_Specify'] = this.otherCardiacEventsSpecify;
+    data['Procedure_Antenatal'] = this.procedureAntenatal;
+    data['Medication_Advised'] = this.medicationAdvised;
     return data;
   }
 }

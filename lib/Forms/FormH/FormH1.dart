@@ -47,6 +47,7 @@ class _FormH1State extends State<FormH1> {
                 icon: isEnabled ? Icon(Icons.save) : Icon(Icons.edit))
           ],
         ),
+        FormH3(enabled: isEnabled,),
         Space(),
         MrowTextDatePickerWidget(enabled: isEnabled,title: 'K1 Date of Admission:',onChanged: (val){},),
         MrowTextDatePickerWidget(enabled: isEnabled,title: 'K2 Date of Discharge:',onChanged: (val){},),
@@ -151,7 +152,20 @@ class _FormH1State extends State<FormH1> {
          FormH5(enabled: isEnabled),
          FormH6(enabled: isEnabled),
          FormH7(enabled: isEnabled),
-        MFilledButton(text: 'submit',onPressed: (){context.push(Routes.Home);},)
+        MFilledButton(key:ValueKey('value $isEnabled}'),text:isEnabled ? 'Save' : 'Edit',onPressed: (){
+          setState(() {
+            isEnabled = !isEnabled;
+          });
+        },),
+        Space(),
+        MFilledButton(text: 'Save & Continue',onPressed: ()  {
+          setState(() {
+            isEnabled = !isEnabled;
+          });
+          context.push(Routes.FormL1);
+        },),
+        Space(),
+
       ],),
     );
   }

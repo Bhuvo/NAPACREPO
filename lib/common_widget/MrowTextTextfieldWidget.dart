@@ -13,8 +13,9 @@ class MrowTextTextFieldWidget extends StatefulWidget {
   final String? initialValue;
   final Function(String)? onChanged;
   final bool? enabled;
+  final int? maxLength;
   final String? Function(String?)? validator;
-  const MrowTextTextFieldWidget({super.key,this.title,this.onChanged, this.initialValue, this.type, this.isneedDivider = true, this.enabled, this.validator});
+  const MrowTextTextFieldWidget({super.key,this.title,this.onChanged, this.initialValue, this.type, this.isneedDivider = true, this.enabled, this.validator, this.maxLength});
 
   @override
   State<MrowTextTextFieldWidget> createState() => _MrowTextTextFieldWidgetState();
@@ -36,7 +37,7 @@ class _MrowTextTextFieldWidgetState extends State<MrowTextTextFieldWidget> {
                   Space(),
                   Text(widget.title ?? ''),
                   Space(),
-                 MTextField(enabled: widget.enabled ?? false,
+                 MTextField(enabled: widget.enabled ?? false,maxLength: widget.maxLength,
                    required: true,validator: widget.validator,
                    onChanged: (val){
                      widget.onChanged!.call(val);

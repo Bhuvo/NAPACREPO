@@ -6,22 +6,23 @@ import 'package:npac/widgets/MdateTimePicker.dart';
 import 'package:npac/widgets/SheetUP.dart';
 import 'package:npac/widgets/space.dart';
 
-class MrowTextOptionPickerwidget extends StatefulWidget {
-  final List<String>? options;
+class MrowTextOptionPickerwidget<T> extends StatefulWidget {
+  final List<T>? options;
   final String? label;
   final String? title;
-  final List<String>? initialSelectedValue;
+  final List<T>? initialSelectedValue;
   final bool? enabled;
-  final String? initialvalue;
-  final Function(String)? onChanged;
-  final Function(List<String>)? onSelectedList;
-  const MrowTextOptionPickerwidget({super.key,this.title, this.initialvalue, this.options, this.onChanged, this.onSelectedList, this.initialSelectedValue, this.label, this.enabled});
+  final T? initialvalue;
+  final bool? isneedDivider;
+  final Function(T)? onChanged;
+  final Function(List<T>)? onSelectedList;
+  const MrowTextOptionPickerwidget({super.key,this.title, this.initialvalue, this.options, this.onChanged, this.onSelectedList, this.initialSelectedValue, this.label, this.enabled, this.isneedDivider});
 
   @override
-  State<MrowTextOptionPickerwidget> createState() => _MrowTextOptionPickerwidgetState();
+  State<MrowTextOptionPickerwidget<T>> createState() => _MrowTextOptionPickerwidgetState<T>();
 }
 
-class _MrowTextOptionPickerwidgetState extends State<MrowTextOptionPickerwidget> {
+class _MrowTextOptionPickerwidgetState<T> extends State<MrowTextOptionPickerwidget<T>> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,7 +37,7 @@ class _MrowTextOptionPickerwidgetState extends State<MrowTextOptionPickerwidget>
                 children: [
                   Space(),
                   Text(widget.title ?? ''),
-                  SheetDown<String>(enabled: widget.enabled,initialSelectedValue: widget.initialSelectedValue ?? [],onSelectedList: widget.onSelectedList ?? (value){
+                  SheetDown<T>(enabled: widget.enabled,initialSelectedValue: widget.initialSelectedValue ?? [],onSelectedList: widget.onSelectedList ?? (value){
                   },label: widget.label ??'Drugs List',
                     value: widget.initialvalue,
                     //label: 'Category',
@@ -46,19 +47,8 @@ class _MrowTextOptionPickerwidgetState extends State<MrowTextOptionPickerwidget>
                        // data.category = value;
                       });
                     },
-                    itemLabel: (e) => e,
-                    items: widget.options ?? const [
-                      'News/media',
-                      'Sports',
-                      'Government and politics',
-                      'Music',
-                      'Fashion',
-                      'Entertainment',
-                      'Digital creator/blogger/influencer',
-                      'Gamer',
-                      'Global business/brand/organization',
-                      'Other'
-                    ],
+                    itemLabel: (e) => e.toString(),
+                    items: widget.options ?? [],
                   ),
                 ],
               ),
@@ -66,7 +56,7 @@ class _MrowTextOptionPickerwidgetState extends State<MrowTextOptionPickerwidget>
             // Checkbox(value: widget.checkboxvalue, onChanged: (value) {}),
           ],
         ),
-        Divider(thickness: 1,height: 3,),
+       widget.isneedDivider ?? true ? Divider(thickness: 1,height: 3,): Container(),
       ],
     );
   }

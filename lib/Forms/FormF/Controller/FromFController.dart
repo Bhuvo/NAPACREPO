@@ -13,11 +13,14 @@ import 'package:npac/app/export.dart';
 class FormFController extends GetxController{
 
   Rx<FormFModel> FormIData = FormFModel().obs;
+  Rx<EchoAssignmentModel> FormIEchoAssignmentData = EchoAssignmentModel().obs;
   Rx<bool> isLoading = false.obs;
   RxList<EchoImageModel> echoModel = <EchoImageModel>[].obs;
   RxList<EchoImageModel> outCome = <EchoImageModel>[].obs;
   RxBool isOutComeUploadLoading = false.obs;
   RxBool isEcoLoading = false.obs;
+
+
 
   Future<void> getFormFData(BuildContext context,int patientId) async {
     isLoading.value = true;
@@ -54,6 +57,7 @@ class FormFController extends GetxController{
     }
     return false;
   }
+
 
   Future<void> getEcho() async{
     var body ={
@@ -102,6 +106,7 @@ class FormFController extends GetxController{
     }
     isEcoLoading.value = false;
   }
+
 
 
   Future<void> getOutCome() async{

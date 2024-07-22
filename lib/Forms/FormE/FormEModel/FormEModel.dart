@@ -75,6 +75,8 @@ class FormEModel {
   String? cIOrPISignature;
   String? totalHospitalStayDuration;
   String? additionalDetails;
+  String? obstetricsVerifiedBy;
+  String? cardiologyVerifiedBy;
 
   FormEModel(
       {this.mTPID,
@@ -152,7 +154,10 @@ class FormEModel {
         this.otherComplications,
         this.cIOrPISignature,
         this.totalHospitalStayDuration,
-        this.additionalDetails});
+        this.additionalDetails,
+      this.obstetricsVerifiedBy,
+        this.cardiologyVerifiedBy
+      });
 
   FormEModel.fromJson(Map<String, dynamic> json) {
     mTPID = json['MTPID'];
@@ -235,6 +240,8 @@ class FormEModel {
     cIOrPISignature = json['CIOrPISignature'];
     totalHospitalStayDuration = json['TotalHospitalStayDuration'];
     additionalDetails = json['AdditionalDetails'];
+    obstetricsVerifiedBy=json['ObstetricsVerifiedBy'];
+    cardiologyVerifiedBy=json['CardiologyVerifiedBy'];
   }
 
   Map<String, dynamic> toJson() {
@@ -325,6 +332,8 @@ class FormEModel {
     data['CIOrPISignature'] = this.cIOrPISignature;
     data['TotalHospitalStayDuration'] = this.totalHospitalStayDuration;
     data['AdditionalDetails'] = this.additionalDetails;
+    data['ObstetricsVerifiedBy'] = this.obstetricsVerifiedBy;
+    data['CardiologyVerifiedBy'] = this.cardiologyVerifiedBy;
     return data;
   }
 }

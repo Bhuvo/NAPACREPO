@@ -20,7 +20,7 @@ class _FormL1State extends State<FormL1> {
   @override
   Widget build(BuildContext context) {
     return MScaffold(
-      appBar: MAppBar(title: 'L. POST PARTUM VISIT PAGE FIRST POST PARTUM VISIT (6 WEEKS) (FORM L)',),
+      appBar: MAppBar(title: 'L. FIRST POST PARTUM VISIT (6 WEEKS) (FORM L)',),
 
       body: MFormBody(Childrens: [
         Row(
@@ -81,8 +81,11 @@ class _FormL1State extends State<FormL1> {
         MrowTextTextFieldWidget(enabled: isEnabled,title: 'Pulmonary regurgitation Peak PR (mmHg):',onChanged: (val){},isneedDivider: false,type: MInputType.numeric,),
         MrowTextTextFieldWidget(enabled: isEnabled,title: 'PAT(ms)',onChanged: (val){},type: MInputType.numeric,),
         MRowTextRadioWidget(enabled: isEnabled,title: 'RV systolic function ',options: List_items.NormalAbnormal,isneedDivider: false,),
+
         isRVAbnormal? MTextField(enabled: isEnabled,label: 'TAPSE (mm)',onChanged: (val){},): Container(),
-        isRVAbnormal? MTextField(enabled: isEnabled,label: 'Sa’',onChanged: (val){},): Container(),
+        isRVAbnormal? MTextField(enabled: isEnabled,label: 'RV S’ (cm/sec)',onChanged: (val){},): Container(),
+        MDivider(),
+        Space(),
 
         MText(text: 'Valve function',),
         Space(),
@@ -96,7 +99,20 @@ class _FormL1State extends State<FormL1> {
         MrowTextTextFieldWidget(enabled: isEnabled,title: 'Other salient echo details (if any):',onChanged: (val){},),
         //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormL2);},)
         FormL2(enabled: isEnabled,),
-        MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
+        Space(20),
+        MFilledButton(key:ValueKey('value $isEnabled}'),text:isEnabled ? 'Save' : 'Edit',onPressed: (){
+          setState(() {
+            isEnabled = !isEnabled;
+          });
+        },),
+        Space(),
+        MFilledButton(text: 'Save & Continue',onPressed: ()  {
+          setState(() {
+            isEnabled = !isEnabled;
+          });
+          context.push(Routes.FormL1);
+        },),
+        Space(),
 
       ],),
     );

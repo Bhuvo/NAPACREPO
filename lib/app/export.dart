@@ -28,6 +28,7 @@ export 'package:npac/SharedPreference/sharedPreference_helper.dart';
 export 'package:npac/common_widget/MRowTextSingleOption.dart';
 export 'package:get/get.dart';
 export 'package:npac/common_widget/SingleImageViewer.dart';
+export 'package:npac/Forms/CommonModelController/EchoAssignmentModel.dart';
 
 
 

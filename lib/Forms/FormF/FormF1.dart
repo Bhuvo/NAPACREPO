@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:npac/Forms/CommonModelController/EchoAssignmentController.dart';
 import 'package:npac/Forms/FormF/Controller/FromFController.dart';
 import 'package:npac/Forms/FormF/FormF1.dart';
 import 'package:npac/Forms/FormF/FormFModel/EchoImageModel.dart';
@@ -31,8 +32,9 @@ class _FormF1State extends State<FormF1> {
 
   bool isEnabled = false;
 
-
   FormFController formFController = Get.put(FormFController());
+  EchoAssignmentController echoAssignmentController = Get.put(EchoAssignmentController());
+
 @override
   void initState() {
   getdatas();
@@ -40,24 +42,29 @@ class _FormF1State extends State<FormF1> {
 }
 
 void getdatas()async{
+  formFController.isLoading.value = true;
   await formFController.getFormFData(context,7964);
   await formFController.getEcho();
   await formFController.getOutCome();
-  formFController.FormIData.value.valveMitralStenotic ?? false ? isMitralStenotic = true :null;
-  formFController.FormIData.value.valveMitralRegurgitant ?? false ? isMitralRegurgitant = true :null;
-  formFController.FormIData.value.valveMitralStenotic ?? false ? MitralSelectedList.add('Stenotic') :null;
-  formFController.FormIData.value.valveMitralRegurgitant ?? false ? MitralSelectedList.add('Regurgitant') :null;
-  formFController.FormIData.value.valveAorticStenotic ?? false ? AorticSelectedList.add('Stenotic') :null;
-  formFController.FormIData.value.valveAorticRegurgitant ?? false ? AorticSelectedList.add('Regurgitant') :null;
-  formFController.FormIData.value.valveTricuspidStenotic ?? false ? TricuspidSelectedList.add('Stenotic') :null;
-  formFController.FormIData.value.valveTricuspidRegurgitant ?? false ? TricuspidSelectedList.add('Regurgitant') :null;
-  formFController.FormIData.value.valvePulmonaryStenotic ?? false ? PulmonarySelectedList.add('Stenotic') :null;
-  formFController.FormIData.value.valvePulmonaryRegurgitant ?? false ? PulmonarySelectedList.add('Regurgitant') :null;
-  formFController.FormIData.value.othersVegetations ?? false ? PericardialOtherSelectedList.add('Vegetations') :null;
-  formFController.FormIData.value.othersVegetations ?? false ? PericardialOtherSelectedList.add('Thrombus') :null;
-  formFController.FormIData.value.wallMotionHypoGlobal ?? false ? PericardialOtherSelectedList.add('Global') :null;
-  formFController.FormIData.value.wallMotionHypoRegional ?? false ? PericardialOtherSelectedList.add('Regional') :null;
+  await echoAssignmentController.getEcoAssignmentData(9);
+  formFController.isLoading.value = true;
+  formFController.FormIEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
+  formFController.FormIEchoAssignmentData.value.mitralStenotic ?? false ? isMitralStenotic = true :null;
+  formFController.FormIEchoAssignmentData.value.mitralRegurgitant ?? false ? isMitralRegurgitant = true :null;
+  formFController.FormIEchoAssignmentData.value.mitralStenotic ?? false ? MitralSelectedList.add('Stenotic') :null;
+  formFController.FormIEchoAssignmentData.value.mitralRegurgitant ?? false ? MitralSelectedList.add('Regurgitant') :null;
+  formFController.FormIEchoAssignmentData.value.aorticStenotic ?? false ? AorticSelectedList.add('Stenotic') :null;
+  formFController.FormIEchoAssignmentData.value.aorticRegurgitant =='True' ?? false ? AorticSelectedList.add('Regurgitant') :null;
+  formFController.FormIEchoAssignmentData.value.tricuspidStenotic ?? false ? TricuspidSelectedList.add('Stenotic') :null;
+  formFController.FormIEchoAssignmentData.value.tricuspidRegurgitant ?? false ? TricuspidSelectedList.add('Regurgitant') :null;
+  formFController.FormIEchoAssignmentData.value.pulmonaryStenotic ?? false ? PulmonarySelectedList.add('Stenotic') :null;
+  formFController.FormIEchoAssignmentData.value.pulmonaryRegurgitant ?? false ? PulmonarySelectedList.add('Regurgitant') :null;
+  formFController.FormIEchoAssignmentData.value.othersVegetations ?? false ? PericardialOtherSelectedList.add('Vegetations') :null;
+  formFController.FormIEchoAssignmentData.value.othersVegetations ?? false ? PericardialOtherSelectedList.add('Thrombus') :null;
+  formFController.FormIEchoAssignmentData.value.wallMotionHypoGlobal ?? false ? PericardialOtherSelectedList.add('Global') :null;
+  formFController.FormIEchoAssignmentData.value.wallMotionHypoRegional ?? false ? PericardialOtherSelectedList.add('Regional') :null;
   print('AorticSelectedList ${AorticSelectedList}');
+  formFController.isLoading.value = false;
   setState(() {
   });
 
@@ -98,19 +105,19 @@ void getdatas()async{
           // MRowTextDropDown(enabled:isEnabled, title: 'I4.1 Weight (Kg):',items:List.generate(200 - 30 + 1, (index) => (index + 30).toString()),onChanged: (val){
           //   formFController.FormIData.value.clinicalSignWeight = val;
           // }),
-          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.1 Weight (Kg):',initialValue: formFController.FormIData.value.clinicalSignWeight,type: MInputType.numeric,onChanged: (val){
+          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.1 Weight (Kg):',initialValue: '${formFController.FormIData.value.clinicalSignWeight}',type: MInputType.numeric,onChanged: (val){
             if(int.parse(val) <=200 && int.parse(val) >= 30){
-              formFController.FormIData.value.clinicalSignWeight = val;
+              formFController.FormIData.value.clinicalSignWeight = int.tryParse(val);
             }else{}
           },isneedDivider: false,),
-          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.2  Heart rate (/min):',type: MInputType.numeric,initialValue: formFController.FormIData.value.clinicalSignHR,onChanged: (val){
-            formFController.FormIData.value.clinicalSignHR= val;
+          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.2  Heart rate (/min):',type: MInputType.numeric,initialValue: '${formFController.FormIData.value.clinicalSignHR}',onChanged: (val){
+            formFController.FormIData.value.clinicalSignHR= int.tryParse(val);
           },isneedDivider: false,),
-          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.3 SPO2 (%):',type: MInputType.numeric,initialValue: formFController.FormIData.value.clinicalSignSp,onChanged: (val){
-            formFController.FormIData.value.clinicalSignSp  = val;
+          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.3 SPO2 (%):',type: MInputType.numeric,initialValue: '${formFController.FormIData.value.clinicalSignSp}',onChanged: (val){
+            formFController.FormIData.value.clinicalSignSp  = int.tryParse(val);
           },isneedDivider: false,),
-          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.4 BP (mm Hg):',type: MInputType.numeric,initialValue: formFController.FormIData.value.clinicalSignBp,onChanged: (val){
-            formFController.FormIData.value.clinicalSignBp = val;
+          MrowTextTextFieldWidget(enabled:isEnabled, title: 'I4.4 BP (mm Hg):',type: MInputType.numeric,initialValue: '${formFController.FormIData.value.clinicalSignBp}',onChanged: (val){
+            formFController.FormIData.value.clinicalSignBp = int.tryParse(val);
           },isneedDivider: false,),
           MRowTextRadioWidget(enabled:isEnabled,title: 'I4.5 Heart Failure :',initialValue: formFController.FormIData.value.clinicalSignCcf,isneedDivider: false,onChanged: (val){
             formFController.FormIData.value.clinicalSignCcf = val;
@@ -180,47 +187,47 @@ setState(() {
         formFController.FormIData.value.significantChanges =='Yes' ? Column(children: [
            MText(text: 'Ventricular Function',),
            Space(),
-           MRowTextRadioWidget(enabled:isEnabled,title: 'Wall Motion:',initialValue: formFController.FormIData.value.wallMotion,onChanged: (val){
-             formFController.FormIData.value.wallMotion = val;
+           MRowTextRadioWidget(enabled:isEnabled,title: 'Wall Motion:',initialValue: formFController.FormIEchoAssignmentData.value.wallMotion,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.wallMotion = val;
            },isneedDivider: false,options: ['Normal','Hypo / akinesia'],),
            MRowTextCheckBox(enabled:isEnabled,selectedlist: HypoSelectedList,list: ['Global','Regional'],result: (val){
-             val.contains('Global') ?formFController.FormIData.value.wallMotionHypoGlobal = true : formFController.FormIData.value.wallMotionHypoGlobal = false;
-             val.contains('Regional') ?formFController.FormIData.value.wallMotionHypoRegional = true : formFController.FormIData.value.wallMotionHypoRegional = false;
+             val.contains('Global') ?formFController.FormIEchoAssignmentData.value.wallMotionHypoGlobal = true : formFController.FormIEchoAssignmentData.value.wallMotionHypoGlobal = false;
+             val.contains('Regional') ?formFController.FormIEchoAssignmentData.value.wallMotionHypoRegional = true : formFController.FormIEchoAssignmentData.value.wallMotionHypoRegional = false;
            },),
            Space(),
           MText(text: 'LV systolic function',),
            Space(),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'LVID Diastole(mm):',initialValue: formFController.FormIData.value.lVIDDiastole,onChanged: (val){
-             formFController.FormIData.value.lVIDDiastole = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'LVID Diastole(mm):',initialValue: formFController.FormIEchoAssignmentData.value.lVIDDiastole,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.lVIDDiastole = val;
            },type: MInputType.numeric,isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'LVID Systole(mm):',initialValue: formFController.FormIData.value.lVIDSystole,onChanged: (val){
-             formFController.FormIData.value.lVIDSystole = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'LVID Systole(mm):',initialValue: formFController.FormIEchoAssignmentData.value.lVIDSystole,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.lVIDSystole = val;
            },type: MInputType.numeric,isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'EF%:',initialValue: formFController.FormIData.value.lVEfPercent,onChanged: (val){
-             formFController.FormIData.value.lVEfPercent = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'EF%:',initialValue: formFController.FormIEchoAssignmentData.value.lVEfPercent,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.lVEfPercent = val;
            },type: MInputType.numeric),
            Space(),
            MText(text: 'RV systolic function',),
            Space(),
-           MRowTextRadioWidget(enabled:isEnabled,options: List_items.NormalAbnormal ,initialValue: formFController.FormIData.value.rvNormalAbnormal,onChanged: (val){
-             formFController.FormIData.value.rvNormalAbnormal = val;
+           MRowTextRadioWidget(enabled:isEnabled,options: List_items.NormalAbnormal ,initialValue: formFController.FormIEchoAssignmentData.value.rvNormalAbnormal,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.rvNormalAbnormal = val;
            },isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'TAPSE (mm)',initialValue: formFController.FormIData.value.rvTapse,onChanged: (val){
-             formFController.FormIData.value.rvTapse = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'TAPSE (mm)',initialValue: formFController.FormIEchoAssignmentData.value.rvTapse,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.rvTapse = val;
            },type: MInputType.numeric,isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'Sa’',initialValue: formFController.FormIData.value.rvRvs,onChanged: (val){
-             formFController.FormIData.value.rvRvs = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'RV S’ (cm/sec)',initialValue: formFController.FormIEchoAssignmentData.value.rvRvs,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.rvRvs = val;
            },type: MInputType.numeric),
 
-           MRowTextRadioWidget(enabled:isEnabled,title: 'Pericardial effusion',initialValue: formFController.FormIData.value.pericardialEffusion,onChanged: (val){
-             formFController.FormIData.value.pericardialEffusion = val;
+           MRowTextRadioWidget(enabled:isEnabled,title: 'Pericardial effusion',initialValue: formFController.FormIEchoAssignmentData.value.pericardialEffusion,onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.pericardialEffusion = val;
            },options: ['Mild','Moderate','Massive','Tamponade'],),
            MRowTextCheckBox(enabled:isEnabled,selectedlist: PericardialOtherSelectedList,title: 'Others ',list: ['Vegetations','Thrombus'],result: (val){
-             val.contains('Vegetations') ? formFController.FormIData.value.othersVegetations = true : formFController.FormIData.value.othersVegetations = false;
-             val.contains('Thrombus') ? formFController.FormIData.value.othersThrombus = true : formFController.FormIData.value.othersThrombus = false;
+             val.contains('Vegetations') ? formFController.FormIEchoAssignmentData.value.othersVegetations = true : formFController.FormIEchoAssignmentData.value.othersVegetations = false;
+             val.contains('Thrombus') ? formFController.FormIEchoAssignmentData.value.othersThrombus = true : formFController.FormIEchoAssignmentData.value.othersThrombus = false;
            },),
-           MrowTextTextFieldWidget(enabled:isEnabled,initialValue: formFController.FormIData.value.otherEchoFindings,title: 'Any other salient Echo Findings:',onChanged: (val){
-             formFController.FormIData.value.otherEchoFindings = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,initialValue: formFController.FormIEchoAssignmentData.value.otherEchoFindings,title: 'Any other salient Echo Findings:',onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.otherEchoFindings = val;
            },),
            MText(text: 'Pulmonary Pressure Assessment:',),
            Space(),
@@ -228,124 +235,137 @@ setState(() {
            //   formFController.FormIData.value.valveTricuspidRegurgitant = val;
            // },isneedDivider: false,),
            // MrowTextTextFieldWidget(title: 'Pulmonary regurgitation ',onChanged: (val){},isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'TRPG (mmHg):',initialValue: formFController.FormIData.value.Trpg,onChanged: (val){
-             formFController.FormIData.value.Trpg = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'TRPG (mmHg):',initialValue: '${formFController.FormIEchoAssignmentData.value.trpg}',onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.trpg = int.tryParse(val);
            },isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'Peak PR (mmHg):',initialValue: formFController.FormIData.value.PeakPr,onChanged: (val){
-             formFController.FormIData.value.PeakPr = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'Peak PR (mmHg):',initialValue:'${formFController.FormIEchoAssignmentData.value.peakPr}',onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.peakPr = int.tryParse(val);
            },isneedDivider: false,),
-           MrowTextTextFieldWidget(enabled:isEnabled,title: 'PAT(msec)',initialValue: formFController.FormIData.value.Pat,onChanged: (val){
-             formFController.FormIData.value.Pat = val;
+           MrowTextTextFieldWidget(enabled:isEnabled,title: 'PAT(msec)',initialValue: '${formFController.FormIEchoAssignmentData.value.pat}',onChanged: (val){
+             formFController.FormIEchoAssignmentData.value.pat = int.tryParse(val);
            },),
            MText(text: 'VALVE FUNCTION',),
            Space(),
            MRowTextRadioWidget(enabled:isEnabled,title: 'Mitral',onChanged: (val ){
              setState(() {
-               formFController.FormIData.value.valveMitralNormal = val=='Normal' ? true : false;
+               formFController.FormIEchoAssignmentData.value.mitralFunction = val;
              });
            },options: List_items.NormalAbnormal,isneedDivider: false,),
-           formFController.FormIData.value.valveMitralNormal?? false ? MRowTextCheckBox(enabled:isEnabled,selectedlist: MitralSelectedList,list: List_items.ValuFunction,
+           formFController.FormIEchoAssignmentData.value.mitralFunction =='Abnormal'? MRowTextCheckBox(enabled:isEnabled,selectedlist: MitralSelectedList,list: List_items.ValuFunction,
              result: (val){
                if(val.contains('Stenotic')){
-                 formFController.FormIData.value.valveMitralStenotic = true;
+                 formFController.FormIEchoAssignmentData.value.mitralStenotic = true;
                  setState(() {
                    isMitralStenotic = true;
                  });
                }else{
-                 formFController.FormIData.value.valveMitralStenotic = false;
+                 formFController.FormIEchoAssignmentData.value.mitralStenotic = false;
                  setState(() {
                    isMitralStenotic = false;
                  });
                }
                if(val.contains('Regurgitant')){
-                 formFController.FormIData.value.valveMitralRegurgitant = true;
+                 formFController.FormIEchoAssignmentData.value.mitralRegurgitant = true;
                  setState(() {
                    isMitralRegurgitant = true;
                  });
                }else{
-                 formFController.FormIData.value.valveMitralRegurgitant = false;
+                 formFController.FormIEchoAssignmentData.value.mitralRegurgitant = false;
                  setState(() {
                    isMitralRegurgitant = false;
                  });
                }
              },isneedDivider: isMitralStenotic ||isMitralRegurgitant ?false  : true,): Container(),
-           isMitralStenotic ?  MRowTextRadioWidget(enabled:isEnabled,initialValue: formFController.FormIData.value.valveMitralRegurgitantMild?? false ? 'Mild' : 'Moderate',onChanged: (val ){
-             formFController.FormIData.value.valveMitralStenoticMild = val=='Mild' ? true : false;
+           isMitralStenotic ?  MRowTextRadioWidget(enabled:isEnabled,initialValue: formFController.FormIEchoAssignmentData.value.mitralStenoticValue,onChanged: (val ){
+             formFController.FormIEchoAssignmentData.value.mitralStenoticValue = val;
            },options: List_items.MildModerateSevere,isneedDivider: false,) : Container(),
-           isMitralStenotic ?  MrowTextTextFieldWidget(enabled:isEnabled,title: 'MVOA (cm2) ',initialValue: formFController.FormIData.value.valveMitralMvoa,onChanged: (val ){
-             formFController.FormIData.value.valveMitralMvoa = val;
+           isMitralStenotic ?  MrowTextTextFieldWidget(enabled:isEnabled,title: 'MVOA (cm2) ',initialValue: '${formFController.FormIEchoAssignmentData.value.mitralMVOA}',onChanged: (val ){
+             formFController.FormIEchoAssignmentData.value.mitralMVOA= int.tryParse(val);
            },isneedDivider: false,) : Container(),
-           isMitralRegurgitant ?  MRowTextRadioWidget(enabled:isEnabled,title: 'Regurgitant',initialValue: formFController.FormIData.value.valveMitralRegurgitantMild?? false ? 'Mild' : 'Moderate',onChanged: (val ){
-             formFController.FormIData.value.valveMitralRegurgitantMild = val =='Mild' ? true : false;
+          isMitralStenotic ?Column(
+            children: [
+              MSmallText(text: 'MVG',),
+              Space(),
+              MrowTextTextFieldWidget(enabled:isEnabled,title: 'MG',initialValue: '${formFController.FormIEchoAssignmentData.value.mitralMVGradientMean}',onChanged: (val ){
+                formFController.FormIEchoAssignmentData.value.mitralMVGradientMean= int.tryParse(val);
+              },isneedDivider: false,),
+              MrowTextTextFieldWidget(enabled:isEnabled,title: 'PG',initialValue: '${formFController.FormIEchoAssignmentData.value.mitralMVGradientPeak}',onChanged: (val ){
+                formFController.FormIEchoAssignmentData.value.mitralMVGradientPeak= int.tryParse(val);
+              },isneedDivider: false,)
+            ],
+          ): Container(),
+
+           isMitralRegurgitant ?  MRowTextRadioWidget(enabled:isEnabled,title: 'Regurgitant',initialValue: formFController.FormIEchoAssignmentData.value.mitralRegurgitantValue,onChanged: (val ){
+             formFController.FormIEchoAssignmentData.value.mitralRegurgitantValue = val;
            },options:List_items.MildModerateSevere,isneedDivider: false,) : Container(),
            isMitralStenotic ||isMitralRegurgitant ? MDivider(): Container(),
            Space(),
-           ValueFunction(key: Key('Aortic'),enabled:isEnabled,title: 'Aortic',radioInitialValue: formFController.FormIData.value.valveAorticNormal?? false ? 'Normal' : 'Abnormal'
-             ,MGInitialValue: formFController.FormIData.value.avgMg,
-             PGInitialValue: formFController.FormIData.value.avgPg,
-             StenoticInitialValue: formFController.FormIData.value.valveAorticStenoticMild ?? false ? 'Mild' : 'Moderate'
-             ,regurgitantInitialValue: formFController.FormIData.value.valveAorticRegurgitantMild?? false ? 'Mild' : 'Moderate'
+           ValueFunction(key: Key('Aortic'),enabled:isEnabled,title: 'Aortic',radioInitialValue: formFController.FormIEchoAssignmentData.value.aorticFunction
+             ,MGInitialValue: '${formFController.FormIEchoAssignmentData.value.aorticStenosisGradientMean}',
+             PGInitialValue: '${formFController.FormIEchoAssignmentData.value.aorticStenosisGradientPeak}',
+             StenoticInitialValue: formFController.FormIEchoAssignmentData.value.aorticStenoticValue
+             ,regurgitantInitialValue: formFController.FormIEchoAssignmentData.value.aorticRegurgitantValue
              ,selectedlist: AorticSelectedList,
              checkboxValue: (val){
-               formFController.FormIData.value.valveAorticStenotic = val;
+               formFController.FormIEchoAssignmentData.value.aorticStenotic = val;
              },checkboxValueRegurgitant: (val){
-               formFController.FormIData.value.valveAorticRegurgitant = val;
+               val ?formFController.FormIEchoAssignmentData.value.aorticRegurgitant = 'true' :formFController.FormIEchoAssignmentData.value.aorticRegurgitant = 'false';
              },MG: (val){
-               formFController.FormIData.value.avgMg = val;
+               formFController.FormIEchoAssignmentData.value.aorticStenosisGradientMean = int.tryParse(val);
              },PG: (val){
-               formFController.FormIData.value.avgPg = val;
+               formFController.FormIEchoAssignmentData.value.aorticStenosisGradientPeak = int.tryParse(val);
              },RegurgitantradioOnchange: (val){
-               formFController.FormIData.value.valveAorticRegurgitantMild = val =='Mild' ? true : false;
+               formFController.FormIEchoAssignmentData.value.aorticRegurgitantValue = val;
              },StenoticradioOnchange: (val){
-               formFController.FormIData.value.valveAorticStenoticMild = val=='Mild' ? true : false;
+               formFController.FormIEchoAssignmentData.value.aorticStenoticValue = val;
              },radioValue: (val){
-               formFController.FormIData.value.valveAorticNormal = val=='Normal' ? true : false;
+               formFController.FormIEchoAssignmentData.value.aorticFunction = val;
              },),
            ValueFunction(enabled:isEnabled,title: 'Tricuspid',
-             radioInitialValue: formFController.FormIData.value.valveTricuspidNormal?? false ? 'Normal' : 'Abnormal'
-             ,MGInitialValue: formFController.FormIData.value.tvgMg,
-             PGInitialValue: formFController.FormIData.value.tvgPg,
-             StenoticInitialValue: formFController.FormIData.value.valveTricuspidStenoticMild ?? false ? 'Mild' : 'Moderate'
-             ,regurgitantInitialValue: formFController.FormIData.value.valveTricuspidRegurgitantMild?? false ? 'Mild' : 'Moderate'
+             radioInitialValue: formFController.FormIEchoAssignmentData.value.tricuspidFunction
+             ,MGInitialValue: '${formFController.FormIEchoAssignmentData.value.tricuspidGradientMean}',
+             PGInitialValue: '${formFController.FormIEchoAssignmentData.value.tricuspidGradientPeak}',
+             StenoticInitialValue: formFController.FormIEchoAssignmentData.value.tricuspidStenoticValue
+             ,regurgitantInitialValue: formFController.FormIEchoAssignmentData.value.tricuspidRegurgitantValue
              ,selectedlist: TricuspidSelectedList,
 
              checkboxValue: (val){
-               formFController.FormIData.value.valveTricuspidStenotic = val;
+               formFController.FormIEchoAssignmentData.value.tricuspidStenotic = val;
              },checkboxValueRegurgitant: (val){
-               formFController.FormIData.value.valveTricuspidRegurgitant = val;
+               formFController.FormIEchoAssignmentData.value.tricuspidRegurgitant = val;
              },MG: (val){
-               formFController.FormIData.value.tvgMg = val;
+               formFController.FormIEchoAssignmentData.value.tricuspidGradientMean = int.tryParse(val);
              },PG: (val){
-               formFController.FormIData.value.tvgPg = val;
+               formFController.FormIEchoAssignmentData.value.tricuspidGradientPeak = int.tryParse(val);
              },RegurgitantradioOnchange: (val){
-               formFController.FormIData.value.valveTricuspidRegurgitantMild = val=='Mild' ? true : false;
+               formFController.FormIEchoAssignmentData.value.tricuspidRegurgitantValue = val;
              },StenoticradioOnchange: (val){
-               formFController.FormIData.value.valveTricuspidStenoticMild = val=='Mild' ? true : false;
+               formFController.FormIEchoAssignmentData.value.tricuspidStenoticValue = val;
              },radioValue: (val){
-               formFController.FormIData.value.valveTricuspidNormal = val=='Normal' ? true : false;
+               formFController.FormIEchoAssignmentData.value.tricuspidFunction = val;
              },),
            ValueFunction(enabled:isEnabled,title: 'Pulmonary',
-             radioInitialValue: formFController.FormIData.value.valvePulmonaryNormal?? false ? 'Normal' : 'Abnormal'
-             ,MGInitialValue: formFController.FormIData.value.pvgMg,
-             PGInitialValue: formFController.FormIData.value.pvgPg,
-             StenoticInitialValue: formFController.FormIData.value.valvePulmonaryStenoticMild ?? false ? 'Mild' : 'Moderate'
-             ,regurgitantInitialValue: formFController.FormIData.value.valvePulmonaryRegurgitantMild?? false ? 'Mild' : 'Moderate'
+             radioInitialValue: formFController.FormIEchoAssignmentData.value.pulmonaryFunction,
+             MGInitialValue: formFController.FormIEchoAssignmentData.value.rvotObstructionGradientMean.toString(),
+             PGInitialValue: formFController.FormIEchoAssignmentData.value.rvotObstructionGradientPeak.toString(),
+             StenoticInitialValue: formFController.FormIEchoAssignmentData.value.pulmonaryStenoticValue
+             ,regurgitantInitialValue: formFController.FormIEchoAssignmentData.value.pulmonaryRegurgitantValue
              ,selectedlist: PulmonarySelectedList,
 
              checkboxValue: (val){
-               formFController.FormIData.value.valvePulmonaryStenotic = val;
+               formFController.FormIEchoAssignmentData.value.pulmonaryStenotic = val;
              },checkboxValueRegurgitant: (val){
-               formFController.FormIData.value.valvePulmonaryRegurgitant = val;
+               formFController.FormIEchoAssignmentData.value.pulmonaryRegurgitant = val;
              },MG: (val){
-               formFController.FormIData.value.pvgMg = val;
+               formFController.FormIEchoAssignmentData.value.rvotObstructionGradientMean = int.tryParse(val);
              },PG: (val){
-               formFController.FormIData.value.pvgPg = val;
+               formFController.FormIEchoAssignmentData.value.rvotObstructionGradientPeak =int.tryParse(val) ;
              },RegurgitantradioOnchange: (val){
-               formFController.FormIData.value.valvePulmonaryRegurgitantMild = val=='Mild' ? true : false;
+               formFController.FormIEchoAssignmentData.value.pulmonaryRegurgitantValue = val;
              },StenoticradioOnchange: (val){
-               formFController.FormIData.value.valvePulmonaryStenoticMild = val=='Mild' ? true : false;
+               formFController.FormIEchoAssignmentData.value.pulmonaryStenoticValue = val;
              },radioValue: (val){
-               formFController.FormIData.value.valvePulmonaryNormal = val=='Normal' ? true : false;
+               formFController.FormIEchoAssignmentData.value.pulmonaryFunction = val;
              },),
          ],): Container(),
           MDivider(),
@@ -396,8 +416,13 @@ setState(() {
         Space(),
         isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
           if(await formFController.upLoadData()){
-            setState(() {
-              isEnabled = !isEnabled;});
+            if(await echoAssignmentController.uploadEchoAssignment(9, formFController.FormIEchoAssignmentData.value)){
+              formFController.FormIEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
+              setState(() {
+                isEnabled = !isEnabled;});
+            }else{
+              context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');
+            }
           }else{
             context.showSnackBar('Error while uploading AntenatalVisitOne data');
           }
@@ -406,6 +431,22 @@ setState(() {
             setState(() {
           isEnabled = !isEnabled;});
             },),
+        Space(),
+        MFilledButton(text: 'Save & Continue',onPressed: () async {
+          if(await formFController.upLoadData()){
+            if(await echoAssignmentController.uploadEchoAssignment(9, formFController.FormIEchoAssignmentData.value)){
+              formFController.FormIEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
+              setState(() {
+                isEnabled = !isEnabled;});
+              context.push(Routes.FormI1);
+            }else{
+              context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');
+            }
+          }else{
+            context.showSnackBar('Error while uploading AntenatalVisitOne data');
+          }
+        },),
+        Space(),
         ],),
       ),
     );

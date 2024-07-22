@@ -107,6 +107,20 @@ class _FormM1State extends State<FormM1> {
        //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormM2);},),
        FormM2(enabled: isEnabled,)
      ],) : Container(),
+      Space(20),
+      MFilledButton(key:ValueKey('value $isEnabled}'),text:isEnabled ? 'Save' : 'Edit',onPressed: (){
+        setState(() {
+          isEnabled = !isEnabled;
+        });
+      },),
+      Space(),
+      MFilledButton(text: 'Save & Continue',onPressed: ()  {
+        setState(() {
+          isEnabled = !isEnabled;
+        });
+        context.push(Routes.FormL1);
+      },),
+      Space(),
     ],),);
   }
 }

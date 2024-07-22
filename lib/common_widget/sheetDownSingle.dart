@@ -27,7 +27,7 @@ class SheetDown<T> extends StatelessWidget {
       required: required,
       prefixIcon: icon != null ? Icon(icon, color: context.dividerColor, size: 18,) : null,
       key: ValueKey('sheet_down::$label${value != null ? itemLabel(value as T) : ''}'),
-      label: label,
+      label: 'Search Here',
       hint: 'Search Here',
       initalValue: value != null ? itemLabel(value as T) : null,
       suffixIcon: Icon(CupertinoIcons.chevron_forward, color: context.dividerColor,),

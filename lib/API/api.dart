@@ -36,5 +36,9 @@ class Api{
   static const String uploadOutcome='VRAPI/SaveAntenatalOutComeImages';
 
 
+  static const String getEchoAssignment='VRAPI/GetEchoAssessmentDetails';
+  static const String uploadEchoAssignment='VRAPI/SaveEchoAssessmentDetails';
+
+
 
 }

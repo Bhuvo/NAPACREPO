@@ -38,16 +38,12 @@ class _MRowTextDropDownState extends State<MRowTextDropDown> {
         DropdownButtonFormField<String>(focusColor: Colors.white,
           borderRadius:  BorderRadius.circular(10),
           decoration: InputDecoration(
-            // contentPadding: EdgeInsets.all(0),
           ),
           hint: Text("Select an option"),
-          value:selectedValue == '' ? null : selectedValue,
+          value:selectedValue != '' && widget.items!.contains(selectedValue) ?  selectedValue: null,
           isExpanded: true,validator:widget.validator ?? (val){
           if(val == null) return 'Please select from DropDown';
-         // return selectedValue == '' ?'Please select from DropDown' : null;
           },
-          // underline: SizedBox.shrink(),
-          // icon: Icon(Icons.arrow_drop_down),
           onChanged:(val){
           print(val);
           selectedValue = val!;

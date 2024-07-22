@@ -34,7 +34,7 @@ class FormA1Controller extends GetxController{
   }
   void updateFormA1Data(BaseLineData data,BuildContext context)async{
     String url ='${Api.baseUrl}${Api.updatePatient}';
-    data.docid = '10';
+    data.docid = 10;
     data.rCHNO ='898498445686';
     var par =data.toJson();
     log(par.toString());
@@ -54,8 +54,8 @@ class FormA1Controller extends GetxController{
 
   void createFormA1Data(BaseLineData data,BuildContext context)async{
 
-    String appendValue ='Doctor_Id=10&RCH_NO=898499495696&Date_Of_Registration=13/06/2024&Date_Of_Referral=13/06/2024&Place_Of_First_Reporting=${data.placeOfFirstReporting}&When_Seen_By_The_Cardiologist=${data.whenSeenByTheCardiologist}&Antenatalorpostnatal=${data.antenatalorpostnatal}&HeartDisease=${data.heartDisease}&Consented=${data.consented}&pin_number=${data.pinNumber}&patientfullname=${data.patientfullname}&Guardian=${data.guardian}&age=${data.age}&dob=${data.dob}&stateid=31&district=1324&Taluk_id=18&villageid=4652&flatname=No 3/591&street_locality=Perumal kovil street&pincode=600026&mobilenumber=9556215635&alternatemobilenumber="9632587412"&ContactPerson_Name=theja&relativemobilenumber=9551963256&relativename=theja&RelativeRelation=Husband&RelativeRelation_Others=Yes&noofyeareducation=7&occupation=Home Maker&occupation_patient_others=test&noofyeareducation_husband=10&occupation_husband=Others&occupation_husband_others=test&Additional_Details=No';
-   String app ='Doctor_Id=10&RCH_NO=848490455816&Date_Of_Registration=${data.dateOfRegistration}&Date_Of_Referral=${data.dateOfReferral}&Place_Of_First_Reporting=${data.placeOfFirstReporting}&When_Seen_By_The_Cardiologist=${data.whenSeenByTheCardiologist}&Antenatalorpostnatal=${data.antenatalorpostnatal}&HeartDisease=${data.heartDisease}&Consented=${data.consented}&pin_number=${data.pinNumber}&patientfullname=${data.patientfullname}&Guardian=${data.guardian}&age=${data.age}&dob=${data.dob}&stateid=${data.stateid}&district=${data.district}&Taluk_id=${data.talukId}&villageid=${data.villageid}&flatname=${data.flatname}&street_locality=${data.streetLocality}&pincode=${data.pincode}&mobilenumber=${data.mobilenumber}&alternatemobilenumber=${data.alternatemobilenumber}&ContactPerson_Name=${data.contactPersonName}&relativemobilenumber=${data.relativemobilenumber}&relativename=${data.relativename}&RelativeRelation=${data.relativeRelation}&noofyeareducation=${data.noofyeareducation}&occupation=${data.occupation}&noofyeareducation_husband=${data.noofyeareducationHusband}&occupationHusband=${data.occupationHusband}&Additional_Details=${data.additionalDetails}';
+   //  String appendValue ='Doctor_Id=10&RCH_NO=898499495696&Date_Of_Registration=13/06/2024&Date_Of_Referral=13/06/2024&Place_Of_First_Reporting=${data.placeOfFirstReporting}&When_Seen_By_The_Cardiologist=${data.whenSeenByTheCardiologist}&Antenatalorpostnatal=${data.antenatalorpostnatal}&HeartDisease=${data.heartDisease}&Consented=${data.consented}&pin_number=${data.pinNumber}&patientfullname=${data.patientfullname}&Guardian=${data.guardian}&age=${data.age}&dob=${data.dob}&stateid=31&district=1324&Taluk_id=18&villageid=4652&flatname=No 3/591&street_locality=Perumal kovil street&pincode=600026&mobilenumber=9556215635&alternatemobilenumber="9632587412"&ContactPerson_Name=theja&relativemobilenumber=9551963256&relativename=theja&RelativeRelation=Husband&RelativeRelation_Others=Yes&noofyeareducation=7&occupation=Home Maker&occupation_patient_others=test&noofyeareducation_husband=10&occupation_husband=Others&occupation_husband_others=test&Additional_Details=No';
+   // String app ='Doctor_Id=10&RCH_NO=848490455816&Date_Of_Registration=${data.dateOfRegistration}&Date_Of_Referral=${data.dateOfReferral}&Place_Of_First_Reporting=${data.placeOfFirstReporting}&When_Seen_By_The_Cardiologist=${data.whenSeenByTheCardiologist}&Antenatalorpostnatal=${data.antenatalorpostnatal}&HeartDisease=${data.heartDisease}&Consented=${data.consented}&pin_number=${data.pinNumber}&patientfullname=${data.patientfullname}&Guardian=${data.guardian}&age=${data.age}&dob=${data.dob}&stateid=${data.stateid}&district=${data.district}&Taluk_id=${data.talukId}&villageid=${data.villageid}&flatname=${data.flatname}&street_locality=${data.streetLocality}&pincode=${data.pincode}&mobilenumber=${data.mobilenumber}&alternatemobilenumber=${data.relativemobilenumber}&ContactPerson_Name=${data.contactPersonName}&relativemobilenumber=${data.relativemobilenumber}&relativename=${data.relativename}&RelativeRelation=${data.relativeRelation}&noofyeareducation=${data.noofyeareducation}&occupation=${data.occupation}&noofyeareducation_husband=${data.noofyeareducationHusband}&occupationHusband=${data.occupationHusband}&Additional_Details=${data.additionalDetails}';
     String url ='${Api.baseUrl}${Api.registerPatient}';
     var params = {
       'patientfullname': 'test aravi',
@@ -96,7 +96,7 @@ class FormA1Controller extends GetxController{
       'Additional_Details': 'No'
     };
      //data = await BaseLineData.fromJson(params);
-    data.docid = '10';
+    data.docid= 10;
     data.rCHNO ='898498445686';
     var par =data.toJson();
        log(par.toString());

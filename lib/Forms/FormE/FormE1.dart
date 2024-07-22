@@ -130,7 +130,7 @@ RxList<String> MTPselectedlist = <String>[].obs;
           MrowTextDatePickerWidget(enabled : isEnabled,title: 'H2 Date of abortion:',initialDate: stringToDate(formEData.value.visitDate ?? ''),onChanged: (val){
             formEData.value.visitDate = dateToString(val);
           },),
-          MRowTextDropDown(enabled: isEnabled,title: 'H3. Gestational age (in weeks):',initialValue: formEData.value.GestationalAge,onChanged: (val){
+          MRowTextDropDown(enabled: isEnabled,title: 'H3.Period of gestation (in completed weeks):',initialValue: formEData.value.GestationalAge,onChanged: (val){
             formEData.value.GestationalAge = val;
           },),
           // MrowTextTextFieldWidget(enabled : isEnabled,title: 'H3. Period of gestation  (in completed weeks) :',initialValue: formEData.value.periodOfGestation,onChanged: (val){
@@ -356,8 +356,13 @@ RxList<String> MTPselectedlist = <String>[].obs;
             //formEData.value.obstetricOutcome = val.toString();
           },list: ['Perforation','Rupture','Hemorrhage','Retained products/Sepsis'],) : Container(),
          //MDivider(),
+
+          MrowTextTextFieldWidget(title: 'Signature of Site PI/ I - Obstetrics',enabled : isEnabled,initialValue: formEData.value.obstetricsVerifiedBy,onChanged: (val){
+            formEData.value.obstetricsVerifiedBy = val;
+          },),
          // MFilledButton(onPressed: (){context.push(Routes.FormE2);},text: 'Next',)
           isObstetric? FormE2(formEData: formEData,enabled: isEnabled,) : Container(),
+          Space(20),
          (widget.isFromPatientDetails ?? false )? MFilledButton(text:isEnabled ? 'Save': 'Edit',onPressed: () async {
            isEnabled ? { await controller.saveData(context,formEData.value,int.parse(widget.data?.tNPHDRNOID ?? '')),
            setState(() {
@@ -370,6 +375,12 @@ RxList<String> MTPselectedlist = <String>[].obs;
            controller.saveData(   context,formEData.value,int.parse(widget.data?.tNPHDRNOID ?? ''));
            //print(formEData.value.toJson());
          }),
+          Space(),
+          MFilledButton(text: 'Save & Continue',onPressed: () async {
+            await controller.saveData(   context,formEData.value,int.parse(widget.data?.tNPHDRNOID ?? ''));
+            context.push(Routes.FormI1);
+          },),
+          Space(),
         ],),
       ),
       );

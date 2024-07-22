@@ -75,9 +75,12 @@ class _FormM2State extends State<FormM2> {
         MrowTextTextFieldWidget(enabled: widget.enabled,title: 'Tricuspid regurgitation TRPG (mmHg):',onChanged: (val){},type: MInputType.numeric,),
         MrowTextTextFieldWidget(enabled: widget.enabled,title: 'Pulmonary regurgitation Peak PR (mmHg):',onChanged: (val){},type: MInputType.numeric,),
         MrowTextTextFieldWidget(enabled: widget.enabled,title: 'PAT(ms)',onChanged: (val){},type: MInputType.numeric,),
+
         MRowTextRadioWidget(enabled: widget.enabled,title: 'RV systolic function ',options: List_items.NormalAbnormal,isneedDivider: false,),
         isRVAbnormal? MTextField(enabled: widget.enabled,label: 'TAPSE (mm)',onChanged: (val){},): Container(),
-        isRVAbnormal? MTextField(enabled: widget.enabled,label: 'Sa’',onChanged: (val){},): Container(),
+        isRVAbnormal? MTextField(enabled: widget.enabled,label: 'RV S’ (cm/sec)',onChanged: (val){},): Container(),
+        MDivider(),
+        Space(),
 
         MText(text: 'Valve function',),
         Space(),

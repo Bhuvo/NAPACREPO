@@ -172,18 +172,21 @@ class _FormA1State extends State<FormA1> {
               setState(() {});
             },),
         hasRch? Obx(()=> MrowTextTextFieldWidget(title:'RCH. No:',initialValue: formA1Data.value.rCHNO ?? '',enabled: isEnabled,onChanged: (val){formA1Data.value.rCHNO = val;},)): Container(),
-            MrowTextDatePickerWidget(title: 'A6. DATE OF REGISTRATION:', initialDate:stringToDate(formA1Data.value.dateOfRegistration?? ''),enabled: isEnabled,onChanged: (val){
+            MrowTextDatePickerWidget(title: 'A6. Date of registration at participating site :', initialDate:stringToDate(formA1Data.value.dateOfRegistration?? ''),enabled: isEnabled,onChanged: (val){
                formA1Data.value.dateOfRegistration =dateToString(val);
               },),
-            MrowTextDatePickerWidget(title: 'A7. DATE OF REFERRAL: ',initialDate:stringToDate(formA1Data.value.dateOfReferral?? ''),enabled: isEnabled,onChanged: (val){
+            MrowTextDatePickerWidget(title: 'A7. Date of referral to participating site (if referred): ',initialDate:stringToDate(formA1Data.value.dateOfReferral?? ''),enabled: isEnabled,onChanged: (val){
               formA1Data.value.dateOfReferral =dateToString(val);
             },),
-            MrowTextTextFieldWidget(title: 'A8. PLACE OF FIRST REPORTING:',initialValue: formA1Data.value.placeOfFirstReporting,onChanged: (val){
-              formA1Data.value.placeOfFirstReporting = val;
-            },enabled: isEnabled,),
-            MrowTextTextFieldWidget(title: 'A9. WHEN SEEN BY THE CARDIOLOGIST:',initialValue: formA1Data.value.whenSeenByTheCardiologist,onChanged: (val){
-              formA1Data.value.whenSeenByTheCardiologist = val;
-            },enabled: isEnabled,),
+        MrowTextDatePickerWidget(title: 'A8. Date of enrollment in the study',initialDate:stringToDate(formA1Data.value.dateOfEnrollment?? ''),enabled: isEnabled,onChanged: (val){
+          formA1Data.value.dateOfEnrollment =dateToString(val);
+        },),
+            // MrowTextTextFieldWidget(title: 'A8. PLACE OF FIRST REPORTING:',initialValue: formA1Data.value.f,onChanged: (val){
+            //   formA1Data.value.placeOfFirstReporting = val;
+            // },enabled: isEnabled,),
+            // MrowTextTextFieldWidget(title: 'A9. WHEN SEEN BY THE CARDIOLOGIST:',initialValue: formA1Data.value.whenSeenByTheCardiologist,onChanged: (val){
+            //   formA1Data.value.whenSeenByTheCardiologist = val;
+            // },enabled: isEnabled,),
 
            (A7 && A8 && A9) ? Column(
             children: [
@@ -265,34 +268,40 @@ class _FormA1State extends State<FormA1> {
                 formA1Data.value.villageid = '${val.locationId}';
               },items: controller.villageList, itemLabel:(item) => item.locationName ??'',),
               MrowTextTextFieldWidget(enabled: isEnabled,title: 'B12. Patient’s mobile number: ',initialValue: '${formA1Data.value.mobilenumber??''}',onChanged: (val){
-                val.length >0 ?(formA1Data.value.mobilenumber = val) : null;
+                val.length >0 ?(formA1Data.value.mobilenumber = int.parse(val)) : null;
               },type: MInputType.phone,),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B13. Name of the Alternate Contact Person:',initialValue: '${formA1Data.value.alternatemobilenumber??''}',onChanged: (val){
-               val.length >0 ? (formA1Data.value.contactPersonName = val) : null;
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B13. Name of the Alternate Contact Person:',initialValue: '${formA1Data.value.relativename??''}',onChanged: (val){
+               val.length >0 ? (formA1Data.value.relativename = val) : null;
               },type: MInputType.phone,),
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B13. Alternate contact person’s mobile number: ',initialValue: '${formA1Data.value.alternatemobilenumber??''}',onChanged: (val){
-                val.length >0 ? (formA1Data.value.alternatemobilenumber = val) : null;
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B13. Alternate contact person’s mobile number: ',initialValue: '${formA1Data.value.relativemobilenumber??''}',onChanged: (val){
+                val.length >0 ? (formA1Data.value.relativemobilenumber = val) : null;
               },type: MInputType.phone,),
-              MRowTextRadioWidget(isneedDivider: false ,enabled: isEnabled,title: 'B13. Relationship',options: ['Husband','Father','Mother','Relative','Friend','Others'],onChanged: (val){
+              MRowTextRadioWidget(isneedDivider: false ,initialValue: formA1Data.value.relativeRelation,enabled: isEnabled,title: 'B13. Relationship',options: ['Husband','Father','Mother','Relative','Friend','Others'],onChanged: (val){
                   setState(() {
                  formA1Data.value.relativeRelation = val;
+                 if(val != 'Others'){
+                   formA1Data.value.relativeRelationOthers =null;
+                 }
                 });
               },),
-              formA1Data.value.relativeRelation=='Others'? MTextField(label: 'If other, please specify',onChanged: (val){},): Container(),
+              formA1Data.value.relativeRelation=='Others'? MTextField(label: 'If other, please specify',initalValue: formA1Data.value.relativeRelationOthers,onChanged: (val){
+                formA1Data.value.relativeRelationOthers = val;
+              },): Container(),
               MDivider(),
               MRowTextRadioWidget(title: 'B14. Provide name of any Health care Contact person (VHN/ASHA worker equivalent):',onChanged: (val){
                 val =='Yes'? isHealthCare = true : isHealthCare = false;
+                formA1Data.value.healthCare= val;
                 setState(() {});
               },isneedDivider: false,),
               isHealthCare ? Column(children: [
-                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s name:',initialValue: '${formA1Data.value.contactPersonName}',onChanged: (val){
-                  formA1Data.value.contactPersonName = val;
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s name:',initialValue: '${formA1Data.value.healthCarePersonName}',onChanged: (val){
+                  formA1Data.value.healthCarePersonName = val;
                 },isneedDivider: false),
-                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s Mobile Number',initialValue: '${formA1Data.value.contactPersonName}',onChanged: (val){
-                  formA1Data.value.contactPersonName = val;
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s Mobile Number',initialValue: '${formA1Data.value.healthCarePersonMoblieNo}',onChanged: (val){
+                  formA1Data.value.healthCarePersonMoblieNo = val;
                 },isneedDivider: false),
-                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person designation : ',initialValue: formA1Data.value.relativeRelation ??'',onChanged: (val){
-                  formA1Data.value.relativeRelation = val;
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person designation : ',initialValue: formA1Data.value.healthCarePersonDesignation ??'',onChanged: (val){
+                  formA1Data.value.healthCarePersonDesignation = val;
                 },isneedDivider: false),
               ],) : Container(),
               MrowTextTextFieldWidget(enabled: isEnabled,title: 'B15 Total number of years of formal education:',validator: (val){
@@ -312,7 +321,7 @@ class _FormA1State extends State<FormA1> {
                 }
                 return null;
               } ,initialValue: '${formA1Data.value.noofyeareducationHusband}', onChanged: (val){
-                val.length > 0 ?formA1Data.value.noofyeareducationHusband = int.tryParse(val) : null;
+                val.length > 0 ?formA1Data.value.noofyeareducationHusband =val : null;
               },type: MInputType.numeric,),
               MRowTextRadioWidget(enabled: isEnabled,title: 'B18 Occupation of husband : ',initialValue: formA1Data.value.occupationHusband,options:item,onChanged:(val){
                 formA1Data.value.occupationHusband = val;
@@ -333,6 +342,7 @@ class _FormA1State extends State<FormA1> {
               },),
               Space(20),
               MFilledButton(text: 'Save & Continue',onPressed: (){
+              formA1Controller.updateFormA1Data(formA1Data.value,context);
                 context.push(Routes.Form3One);
               },),
               Space(),

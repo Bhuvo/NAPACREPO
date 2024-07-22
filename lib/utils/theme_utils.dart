@@ -6,8 +6,8 @@ extension ThemeUtils on BuildContext {
   Color get cardColor => Theme.of(this).cardColor;
   Color get scaffoldBackgroundColor => Theme.of(this).scaffoldBackgroundColor;
   Color get dividerColor => Theme.of(this).dividerColor;
-  TextStyle? get caption => Theme.of(this).textTheme.caption;
-  TextStyle? get overline => Theme.of(this).textTheme.overline;
+  TextStyle? get caption => Theme.of(this).textTheme.bodySmall;
+  TextStyle? get overline => Theme.of(this).textTheme.labelSmall;
   TextStyle? get headlineSmall => Theme.of(this).textTheme.headlineSmall;
   TextStyle? get headlineMedium => Theme.of(this).textTheme.headlineMedium;
   TextStyle? get headlineLarge => Theme.of(this).textTheme.headlineLarge;

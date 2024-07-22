@@ -14,7 +14,7 @@ class _FormH5State extends State<FormH5> {
     return Column(children: [
         MText(text: 'K8.3 Secondary outcome – Obstetric',),
         Space(),
-        MRowTextRadioWidget(enabled : widget.enabled,title: 'Mode of delivery ',onChanged: (val){},options: ['NVD','AVD','Failed VD converted to LSCS ','LSCS'],),
+        MRowTextRadioWidget(enabled : widget.enabled,title: 'Mode of delivery',onChanged: (val){},options: ['Normal VD','Assisted VD','Failed VD converted to LSCS ','LSCS'],),
         // MSmallText(text: 'Secondary outcome – Obstetric',),
         // Space(),
         FormH3Common(enabled : widget.enabled,title: '8.3.1. Gestational Diabetes Mellitus',radioiOnChanged: (val){},TextField1OnChanged:(val){} ,TextField2OnChanged: (val){},),

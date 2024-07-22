@@ -1,3 +1,4 @@
+import 'package:npac/Forms/FormH/widget/FormH3CommonEvents.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MRowTextCheckBox.dart';
 
@@ -43,7 +44,7 @@ class _FormH3State extends State<FormH3> {
             });
           }
         },isneedDivider: false,),
-      isDeath ? MRowTextRadioWidget(title: 'If yes, specify',options: ['AN' , 'IP', 'PA'],onChanged: (val){
+      isDeath ? MRowTextRadioWidget(enabled: widget.enabled,isneedDivider: false,title: 'If yes, specify',options: ['AN' , 'IP', 'PA'],onChanged: (val){
         val =='AN' ? isDeathAn= true : isDeathAn= false;
         val =='IP' ? isDeathIP= true : isDeathIP= false;
         val =='PA' ? isDeathPA= true : isDeathPA= false;
@@ -54,15 +55,15 @@ class _FormH3State extends State<FormH3> {
         isDeath && isDeathAn ? MTextField(enabled: widget.enabled,label: 'AN Time(in weeks)',onChanged: (val){},) : Container(),
         isDeath && isDeathIP ? MTextField(enabled: widget.enabled,label: 'IP',onChanged: (val){},) : Container(),
         isDeath && isDeathPA ? MTextField(enabled: widget.enabled,label: 'PA Time(in days)',onChanged: (val){},) : Container(),
-        isDeath ? MTextField(enabled: widget.enabled,label: 'Time',onChanged: (val){},): Container(),
+        // isDeath ? MTextField(enabled: widget.enabled,label: 'Time',onChanged: (val){},): Container(),
         MDivider(),
-        FormH3Common(enabled: widget.enabled,title: '8.1.2. Resuscitated cardiac arrest',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
-        FormH3Common(enabled: widget.enabled,title: '8.1.3. New onset HF or worsening HF requiringTreatment escalation or hospitalization',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
-        FormH3Common(enabled: widget.enabled,title: '8.1.4. New or sustained cardiac arrhythmia requiring treatment',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
-        FormH3Common(enabled: widget.enabled,title: '8.1.5. CVA/ Stroke',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
-        FormH3Common(enabled: widget.enabled,title: '8.1.6. Prosthetic valve thrombosis',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
-        FormH3Common(enabled: widget.enabled,title: '8.1.7. Systemic Thromboembolism',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
-        FormH3Common(enabled: widget.enabled,title: '8.1.8. Venous Thromboembolism (PTE/CVT & others)',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
+      FormH3CommonEvents(enabled: widget.enabled,title: '8.1.2. Resuscitated cardiac arrest',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
+      FormH3CommonEvents(enabled: widget.enabled,title: '8.1.3. New onset HF or worsening HF requiringTreatment escalation or hospitalization',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
+      FormH3CommonEvents(enabled: widget.enabled,title: '8.1.4. New or sustained cardiac arrhythmia requiring treatment',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
+      FormH3CommonEvents(enabled: widget.enabled,title: '8.1.5. CVA/ Stroke',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
+      FormH3CommonEvents(enabled: widget.enabled,title: '8.1.6. Prosthetic valve thrombosis',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
+      FormH3CommonEvents(enabled: widget.enabled,title: '8.1.7. Systemic Thromboembolism',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
+      FormH3CommonEvents(enabled: widget.enabled,title: '8.1.8. Venous Thromboembolism (PTE/CVT & others)',radioiOnChanged: (val){},TextField1OnChanged: (val){},TextField2OnChanged: (val){},),
        
         MRowTextCheckBox(enabled: widget.enabled,title: '8.1.9. Bleeding: Major / Minor',result: (val){
           if(val.contains('Obstetric')){

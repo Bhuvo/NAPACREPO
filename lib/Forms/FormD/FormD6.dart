@@ -25,7 +25,7 @@ class _FormD6State extends State<FormD6> {
         Space(),
         MSmallText(text: 'Aortic Dimensions',),
         Space(),
-        MSmallText(text: '1st Trimester',),
+        MSmallText(text: 'First Visit',),
         Space(),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
@@ -35,7 +35,7 @@ class _FormD6State extends State<FormD6> {
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
 
         Space(),
-        MSmallText(text: '2nd Trimester',),
+        MSmallText(text: 'AN Revisit 1',),
         Space(),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
@@ -45,7 +45,7 @@ class _FormD6State extends State<FormD6> {
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
 
         Space(),
-        MSmallText(text: '3nd Trimester',),
+        MSmallText(text: 'AN Revisit 2',),
         Space(),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
@@ -65,7 +65,7 @@ class _FormD6State extends State<FormD6> {
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
 
         Space(),
-        MSmallText(text: 'Post Natal',),
+        MSmallText(text: 'PN Revisit 1',),
         Space(),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
@@ -74,6 +74,22 @@ class _FormD6State extends State<FormD6> {
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
         MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
         Space(),
+
+        Space(),
+        MSmallText(text: 'PN Revisit 2',),
+        Space(),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.3 Aortic Sinus',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.4 ST Junction',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.5 Asc Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.6 Arch of Aorta',onChanged: (val){},isneedDivider: false),
+        MrowTextTextFieldWidget(enabled :widget.isEnabled,title: 'D9.7 Desc thoracic aorta',onChanged: (val){},),
+        Space(),
+
+        MSmallText(text: 'Other relevant echo findings:',),
+        Space(),
+        MFilledButton(text: 'Add Echo',onPressed: (){}),
+
         // Text('Desc thoracic aorta'),
         // Space(),
         // MrowTextTextFieldWidget(title: 'D9.2 Annulus',onChanged: (val){},isneedDivider: false,),
