@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:npac/app/export.dart';
 
 class SingleImage extends StatelessWidget {
@@ -10,12 +11,15 @@ class SingleImage extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Space(),
         Text(URL?.split('/').last ?? ''),
         Space(),
-        Container(
-            padding:  EdgeInsets.all(10),
-            width: double.maxFinite,
-            child: Image.network(URL ?? '')),
+        Flexible(
+          child: Container(
+              padding:  EdgeInsets.all(10),
+              width: double.maxFinite,
+              child: Image.network(URL ?? '')),
+        ),
 
       ],);
   }

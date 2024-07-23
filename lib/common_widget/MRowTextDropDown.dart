@@ -40,7 +40,7 @@ class _MRowTextDropDownState extends State<MRowTextDropDown> {
           decoration: InputDecoration(
           ),
           hint: Text("Select an option"),
-          value:selectedValue != '' && widget.items!.contains(selectedValue) ?  selectedValue: null,
+          value:selectedValue != '' && (widget.items ?? items).contains(selectedValue) ?  selectedValue: null,
           isExpanded: true,validator:widget.validator ?? (val){
           if(val == null) return 'Please select from DropDown';
           },

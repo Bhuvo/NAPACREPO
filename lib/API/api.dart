@@ -38,6 +38,9 @@ class Api{
 
   static const String getEchoAssignment='VRAPI/GetEchoAssessmentDetails';
   static const String uploadEchoAssignment='VRAPI/SaveEchoAssessmentDetails';
+  static const String getEchoImage='VRAPI/Get_Ecg_Images';
+  static const String uploadEchoImage='VRAPI/Save_Ecg_Images';
+
 
 
 

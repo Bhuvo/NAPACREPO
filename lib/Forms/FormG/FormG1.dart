@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:npac/Forms/CommonModelController/EchoAssignmentController.dart';
+import 'package:npac/Forms/CommonModelController/EchoImage/EchoImageController.dart';
 import 'package:npac/Forms/FormF/FormF1.dart';
 import 'package:npac/Forms/FormF/widget/ValueFunction.dart';
 import 'package:npac/Forms/FormG/Controller/AntenalFormJController.dart';
+import 'package:npac/Forms/FormH/FormH3.dart';
+import 'package:npac/Forms/FormH/FormH4.dart';
+import 'package:npac/Forms/FormH/FormH5.dart';
+import 'package:npac/Forms/FormH/FormH6.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MRowTextDropDown.dart';
 import 'package:npac/common_widget/MSmallText.dart';
@@ -19,6 +24,8 @@ class FormG1 extends StatefulWidget {
 class _FormG1State extends State<FormG1> {
   AntenalFormJController formGController = Get.put(AntenalFormJController());
   EchoAssignmentController echoAssignmentController = Get.put(EchoAssignmentController());
+  EchoImageController echoImageController = Get.put(EchoImageController());
+
 
 
   RxList<String> MitralSelectedList = <String>[].obs;
@@ -37,8 +44,9 @@ class _FormG1State extends State<FormG1> {
   void getData()async{
     formGController.isLoading.value = true;
     await formGController.getFormFData(context,7964);
-    await formGController.getEcho();
-    await formGController.getOutCome();
+    await echoImageController.getEchoImage(7964 ,10);
+    // await formGController.getEcho();
+    // await formGController.getOutCome();
     await echoAssignmentController.getEcoAssignmentData(9);
     formGController.isLoading.value = true;
     formGController.FormJEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
@@ -47,7 +55,7 @@ class _FormG1State extends State<FormG1> {
     formGController.FormJEchoAssignmentData.value.mitralStenotic ?? false ? MitralSelectedList.add('Stenotic') :null;
     formGController.FormJEchoAssignmentData.value.mitralRegurgitant ?? false ? MitralSelectedList.add('Regurgitant') :null;
     formGController.FormJEchoAssignmentData.value.aorticStenotic ?? false ? AorticSelectedList.add('Stenotic') :null;
-    formGController.FormJEchoAssignmentData.value.aorticRegurgitant =='True' ?? false ? AorticSelectedList.add('Regurgitant') :null;
+    formGController.FormJEchoAssignmentData.value.aorticRegurgitant ?? false  ? AorticSelectedList.add('Regurgitant') :null;
     formGController.FormJEchoAssignmentData.value.tricuspidStenotic ?? false ? TricuspidSelectedList.add('Stenotic') :null;
     formGController.FormJEchoAssignmentData.value.tricuspidRegurgitant ?? false ? TricuspidSelectedList.add('Regurgitant') :null;
     formGController.FormJEchoAssignmentData.value.pulmonaryStenotic ?? false ? PulmonarySelectedList.add('Stenotic') :null;
@@ -133,7 +141,7 @@ class _FormG1State extends State<FormG1> {
             ListView(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              children: formGController.echoModel.map((element) => Builder(
+              children: echoImageController.EchoImage.map((element) => Builder(
                   builder: (context) {
                     return InkWell(
                       onTap: (){
@@ -157,8 +165,9 @@ class _FormG1State extends State<FormG1> {
                   }
               )).toList(),
             ),
-            MFilledButton(text: 'Upload ECG',isLoading: formGController.isEcoLoading.value,onPressed: (){
-              formGController.uploadEcho(context);
+            MFilledButton(text: 'Upload ECG',isLoading: formGController.isEcoLoading.value,onPressed: () async {
+              // formGController.uploadEcho(context);
+             await echoImageController.uploadEchoImage(7964, 10);
             },),
           ],): Container(),
           MSmallText(text:'J6 ECHOCARDIOGRAPHIC ASSESSMENT'),
@@ -227,171 +236,251 @@ class _FormG1State extends State<FormG1> {
            MrowTextTextFieldWidget(enabled: isEnabled,title: 'PAT(msec)',initialValue:'${formGController.FormJEchoAssignmentData.value.peakPr}',onChanged: (val){
              formGController.FormJEchoAssignmentData.value.pat = int.tryParse(val);
            },),
-           MText(text: 'VALVE FUNCTION',),
+           // MText(text: 'VALVE FUNCTION',),
+            MRowTextRadioWidget(title: ' Valvular Morphology',options: List_items.NormalAbnormal,initialValue: formGController.FormJEchoAssignmentData.value.valvularMorphology,enabled: isEnabled,onChanged: (val){
+              formGController.FormJEchoAssignmentData.value.valvularMorphology = val;
+              setState(() {});
+            },),
            Space(),
-           MRowTextRadioWidget(enabled: isEnabled,title: 'Mitral',initialValue: formGController.FormJEchoAssignmentData.value.mitralFunction ,onChanged: (val ){
-             formGController.FormJEchoAssignmentData.value.mitralFunction = val;
-             setState(() {});
-           },options: ['Normal','Abnormal'],isneedDivider: false,),
-            !(formGController.FormJEchoAssignmentData.value.mitralFunction =='Abnormal')? MRowTextCheckBox(enabled: isEnabled,list: List_items.ValuFunction,
-             result: (val){
-               if(val.contains('Stenotic')){
-                 formGController.FormJEchoAssignmentData.value.mitralStenotic = true;
-                 setState(() {
-                   isMitralStenotic = true;
-                 });
-               }else{
-                 formGController.FormJEchoAssignmentData.value.mitralStenotic = false;
-                 setState(() {
-                   isMitralStenotic = false;
-                 });
-               }
-               if(val.contains('Regurgitant')){
-                 formGController.FormJEchoAssignmentData.value.mitralRegurgitant = true;
-                 setState(() { 
-                   isMitralRegurgitant = true;
-                 });
-               }else{
-                 formGController.FormJEchoAssignmentData.value.mitralRegurgitant = false;
-                 setState(() {
-                   isMitralRegurgitant = false;
-                 });
-               }
-             },isneedDivider: isMitralStenotic ||isMitralRegurgitant ?false  : true,):Container(),
-           isMitralStenotic ?  MRowTextRadioWidget(enabled: isEnabled,title: 'Tricuspid',initialValue: formGController.FormJEchoAssignmentData.value.mitralStenoticValue,onChanged: (val ){
-             formGController.FormJEchoAssignmentData.value.mitralStenoticValue = val;
-           },options: List_items.MildModerateSevere,isneedDivider: false,) : Container(),
-           isMitralStenotic ?  MrowTextTextFieldWidget(enabled: isEnabled,title: 'MVOA (cm2) ',initialValue: formGController.FormJEchoAssignmentData.value.mitralMVOA.toString(),onChanged: (val ){
-             formGController.FormJEchoAssignmentData.value.mitralMVOA = int.tryParse(val);
-           },isneedDivider: false,) : Container(),
-            isMitralStenotic ?Column(
+            formGController.FormJEchoAssignmentData.value.valvularMorphology == 'Abnormal' ? Column(
+              key: ValueKey(formGController.FormJEchoAssignmentData.value.valvularMorphology),
               children: [
-                MSmallText(text: 'MVG',),
-                Space(),
-                MrowTextTextFieldWidget(enabled:isEnabled,title: 'MG',initialValue: '${ formGController.FormJEchoAssignmentData.value.mitralMVGradientMean}',onChanged: (val ){
-                  formGController.FormJEchoAssignmentData.value.mitralMVGradientMean= int.tryParse(val);
-                },isneedDivider: false,),
-                MrowTextTextFieldWidget(enabled:isEnabled,title: 'PG',initialValue: '${ formGController.FormJEchoAssignmentData.value.mitralMVGradientPeak}',onChanged: (val ){
-                  formGController.FormJEchoAssignmentData.value.mitralMVGradientPeak= int.tryParse(val);
-                },isneedDivider: false,)
-              ],
-            ): Container(),
-           isMitralRegurgitant ?  MRowTextRadioWidget(enabled: isEnabled,title: 'Regurgitant',initialValue: formGController.FormJEchoAssignmentData.value.mitralRegurgitantValue,onChanged: (val ){
-             formGController.FormJEchoAssignmentData.value.mitralRegurgitantValue = val;
-           },options:List_items.MildModerateSevere,isneedDivider: false,) : Container(),
-           isMitralStenotic ||isMitralRegurgitant ? MDivider(): Container(),
-           Space(),
-            ValueFunction(key: Key('Aortic'),enabled:isEnabled,title: 'Aortic',radioInitialValue: formGController.FormJEchoAssignmentData.value.aorticFunction
-              ,MGInitialValue: '${formGController.FormJEchoAssignmentData.value.aorticStenosisGradientMean}',
-              PGInitialValue: '${formGController.FormJEchoAssignmentData.value.aorticStenosisGradientPeak}',
-              StenoticInitialValue: formGController.FormJEchoAssignmentData.value.aorticStenoticValue
-              ,regurgitantInitialValue: formGController.FormJEchoAssignmentData.value.aorticRegurgitantValue
-              ,selectedlist: AorticSelectedList,
-              checkboxValue: (val){
-                formGController.FormJEchoAssignmentData.value.aorticStenotic = val;
-              },checkboxValueRegurgitant: (val){
-                val ?formGController.FormJEchoAssignmentData.value.aorticRegurgitant = 'true' :formGController.FormJEchoAssignmentData.value.aorticRegurgitant = 'false';
-              },MG: (val){
-                formGController.FormJEchoAssignmentData.value.aorticStenosisGradientMean = int.tryParse(val);
-              },PG: (val){
-                formGController.FormJEchoAssignmentData.value.aorticStenosisGradientPeak = int.tryParse(val);
-              },RegurgitantradioOnchange: (val){
-                formGController.FormJEchoAssignmentData.value.aorticRegurgitantValue = val;
-              },StenoticradioOnchange: (val){
-                formGController.FormJEchoAssignmentData.value.aorticStenoticValue = val;
-              },radioValue: (val){
-                formGController.FormJEchoAssignmentData.value.aorticFunction = val;
-              },),
-            ValueFunction(enabled:isEnabled,title: 'Tricuspid',
-              radioInitialValue: formGController.FormJEchoAssignmentData.value.tricuspidFunction
-              ,MGInitialValue: '${formGController.FormJEchoAssignmentData.value.tricuspidGradientMean}',
-              PGInitialValue: '${formGController.FormJEchoAssignmentData.value.tricuspidGradientPeak}',
-              StenoticInitialValue: formGController.FormJEchoAssignmentData.value.tricuspidStenoticValue
-              ,regurgitantInitialValue: formGController.FormJEchoAssignmentData.value.tricuspidRegurgitantValue
-              ,selectedlist: TricuspidSelectedList,
-
-              checkboxValue: (val){
-                formGController.FormJEchoAssignmentData.value.tricuspidStenotic = val;
-              },checkboxValueRegurgitant: (val){
-                formGController.FormJEchoAssignmentData.value.tricuspidRegurgitant = val;
-              },MG: (val){
-                formGController.FormJEchoAssignmentData.value.tricuspidGradientMean = int.tryParse(val);
-              },PG: (val){
-                formGController.FormJEchoAssignmentData.value.tricuspidGradientPeak = int.tryParse(val);
-              },RegurgitantradioOnchange: (val){
-                formGController.FormJEchoAssignmentData.value.tricuspidRegurgitantValue = val;
-              },StenoticradioOnchange: (val){
-                formGController.FormJEchoAssignmentData.value.tricuspidStenoticValue = val;
-              },radioValue: (val){
-                formGController.FormJEchoAssignmentData.value.tricuspidFunction = val;
-              },),
-            ValueFunction(enabled:isEnabled,title: 'Pulmonary',
-              radioInitialValue: formGController.FormJEchoAssignmentData.value.pulmonaryFunction,
-              MGInitialValue: formGController.FormJEchoAssignmentData.value.rvotObstructionGradientMean.toString(),
-              PGInitialValue: formGController.FormJEchoAssignmentData.value.rvotObstructionGradientPeak.toString(),
-              StenoticInitialValue: formGController.FormJEchoAssignmentData.value.pulmonaryStenoticValue
-              ,regurgitantInitialValue: formGController.FormJEchoAssignmentData.value.pulmonaryRegurgitantValue
-              ,selectedlist: PulmonarySelectedList,
-
-              checkboxValue: (val){
-                formGController.FormJEchoAssignmentData.value.pulmonaryStenotic = val;
-              },checkboxValueRegurgitant: (val){
-                formGController.FormJEchoAssignmentData.value.pulmonaryRegurgitant = val;
-              },MG: (val){
-                formGController.FormJEchoAssignmentData.value.rvotObstructionGradientMean = int.tryParse(val);
-              },PG: (val){
-                formGController.FormJEchoAssignmentData.value.rvotObstructionGradientPeak =int.tryParse(val) ;
-              },RegurgitantradioOnchange: (val){
-                formGController.FormJEchoAssignmentData.value.pulmonaryRegurgitantValue = val;
-              },StenoticradioOnchange: (val){
-                formGController.FormJEchoAssignmentData.value.pulmonaryStenoticValue = val;
-              },radioValue: (val){
-                formGController.FormJEchoAssignmentData.value.pulmonaryFunction = val;
-              },),
+             MRowTextRadioWidget(title: 'Mitral',options: ['Native','Prosthetic'],initialValue: formGController.FormJEchoAssignmentData.value.mitral,enabled: isEnabled,isneedDivider: false,onChanged: (val){
+               formGController.FormJEchoAssignmentData.value.mitral = val;
+               setState(() {});
+             },),
+             formGController.FormJEchoAssignmentData.value.mitral == 'Native' ?Column(children: [
+               MRowTextRadioWidget(enabled: isEnabled,title: 'Mitral Function',initialValue: formGController.FormJEchoAssignmentData.value.mitralFunction ,onChanged: (val ){
+                 formGController.FormJEchoAssignmentData.value.mitralFunction = val;
+                 setState(() {});
+               },options: ['Normal','Abnormal'],isneedDivider: false,),
+               (formGController.FormJEchoAssignmentData.value.mitralFunction =='Abnormal')? MRowTextCheckBox( key : ValueKey('val ${MitralSelectedList}'),enabled: isEnabled,selectedlist: MitralSelectedList,list: List_items.ValuFunction,
+                 result: (val){
+                   if(val.contains('Stenotic')){
+                     formGController.FormJEchoAssignmentData.value.mitralStenotic = true;
+                     setState(() {
+                       isMitralStenotic = true;
+                     });
+                   }else{
+                     formGController.FormJEchoAssignmentData.value.mitralStenotic = false;
+                     setState(() {
+                       isMitralStenotic = false;
+                     });
+                   }
+                   if(val.contains('Regurgitant')){
+                     formGController.FormJEchoAssignmentData.value.mitralRegurgitant = true;
+                     setState(() {
+                       isMitralRegurgitant = true;
+                     });
+                   }else{
+                     formGController.FormJEchoAssignmentData.value.mitralRegurgitant = false;
+                     setState(() {
+                       isMitralRegurgitant = false;
+                     });
+                   }
+                 },isneedDivider: isMitralStenotic ||isMitralRegurgitant ?false  : true,):Container(),
+               // isMitralStenotic ?  MRowTextRadioWidget(enabled: isEnabled,title: 'Tricuspid',initialValue: formGController.FormJEchoAssignmentData.value.mitralStenoticValue,onChanged: (val ){
+               //   formGController.FormJEchoAssignmentData.value.mitralStenoticValue = val;
+               // },options: List_items.MildModerateSevere,isneedDivider: false,) : Container(),
+               isMitralStenotic ?  MrowTextTextFieldWidget(enabled: isEnabled,title: 'MVOA (cm2) ',initialValue: formGController.FormJEchoAssignmentData.value.mitralMVOA.toString(),onChanged: (val ){
+                 formGController.FormJEchoAssignmentData.value.mitralMVOA = int.tryParse(val);
+               },isneedDivider: false,) : Container(),
+               isMitralStenotic ?Column(
+                 children: [
+                   Space(),
+                   MSmallText(text: 'MVG :-',),
+                   // Space(),
+                   MrowTextTextFieldWidget(enabled:isEnabled,title: 'MG',initialValue: '${ formGController.FormJEchoAssignmentData.value.mitralMVGradientMean}',onChanged: (val ){
+                     formGController.FormJEchoAssignmentData.value.mitralMVGradientMean= int.tryParse(val);
+                   },isneedDivider: false,),
+                   MrowTextTextFieldWidget(enabled:isEnabled,title: 'PG',initialValue: '${ formGController.FormJEchoAssignmentData.value.mitralMVGradientPeak}',onChanged: (val ){
+                     formGController.FormJEchoAssignmentData.value.mitralMVGradientPeak= int.tryParse(val);
+                   },isneedDivider: false,)
+                 ],
+               ): Container(),
+               isMitralRegurgitant ?  MRowTextRadioWidget(enabled: isEnabled,title: 'Regurgitant',initialValue: formGController.FormJEchoAssignmentData.value.mitralRegurgitantValue,onChanged: (val ){
+                 formGController.FormJEchoAssignmentData.value.mitralRegurgitantValue = val;
+               },options:List_items.MildModerateSevere,isneedDivider: false,) : Container(),
+             ],): Container(),
+             // isMitralStenotic ||isMitralRegurgitant ? MDivider(): Container(),
+             MDivider(),
+             Space(),
+             ValueFunction(key: Key('Aortic ${AorticSelectedList}'),enabled:isEnabled,title: 'Aortic',radioInitialValue: formGController.FormJEchoAssignmentData.value.aorticFunction
+               ,MGInitialValue: '${formGController.FormJEchoAssignmentData.value.aorticStenosisGradientMean}',
+               maininitialValue:formGController.FormJEchoAssignmentData.value.aortic ,
+               PGInitialValue: '${formGController.FormJEchoAssignmentData.value.aorticStenosisGradientPeak}',
+               StenoticInitialValue: formGController.FormJEchoAssignmentData.value.aorticStenoticValue
+               ,regurgitantInitialValue: formGController.FormJEchoAssignmentData.value.aorticRegurgitantValue
+               ,selectedlist: AorticSelectedList,
+               checkboxValue: (val){
+                 formGController.FormJEchoAssignmentData.value.aorticStenotic = val;
+                 setState(() {
+                 });
+               },checkboxValueRegurgitant: (val){
+                 formGController.FormJEchoAssignmentData.value.aorticRegurgitant = val;
+                 setState(() {
+                 });
+               },MG: (val){
+                 formGController.FormJEchoAssignmentData.value.aorticStenosisGradientMean = int.tryParse(val);
+                 setState(() {
+                 });
+               },
+               mainValue: (val){
+                 formGController.FormJEchoAssignmentData.value.aortic = val;
+                 setState(() {
+                 });
+               },
+               PG: (val){
+                 formGController.FormJEchoAssignmentData.value.aorticStenosisGradientPeak = int.tryParse(val);
+                 setState(() {
+                 });
+               },RegurgitantradioOnchange: (val){
+                 formGController.FormJEchoAssignmentData.value.aorticRegurgitantValue = val;
+                 setState(() {
+                 });
+               },StenoticradioOnchange: (val){
+                 formGController.FormJEchoAssignmentData.value.aorticStenoticValue = val;
+                 setState(() {
+                 });
+               },radioValue: (val){
+                 formGController.FormJEchoAssignmentData.value.aorticFunction = val;
+                 setState(() {
+                 });
+               },),
+             ValueFunction(key: Key('Tricuspid ${TricuspidSelectedList}'),enabled:isEnabled,title: 'Tricuspid',
+               radioInitialValue: formGController.FormJEchoAssignmentData.value.tricuspidFunction
+               ,MGInitialValue: '${formGController.FormJEchoAssignmentData.value.tricuspidGradientMean}',
+               maininitialValue: formGController.FormJEchoAssignmentData.value.tricuspid ,
+               PGInitialValue: '${formGController.FormJEchoAssignmentData.value.tricuspidGradientPeak}',
+               StenoticInitialValue: formGController.FormJEchoAssignmentData.value.tricuspidStenoticValue
+               ,regurgitantInitialValue: formGController.FormJEchoAssignmentData.value.tricuspidRegurgitantValue
+               ,selectedlist: TricuspidSelectedList,
+               mainValue: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspid = val;
+                 setState(() {
+                 });
+               },
+               checkboxValue: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspidStenotic = val;
+                 setState(() {
+                 });
+               },checkboxValueRegurgitant: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspidRegurgitant = val;
+                 setState(() {
+                 });
+               },MG: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspidGradientMean = int.tryParse(val);
+                 setState(() {
+                 });
+               },PG: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspidGradientPeak = int.tryParse(val);
+                 setState(() {
+                 });
+               },RegurgitantradioOnchange: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspidRegurgitantValue = val;
+                 setState(() {
+                 });
+               },StenoticradioOnchange: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspidStenoticValue = val;
+                 setState(() {
+                 });
+               },radioValue: (val){
+                 formGController.FormJEchoAssignmentData.value.tricuspidFunction = val;
+                 setState(() {
+                 });
+               },),
+             ValueFunction(key: Key('Pulmonary ${PulmonarySelectedList}'),enabled:isEnabled,title: 'Pulmonary',
+               maininitialValue: formGController.FormJEchoAssignmentData.value.pulmonary ,
+               radioInitialValue: formGController.FormJEchoAssignmentData.value.pulmonaryFunction,
+               MGInitialValue: formGController.FormJEchoAssignmentData.value.rvotObstructionGradientMean.toString(),
+               PGInitialValue: formGController.FormJEchoAssignmentData.value.rvotObstructionGradientPeak.toString(),
+               StenoticInitialValue: formGController.FormJEchoAssignmentData.value.pulmonaryStenoticValue
+               ,regurgitantInitialValue: formGController.FormJEchoAssignmentData.value.pulmonaryRegurgitantValue
+               ,selectedlist: PulmonarySelectedList,
+               mainValue: (val){
+                 formGController.FormJEchoAssignmentData.value.pulmonary = val;
+                 setState(() {
+                 });
+               },
+               checkboxValue: (val){
+                 formGController.FormJEchoAssignmentData.value.pulmonaryStenotic = val;
+                 setState(() {
+                 });
+               },checkboxValueRegurgitant: (val){
+                 formGController.FormJEchoAssignmentData.value.pulmonaryRegurgitant = val;
+                 setState(() {
+                 });
+               },MG: (val){
+                 formGController.FormJEchoAssignmentData.value.rvotObstructionGradientMean = int.tryParse(val);
+                 setState(() {
+                 });
+               },PG: (val){
+                 formGController.FormJEchoAssignmentData.value.rvotObstructionGradientPeak =int.tryParse(val) ;
+                 setState(() {
+                 });
+               },RegurgitantradioOnchange: (val){
+                 formGController.FormJEchoAssignmentData.value.pulmonaryRegurgitantValue = val;
+                 setState(() {
+                 });
+               },StenoticradioOnchange: (val){
+                 formGController.FormJEchoAssignmentData.value.pulmonaryStenoticValue = val;
+                 setState(() {
+                 });
+               },radioValue: (val){
+                 formGController.FormJEchoAssignmentData.value.pulmonaryFunction = val;
+                 setState(() {
+                 });
+               },),
+           ],): Container(),
           ],): Container(),
           MRowTextRadioWidget(key:ValueKey('J7 ${formGController.FormJData.value.outComeIdentified}'),enabled: isEnabled,isneedDivider: false,title: 'J7.  Did the patient develop any complication (study outcome) Ell this visit:',initialValue: formGController.FormJData.value.outComeIdentified ?? 'No',onChanged: (val){
                 setState(() {
                   formGController.FormJData.value.outComeIdentified = val;
                 });
           },),
-          Obx(
-            ()=> formGController.FormJData.value.outComeIdentified == 'Yes' ? Column(children: [
-              ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: formGController.outCome.map((element) => Builder(
-                    builder: (context) {
-                      return InkWell(
-                        onTap: (){
-                          showModalBottomSheet(
-                              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*0.6,minWidth: MediaQuery.of(context).size.width),
-                              context: context, builder: (context)=>SingleImage(
-                            URL: element.filePath,
-                          )
-                          );
-                        },
-                        child: Container(
-                            height: 30,
-                            // padding:  EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(7),
-                            ),
-                            margin: EdgeInsets.all(4),
-                            child: Center(child: Text(element.name ?? ''))),
-                      );
-                    }
-                )).toList(),
-              ),
-             MFilledButton(text: 'Upload study outcome',isLoading: formGController.isOutComeUploadLoading.value,onPressed: (){
-                  formGController.UploadOutCome(context);
-                },),
+        formGController.FormJData.value.outComeIdentified == 'Yes' ?  FormH3(enabled: isEnabled,) : Container(),
+        formGController.FormJData.value.outComeIdentified == 'Yes' ?  FormH4(enabled: isEnabled,) : Container(),
+        formGController.FormJData.value.outComeIdentified == 'Yes' ?  FormH5(enabled: isEnabled,) : Container(),
+        formGController.FormJData.value.outComeIdentified == 'Yes' ?  FormH6(enabled: isEnabled,) : Container(),
 
-            ],): Container(),
-          ),
+        // Obx(
+          //   ()=> formGController.FormJData.value.outComeIdentified == 'Yes' ? Column(children: [
+          //     ListView(
+          //       shrinkWrap: true,
+          //       physics: NeverScrollableScrollPhysics(),
+          //       children: formGController.outCome.map((element) => Builder(
+          //           builder: (context) {
+          //             return InkWell(
+          //               onTap: (){
+          //                 showModalBottomSheet(
+          //                     constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*0.6,minWidth: MediaQuery.of(context).size.width),
+          //                     context: context, builder: (context)=>SingleImage(
+          //                   URL: element.filePath,
+          //                 )
+          //                 );
+          //               },
+          //               child: Container(
+          //                   height: 30,
+          //                   // padding:  EdgeInsets.all(4),
+          //                   decoration: BoxDecoration(
+          //                     color: Colors.grey,
+          //                     borderRadius: BorderRadius.circular(7),
+          //                   ),
+          //                   margin: EdgeInsets.all(4),
+          //                   child: Center(child: Text(element.name ?? ''))),
+          //             );
+          //           }
+          //       )).toList(),
+          //     ),
+          //    MFilledButton(text: 'Upload study outcome',isLoading: formGController.isOutComeUploadLoading.value,onPressed: (){
+          //         formGController.UploadOutCome(context);
+          //       },),
+          //
+          //   ],): Container(),
+          // ),
           Space(),
-          MDivider(),
-          Space(),
+          // MDivider(),
+          // Space(),
           // MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
           isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
             if(await formGController.upLoadData()){

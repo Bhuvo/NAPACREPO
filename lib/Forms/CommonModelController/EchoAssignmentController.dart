@@ -19,7 +19,7 @@ class EchoAssignmentController extends GetxController{
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
       EchoAssignmentData.value = EchoAssignmentModel.fromJson(jsonData);
-      //print(jsonData);
+      // print(jsonData);
     }else{
       print('Error while fetching Echo Assignment data');
     }

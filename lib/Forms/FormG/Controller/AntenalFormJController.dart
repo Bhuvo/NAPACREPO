@@ -32,17 +32,17 @@ class AntenalFormJController extends GetxController{
     if (response.statusCode == 200) {
       FormJData.value = FormFModel.fromJson(jsonDecode(response.body));
       // print(response.body);
-      context.showSnackBar('FormF Data fetched successfully');
+      context.showSnackBar('FormJ Data fetched successfully');
     } else {
       //print(response.body);
-      print('Error while fetching FormF data');
+      print('Error while fetching FormJ data');
     }
 
     isLoading.value = false;
   }
 
   Future<bool> upLoadData() async{
-    FormJData.value.visitNo = 1;
+    FormJData.value.visitNo = 2;
     FormJData.value.patientId = 7964;
     var response = await http.post(Uri.parse('${Api.baseUrl}${Api.updateAntenatalVisitOne}'),body: jsonEncode(FormJData.value.toJson()),headers: apiHeader);
 
@@ -50,6 +50,7 @@ class AntenalFormJController extends GetxController{
       print(response.body);
       return true;
     }else{
+      print(response.body);
       print('Error while uploading AntenatalVisitOne data');
     }
     return false;

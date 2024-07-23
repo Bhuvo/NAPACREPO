@@ -28,7 +28,7 @@ class EchoAssignmentModel {
   String? aorticStenoticValue;
   int? aorticStenosisGradientMean;
   int? aorticStenosisGradientPeak;
-  String? aorticRegurgitant;
+  bool? aorticRegurgitant;
   String? aorticRegurgitantValue;
   String? tricuspid;
   String? tricuspidFunction;
