@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:npac/Forms/FormL/FormLModel.dart';
 import 'package:npac/Forms/FormN/widget/MN1body.dart';
 import 'package:npac/app/export.dart';
 
 class FormL2 extends StatefulWidget {
   final bool? enabled;
-  const FormL2({super.key, this.enabled});
+  final Rx<FormLModel>? formLData;
+  const FormL2({super.key, this.enabled, this.formLData});
 
   @override
   State<FormL2> createState() => _FormL2State();
@@ -25,7 +27,8 @@ class _FormL2State extends State<FormL2> {
         print('Value from map $e');
       },),
         Space(),
-        MRowTextRadioWidget(enabled: widget.enabled,title: 'L5 Hospitalisations after discharge:',onChanged: (val){
+        MRowTextRadioWidget(enabled: widget.enabled,title: 'L5 Hospitalisations after discharge:',initialValue: widget.formLData?.value.hospitalisationAfterDischarge,onChanged: (val){
+          widget.formLData?.value.hospitalisationAfterDischarge = val;
           if(val =='Yes'){
             setState(() {
               isHospitalisations = true;
@@ -36,19 +39,27 @@ class _FormL2State extends State<FormL2> {
             });
           }
         },) ,
-        isHospitalisations ? MTextField(enabled: widget.enabled,label: 'If yes, specify:',onChanged: (val){},): Container(),
-        MRowTextRadioWidget(enabled: widget.enabled,title: 'L6 Post-partum plan contraception provided:',onChanged: (val){},),
-        MRowTextRadioWidget(enabled: widget.enabled,title: 'L7 Cardiac referral provided:',onChanged: (val){},),
-        MSmallText(text: 'L8 NEONATAL OUTCOME',),
-        MRowTextRadioWidget(title: '8.1 Live',onChanged: (val){
-          val =='Yes' ? isLive =true : isLive = false;
-          setState(() {
-
-          });
+        isHospitalisations ? MTextField(enabled: widget.enabled,label: 'If yes, specify:',initalValue: widget.formLData?.value.reasonForHospitalization,onChanged: (val){
+          widget.formLData?.value.reasonForHospitalization = val;
+        },): Container(),
+        MRowTextRadioWidget(enabled: widget.enabled,title: 'L6 Post-partum plan contraception provided:',initialValue: widget.formLData?.value.postpartumContraception,onChanged: (val){
+          widget.formLData?.value.postpartumContraception = val;
         },),
-      isLive ?MrowTextTextFieldWidget(enabled: widget.enabled,title: 'L8.1.1 Neonatal weight(Kg):', onChanged: (val){},isneedDivider: false,) : Container(),
-      MRowTextRadioWidget(title: '8.1 Dead',onChanged: (val){
+        MRowTextRadioWidget(enabled: widget.enabled,title: 'L7 Cardiac referral provided:',initialValue: widget.formLData?.value.cardiacReferral,onChanged: (val){
+          widget.formLData?.value.cardiacReferral = val;
+        },),
+        MSmallText(text: 'L8 NEONATAL OUTCOME',),
+        MRowTextRadioWidget(title: '8.1 Live',initialValue: widget.formLData?.value.neonatalOutcome,onChanged: (val){
+          val =='Yes' ? isLive =true : isLive = false;
+          widget.formLData?.value.neonatalOutcome = val;
+          setState(() {});
+        },),
+      isLive ?MrowTextTextFieldWidget(enabled: widget.enabled,title: 'L8.1.1 Neonatal weight(Kg):',initialValue: widget.formLData?.value.neonatalWeight, onChanged: (val){
+        widget.formLData?.value.neonatalWeight = val;
+      },isneedDivider: false,) : Container(),
+      MRowTextRadioWidget(title: '8.1 Dead',initialValue: widget.formLData?.value.neonatalOutcome,onChanged: (val){
         val =='Yes' ? isDead =true : isDead = false;
+        widget.formLData?.value.neonatalOutcome = val;
         setState(() {
 
         });
@@ -59,8 +70,10 @@ class _FormL2State extends State<FormL2> {
         //   setState(() {});
         // },isneedDivider: false,),
         // Space(),
-      isDead ? MrowTextTextFieldWidget(enabled: widget.enabled,title: 'L8.1.2 Mention cause of death:', onChanged: (val){},isneedDivider: false,) : Container(),
-      MRowTextRadioWidget(enabled: widget.enabled,title: 'L8.2 Echocardiographic evaluation (if any): ',onChanged: (val){
+      isDead ? MrowTextTextFieldWidget(enabled: widget.enabled,title: 'L8.1.2 Mention cause of death:',initialValue: widget.formLData?.value.causeOfDeath, onChanged: (val){
+        widget.formLData?.value.causeOfDeath = val;
+      },isneedDivider: false,) : Container(),
+      MRowTextRadioWidget(enabled: widget.enabled,title: 'L8.2 Echocardiographic evaluation (if any): ',initialValue: widget.formLData?.value.ecgEvaluation,onChanged: (val){
           if(val =='Yes'){
             setState(() {
               isYes = true;
@@ -70,11 +83,20 @@ class _FormL2State extends State<FormL2> {
               isYes = false;
             });
           }
+        widget.formLData?.value.ecgEvaluation = val;
         },isneedDivider: false,),
-     isYes ? MRowTextRadioWidget(enabled: widget.enabled,title: 'If yes',options: ['Normal','Cong HD'],onChanged: (val){},): Container(),
-      MRowTextRadioWidget(enabled: widget.enabled,title: 'L8.3 Adverse neonatal outcome:',onChanged: (val){},options: ['Neonatal death','Cardiac lesion','Malnourishment'],),
-        MrowTextTextFieldWidget(enabled: widget.enabled,title: 'L9 Any other comments:',onChanged: (val){},),
-        MrowTextDatePickerWidget(enabled: widget.enabled,title: 'L10 Date of next follow up:',onChanged: (val){},),
+     isYes ? MRowTextRadioWidget(enabled: widget.enabled,title: 'If yes',initialValue: widget.formLData?.value.ecgEvaluationValue,options: ['Normal','Cong HD'],onChanged: (val){
+       widget.formLData?.value.ecgEvaluationValue = val;
+     },): Container(),
+      MRowTextRadioWidget(enabled: widget.enabled,title: 'L8.3 Adverse neonatal outcome:',initialValue: widget.formLData?.value.adverseNeonatalOutcome,onChanged: (val){
+        widget.formLData?.value.adverseNeonatalOutcome = val;
+      },options: ['Neonatal death','Cardiac lesion','Malnourishment'],),
+        MrowTextTextFieldWidget(enabled: widget.enabled,title: 'L9 Any other comments:',initialValue: widget.formLData?.value.otherComments,onChanged: (val){
+          widget.formLData?.value.otherComments = val;
+        },),
+        MrowTextDatePickerWidget(enabled: widget.enabled,title: 'L10 Date of next follow up:',initialDate: stringToDate(widget.formLData?.value.nextFollowUpDate ?? ''),onChanged: (val){
+          widget.formLData?.value.nextFollowUpDate = dateToString(val);
+        },),
 
       ],);
   }

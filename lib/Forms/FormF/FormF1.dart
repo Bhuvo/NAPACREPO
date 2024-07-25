@@ -323,13 +323,18 @@ void getdatas()async{
                  ],): Container(),
                MDivider(),
                Space(),
-               Obx(
-                     ()=> ValueFunction(key: Key('Aortic ${AorticSelectedList}'),enabled:isEnabled,title: 'Aortic',radioInitialValue: formFController.FormIEchoAssignmentData.value.aorticFunction
+               Obx(()=> ValueFunction(key: Key('Aortic ${AorticSelectedList}'),enabled:isEnabled,title: 'Aortic',radioInitialValue: formFController.FormIEchoAssignmentData.value.aorticFunction
                    ,MGInitialValue: '${formFController.FormIEchoAssignmentData.value.aorticStenosisGradientMean}',
                    PGInitialValue: '${formFController.FormIEchoAssignmentData.value.aorticStenosisGradientPeak}',
                    StenoticInitialValue: formFController.FormIEchoAssignmentData.value.aorticStenoticValue
                    ,regurgitantInitialValue: formFController.FormIEchoAssignmentData.value.aorticRegurgitantValue
                    ,selectedlist: AorticSelectedList,
+                   maininitialValue: formFController.FormIEchoAssignmentData.value.aortic,
+                   mainValue: (val){
+                     formFController.FormIEchoAssignmentData.value.aortic = val;
+                     setState(() {
+                     });
+                   },
                    checkboxValue: (val){
                      formFController.FormIEchoAssignmentData.value.aorticStenotic = val;
                      print('Aortic ${AorticSelectedList}');
@@ -368,7 +373,12 @@ void getdatas()async{
                  StenoticInitialValue: formFController.FormIEchoAssignmentData.value.tricuspidStenoticValue
                  ,regurgitantInitialValue: formFController.FormIEchoAssignmentData.value.tricuspidRegurgitantValue
                  ,selectedlist: TricuspidSelectedList,
-
+                  maininitialValue: formFController.FormIEchoAssignmentData.value.tricuspid,
+                 mainValue: (val){
+                   formFController.FormIEchoAssignmentData.value.tricuspid = val;
+                   setState(() {
+                   });
+                 },
                  checkboxValue: (val){
                    formFController.FormIEchoAssignmentData.value.tricuspidStenotic = val;
                    setState(() {
@@ -405,7 +415,12 @@ void getdatas()async{
                  StenoticInitialValue: formFController.FormIEchoAssignmentData.value.pulmonaryStenoticValue
                  ,regurgitantInitialValue: formFController.FormIEchoAssignmentData.value.pulmonaryRegurgitantValue
                  ,selectedlist: PulmonarySelectedList,
-
+                 maininitialValue: formFController.FormIEchoAssignmentData.value.pulmonary,
+                 mainValue:  (val){
+                   formFController.FormIEchoAssignmentData.value.pulmonary  = val;
+                   setState(() {
+                   });
+                 },
                  checkboxValue: (val){
                    formFController.FormIEchoAssignmentData.value.pulmonaryStenotic = val;
                    setState(() {

@@ -41,6 +41,8 @@ class Api{
   static const String getEchoImage='VRAPI/Get_Ecg_Images';
   static const String uploadEchoImage='VRAPI/Save_Ecg_Images';
 
+  static const String getPostpartumFirstData='VRAPI/GetPostPartumFirstDetails';
+  static const String UploadPostpartumFirst='VRAPI/SavePostPartumFirst';
 
 
 

@@ -484,7 +484,7 @@ class _FormG1State extends State<FormG1> {
           // MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
           isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
             if(await formGController.upLoadData()){
-              if(await echoAssignmentController.uploadEchoAssignment(9, formGController.FormJEchoAssignmentData.value)){
+              if(await echoAssignmentController.uploadEchoAssignment(10, formGController.FormJEchoAssignmentData.value)){
                 formGController.FormJEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
                 setState(() {
                   isEnabled = !isEnabled;});
@@ -502,7 +502,7 @@ class _FormG1State extends State<FormG1> {
         Space(),
         MFilledButton(text: 'Save & Continue',onPressed: () async {
           if(await formGController.upLoadData()){
-            if(await echoAssignmentController.uploadEchoAssignment(9, formGController.FormJEchoAssignmentData.value)){
+            if(await echoAssignmentController.uploadEchoAssignment(10, formGController.FormJEchoAssignmentData.value)){
               formGController.FormJEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
               setState(() {
                 isEnabled = !isEnabled;});

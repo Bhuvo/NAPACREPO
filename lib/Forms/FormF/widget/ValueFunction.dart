@@ -54,6 +54,7 @@ class _ValueFunctionState extends State<ValueFunction> {
          widget.radioValue?.call(val);
          setState(() {});
        },options: List_items.NormalAbnormal,isneedDivider: false,),
+
        isAbNormal ? Column(
          key: ValueKey('val${widget.title} $isAbNormal'),
          children: [
