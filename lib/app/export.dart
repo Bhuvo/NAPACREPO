@@ -70,8 +70,10 @@ DateTime? stringToDate(String dateString) {
   return date;
 }
 
-String dateToString(DateTime date) {
-  String dateString ='${date.day}/${date.month}/${date.year}';
+String dateToString(DateTime? date) {
+  if(date == null) return '';
+  String dateString = DateFormat("dd/MM/yyyy").format(date);
+  // String dateString ='${date.day}/${date.month}/${date.year}';
   return dateString;
 }
 

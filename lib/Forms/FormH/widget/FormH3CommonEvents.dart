@@ -48,16 +48,16 @@ class _FormH3CommonEventsState extends State<FormH3CommonEvents> {
             return isYes ?Column(children: [
               MSmallText(text: 'Event ${index+1}',),
               Space(),
-              MRowTextRadioWidget(enabled: widget.enabled ,title: 'If yes, specify',options: ['AN' , 'IP', 'PA'],onChanged: (val){
-                val== 'AN' ? isAn = true : isAn = false;
-                val== 'IP' ? isIP = true : isIP = false;
-                val== 'PA' ? isPA = true : isPA = false;
+              MRowTextRadioWidget(enabled: widget.enabled ,title: 'If yes, specify',options: ['Antinaval' , 'Intra partum', 'Postanatal'],onChanged: (val){
+                val== 'Antinaval' ? isAn = true : isAn = false;
+                val== 'Intra partum' ? isIP = true : isIP = false;
+                val== 'Postanatal' ? isPA = true : isPA = false;
                 setState(() {
                 });
               },isneedDivider: false,),
-              isYes && isAn? MTextField(enabled: widget.enabled,label: 'AN Time(in Weeks)',onChanged:widget.TextField1OnChanged ,): Container(),
-              isYes && isIP ? MTextField(enabled: widget.enabled,label: 'IP',onChanged:widget.TextField1OnChanged ,): Container(),
-              isYes && isPA? MTextField(enabled: widget.enabled,label: 'PA Time(in days)',onChanged:widget.TextField1OnChanged ,): Container(),
+              isYes && isAn? MTextField(enabled: widget.enabled,label: 'Antinaval Time(in Weeks)',onChanged:widget.TextField1OnChanged ,): Container(),
+              isYes && isIP ? MTextField(enabled: widget.enabled,label: 'Intra partum',onChanged:widget.TextField1OnChanged ,): Container(),
+              isYes && isPA? MTextField(enabled: widget.enabled,label: 'Postanatal Time(in days)',onChanged:widget.TextField1OnChanged ,): Container(),
             ],): Container();
         },
         ),

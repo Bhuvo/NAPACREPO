@@ -17,7 +17,8 @@ import 'package:npac/common_widget/MText.dart';
 import 'package:npac/widgets/loading_widget.dart';
 
 class FormF1 extends StatefulWidget {
-  const FormF1({super.key});
+  final int? patientId;
+  const FormF1({super.key, this.patientId});
 
   @override
   State<FormF1> createState() => _FormF1State();
@@ -51,11 +52,11 @@ class _FormF1State extends State<FormF1> {
 
 void getdatas()async{
   formFController.isLoading.value = true;
-  await formFController.getFormFData(context,7964);
-  await echoImageController.getEchoImage(7964 ,9);
+  await formFController.getFormFData(context,widget.patientId ?? 0);
+  await echoImageController.getEchoImage(widget.patientId ?? 0 ,9);
   // await formFController.getEcho();
   // await formFController.getOutCome();
-  await echoAssignmentController.getEcoAssignmentData(9);
+  await echoAssignmentController.getEcoAssignmentData(widget.patientId ?? 0 ,9);
   formFController.isLoading.value = true;
   formFController.FormIEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
   formFController.FormIEchoAssignmentData.value.mitralStenotic ?? false ? isMitralStenotic = true :null;
@@ -503,11 +504,12 @@ void getdatas()async{
           MDivider(),
           Space(),
           isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
-            if(await formFController.upLoadData()){
-              if(await echoAssignmentController.uploadEchoAssignment(9, formFController.FormIEchoAssignmentData.value)){
+            if(await formFController.upLoadData(widget.patientId ?? 0)){
+              if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ?? 0,9, formFController.FormIEchoAssignmentData.value)){
                 formFController.FormIEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
                 setState(() {
                   isEnabled = !isEnabled;});
+                context.showSnackBar('FormF Data saved successfully');
               }else{
                 context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');
               }
@@ -521,11 +523,12 @@ void getdatas()async{
               },),
           Space(),
           MFilledButton(text: 'Save & Continue',onPressed: () async {
-            if(await formFController.upLoadData()){
-              if(await echoAssignmentController.uploadEchoAssignment(9, formFController.FormIEchoAssignmentData.value)){
+            if(await formFController.upLoadData(widget.patientId ?? 0)){
+              if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ?? 0,9, formFController.FormIEchoAssignmentData.value)){
                 formFController.FormIEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
                 setState(() {
                   isEnabled = !isEnabled;});
+                context.showSnackBar('FormI Data saved successfully');
                 context.push(Routes.FormI1);
               }else{
                 context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');

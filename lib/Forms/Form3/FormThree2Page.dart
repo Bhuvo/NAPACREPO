@@ -6,6 +6,7 @@ import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MAppBar.dart';
 import 'package:npac/common_widget/MFormBody.dart';
 import 'package:npac/common_widget/MRowTextDropDown.dart';
+import 'package:npac/common_widget/MSmallText.dart';
 import 'package:npac/common_widget/MrowTextDatePicker.dart';
 import 'package:npac/common_widget/MrowTextTextfieldWidget.dart';
 import 'package:npac/utils/navigator_utils.dart';
@@ -53,7 +54,7 @@ class _FormThree2PageState extends State<FormThree2Page> {
   Widget build(BuildContext context) {
     return  Column(children: [
       Space(),
-      Text('C3.1 Previous Pregnancy ${widget.index}', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+      Text('C3.${widget.index} Previous Pregnancy ${widget.index}', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
       Space(),
       const Divider(thickness: 1,height: 3,),
       MRowTextDropDown(title: 'Pregnancy year',items:  List.generate(DateTime.now().year - 2000 + 1, (index) => (2000 + index).toString()),onChanged: (val){
@@ -102,16 +103,17 @@ class _FormThree2PageState extends State<FormThree2Page> {
           val.contains('Social / others') ? widget.Modeldata?.others = true : widget.Modeldata?.others = false;
         });
         },list: ['Maternal - Cardiac','Fetal','Maternal- Obstetric','Social / others'],): Container(),
-     Text('C3.${widget.index}.7 Previous pregnancy neonatal outcome:'),
+     MSmallText(text: 'C3.${widget.index}.7 Previous pregnancy neonatal outcome:',),
+
       MRowTextRadioWidget(enabled: widget.isEnabled,initialValue: widget.Modeldata?.congenitalAnomaly,title: 'Adverse outcome:',onChanged: (val){
         widget.Modeldata?.congenitalAnomaly = val;
       }),
-      widget.Modeldata?.congenitalAnomaly == 'Yes' ? MRowTextRadioWidget(enabled: widget.isEnabled,initialValue: widget.Modeldata?.neonatalDeath,title: 'Congenital anomaly:',onChanged: (val){
-        widget.Modeldata?.congenitalAnomaly = val;
-      }): Container(),
-      widget.Modeldata?.congenitalAnomaly == 'Yes' ? MRowTextRadioWidget(enabled: widget.isEnabled,initialValue: widget.Modeldata?.neonatalComplication,title: 'Neonatal death: ',onChanged: (val){
-        widget.Modeldata?.neonatalDeath = val;
-      }): Container(),
+      widget.Modeldata?.congenitalAnomaly == 'Yes' ? MRowTextCheckBox(enabled: widget.isEnabled,title: 'Congenital anomaly:',result: (val){
+
+      },list: ['Normal', 'Neonatal death' ,'Congenital anomaly','other abnormalities'],): Container(),
+      // widget.Modeldata?.congenitalAnomaly == 'Yes' ? MRowTextRadioWidget(enabled: widget.isEnabled,initialValue: widget.Modeldata?.neonatalComplication,title: 'Neonatal death: ',onChanged: (val){
+      //   widget.Modeldata?.neonatalDeath = val;
+      // }): Container(),
       // widget.Modeldata?.congenitalAnomaly == 'Yes' ? MRowTextRadioWidget(enabled: widget.isEnabled,initialValue: widget.Modeldata?.neonatalComplication,title: 'Neonatal complication: ',onChanged: (val){
       //   widget.Modeldata?.neonatalComplication = val;
       // }):Container(),

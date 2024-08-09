@@ -62,7 +62,7 @@ class _MTextFieldState extends State<MTextField> {
       onTap: widget.onTap,
       enabled: widget.enabled,
       controller: widget.controller,
-      initialValue: widget.initalValue,
+      initialValue: (widget.initalValue =='null' || widget.initalValue == null) ? '' : widget.initalValue,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       autofocus: widget.autoFocus,

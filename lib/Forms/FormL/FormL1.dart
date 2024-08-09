@@ -9,7 +9,8 @@ import 'package:npac/app/export.dart';
 import 'package:npac/widgets/loading_widget.dart';
 
 class FormL1 extends StatefulWidget {
-  const FormL1({super.key});
+  final int? patientId ;
+  const FormL1({super.key, required this.patientId});
 
   @override
   State<FormL1> createState() => _FormL1State();
@@ -25,12 +26,12 @@ class _FormL1State extends State<FormL1> {
   bool isGlobal=false;
   bool isRegional = false;
   List<String> GRSelectedList = [];
+  List<String> VHSelectedList = [];
+
   RxList<String> MitralSelectedList = <String>[].obs;
   RxList<String> AorticSelectedList = <String>[].obs;
   List<String> TricuspidSelectedList = <String>[].obs;
   List<String> PulmonarySelectedList = <String>[].obs;
-  List<String> PericardialOtherSelectedList = <String>[].obs;
-  List<String> HypoSelectedList = <String>[].obs;
 
   FormLController controller = Get.put(FormLController());
   EchoAssignmentController echoAssignmentController = Get.put(EchoAssignmentController());
@@ -46,8 +47,8 @@ class _FormL1State extends State<FormL1> {
   void getData()async{
     isLoading.value = true;
     await controller.getPostpartumFirstData();
-    await echoImageController.getEchoImage(7964 ,12);
-    await echoAssignmentController.getEcoAssignmentData(12);
+    await echoImageController.getEchoImage(widget.patientId ?? 0 ,12);
+    await echoAssignmentController.getEcoAssignmentData(widget.patientId ?? 0,12);
     controller.FormLEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
     await Future.delayed(Duration(seconds: 1));
     // controller.FormLEchoAssignmentData.value.mitralStenotic ?? false ? isMitralStenotic = true :null;
@@ -60,10 +61,6 @@ class _FormL1State extends State<FormL1> {
     controller.FormLEchoAssignmentData.value.tricuspidRegurgitant ?? false ? TricuspidSelectedList.add('Regurgitant') :null;
     controller.FormLEchoAssignmentData.value.pulmonaryStenotic ?? false ? PulmonarySelectedList.add('Stenotic') :null;
     controller.FormLEchoAssignmentData.value.pulmonaryRegurgitant ?? false ? PulmonarySelectedList.add('Regurgitant') :null;
-    controller.FormLEchoAssignmentData.value.othersVegetations ?? false ? PericardialOtherSelectedList.add('Vegetations') :null;
-    controller.FormLEchoAssignmentData.value.othersVegetations ?? false ? PericardialOtherSelectedList.add('Thrombus') :null;
-    controller.FormLEchoAssignmentData.value.wallMotionHypoGlobal ?? false ? PericardialOtherSelectedList.add('Global') :null;
-    controller.FormLEchoAssignmentData.value.wallMotionHypoRegional ?? false ? PericardialOtherSelectedList.add('Regional') :null;
     print('AorticSelectedList ${AorticSelectedList}');
     isLoading.value = false;
     setState(() {
@@ -413,7 +410,11 @@ class _FormL1State extends State<FormL1> {
                   });
                 },),
               MRowTextRadioWidget(enabled: isEnabled,title: 'Pericardial effusion ',onChanged: (val){},options: ['Mild','Moderate','Massive','Tamponade','Others'],isneedDivider: false,),
-         isOthers? MRowTextCheckBox(enabled: isEnabled,title: 'Others',list: ['Vegetation','Thrombus'],isneedDivider: false): Container(),
+         isOthers? MRowTextCheckBox(enabled: isEnabled,title: 'Others',selectedlist: VHSelectedList,result: (val){
+           val.contains('Vegetation') ?controller.FormLEchoAssignmentData.value.othersVegetations = true:controller.FormLEchoAssignmentData.value.othersVegetations = false;
+           val.contains('Thrombus') ?controller.FormLEchoAssignmentData.value.othersThrombus = true:controller.FormLEchoAssignmentData.value.othersThrombus = false;
+           setState(() {});
+         },list: ['Vegetation','Thrombus'],isneedDivider: false): Container(),
          MDivider(),
          MrowTextTextFieldWidget(enabled: isEnabled,title: 'Other salient echo details (if any):',onChanged: (val){},),
              ],) : Container(),
@@ -422,7 +423,7 @@ class _FormL1State extends State<FormL1> {
           Space(20),
           isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
             if(await controller.UploadPostpartumFirstData()){
-              if(await echoAssignmentController.uploadEchoAssignment(12, controller.FormLEchoAssignmentData.value)){
+              if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ??0,12, controller.FormLEchoAssignmentData.value)){
                 controller.FormLEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
                 setState(() {
                   isEnabled = !isEnabled;});
@@ -441,7 +442,7 @@ class _FormL1State extends State<FormL1> {
           Space(),
           MFilledButton(text: 'Save & Continue',onPressed: () async{
             if(await controller.UploadPostpartumFirstData()){
-            if(await echoAssignmentController.uploadEchoAssignment(12, controller.FormLEchoAssignmentData.value)){
+            if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ?? 0 ,12, controller.FormLEchoAssignmentData.value)){
             controller.FormLEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
             setState(() {
             isEnabled = !isEnabled;});

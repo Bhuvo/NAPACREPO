@@ -22,7 +22,7 @@ class EchoImageController extends GetxController{
       List< EchoImageModel > echo = response.body.isNotEmpty ? (jsonDecode(response.body) as List).map((e) => EchoImageModel.fromJson(e)).toList() : [];
       // EchoImage.value = EchoImageModel.fromJson(jsonDecode(response.body));
       EchoImage.value = echo;
-      print('echo image : ${response.body}');
+      // print('echo image : ${response.body}');
     }else{
       print('Error while fetching echo images');
     }

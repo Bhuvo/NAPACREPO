@@ -22,7 +22,11 @@ class _valueFunctionState extends State<valueFunction> {
       ),
       Space(),
       MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'G2.2 Valve size(mm)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
-      MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'G2.3 Post-op gradient (mmHg)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
+      // MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'G2.3 Post-op gradient (mmHg)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
+      MSmallText(text: 'G2.3 Post-op gradient (mmHg)',),
+      MrowTextTextFieldWidget(title: 'G2.3.1 Mean Gradient (mmHg)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
+      MrowTextTextFieldWidget(title: 'G2.3.2 Peak Gradient (mmHg)',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
+
       MRowTextCheckBox(enabled:widget.isEnabled,title: 'G2.4 Type of valve',result: (val){
         if(val.contains('Other')) {
           setState(() {

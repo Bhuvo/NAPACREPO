@@ -16,7 +16,9 @@ class ThreeTextField extends StatelessWidget {
   final Function(String)? onText1Changed;
   final Function(String)? onText2Changed;
   final Function(String)? onText3Changed;
-  const ThreeTextField({super.key, required this.title, this.isOptionNeeded, this.onOptionChanged, this.isneedDivider, this.text1, this.text2, this.text3, this.onText1Changed, this.onText2Changed, this.onText3Changed, this.text1type, this.text2type, this.text3type, this.isonlyDose, this.enabled});
+  final String? Function(String?)? doseValidator;
+
+  const ThreeTextField({super.key, required this.title, this.isOptionNeeded, this.onOptionChanged, this.isneedDivider, this.text1, this.text2, this.text3, this.onText1Changed, this.onText2Changed, this.onText3Changed, this.text1type, this.text2type, this.text3type, this.isonlyDose, this.enabled, this.doseValidator});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +26,9 @@ class ThreeTextField extends StatelessWidget {
       widget: Column(
         children: [
           (isOptionNeeded ?? false) ?  MRowTextRadioWidget(enabled: enabled,options: ['IV Inf','IV Bolus','Subcutaneous'],onChanged: (val){},isneedDivider:isneedDivider ?? true ,) : Container(),
-      MTextField(enabled: enabled,label: text1 ??'Dose',onChanged: onText1Changed,type:text1type ?? MInputType.numeric,),
-          (isonlyDose ?? false) ? Container(): MTextField(enabled: enabled,label: text2 ?? 'INR',onChanged: onText2Changed,type:text2type?? MInputType.numeric),
-          (isonlyDose ?? false) ? Container(): MTextField(enabled: enabled,label: text3 ??'Period',onChanged: onText3Changed,type:text3type?? MInputType.numeric),
+      MTextField(enabled: enabled,label: text1 ??'Dose',validator:doseValidator ,onChanged: onText1Changed,type:text1type ?? MInputType.decimal,),
+          (isonlyDose ?? false) ? Container(): MTextField(enabled: enabled,label: text2 ?? 'INR',onChanged: onText2Changed,type:text2type?? MInputType.decimal),
+          (isonlyDose ?? false) ? Container(): MTextField(enabled: enabled,label: text3 ??'Period',onChanged: onText3Changed,type:text3type?? MInputType.decimal),
     ],),);
   }
 }

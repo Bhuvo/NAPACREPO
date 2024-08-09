@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:npac/Forms/FormL/widget/ValueFunction.dart';
 import 'package:npac/Forms/FormM/Model/FormMModel.dart';
+import 'package:npac/Forms/FormN/widget/MN1body.dart';
 import 'package:npac/app/export.dart';
 
 class FormM2 extends StatefulWidget {
@@ -16,7 +17,7 @@ class FormM2 extends StatefulWidget {
 class _FormM2State extends State<FormM2> {
   bool isWallAbnormal = false;
   bool isRVAbnormal = false;
-  bool isOthers = false;
+  // bool isOthers = false;
   bool isHospitalisations = false;
   bool isOther = false;
   bool isfollowup = false;
@@ -24,16 +25,19 @@ class _FormM2State extends State<FormM2> {
   bool isYes = false;
   bool hasHD = false;
   bool isAssignment = false;
+  bool isCardiac = false;
 
-  bool isGlobal=false;
-  bool isRegional = false;
+  // bool isGlobal=false;
+  // bool isRegional = false;
   List<String> GRSelectedList = [];
+  List<String> VHSelectedList = [];
+
   RxList<String> MitralSelectedList = <String>[].obs;
   RxList<String> AorticSelectedList = <String>[].obs;
   List<String> TricuspidSelectedList = <String>[].obs;
   List<String> PulmonarySelectedList = <String>[].obs;
-  List<String> PericardialOtherSelectedList = <String>[].obs;
-  List<String> HypoSelectedList = <String>[].obs;
+  // List<String> PericardialOtherSelectedList = <String>[].obs;
+  // List<String> HypoSelectedList = <String>[].obs;
 
 
   @override
@@ -44,8 +48,27 @@ class _FormM2State extends State<FormM2> {
   void getData() async{
     widget.EchoAssignmentData?.value.wallMotionHypoGlobal ?? false ? GRSelectedList.add('Global') : null ;
     widget.EchoAssignmentData?.value.wallMotionHypoRegional ?? false ? GRSelectedList.add('Regional') : null ;
-    widget.EchoAssignmentData?.value.wallMotion == 'Abnormal' ? isWallAbnormal = true :null;
-    
+    widget.EchoAssignmentData?.value.wallMotion == 'Abnormal' ? isWallAbnormal = true :false;
+    widget.EchoAssignmentData?.value.othersVegetations ?? false  ? VHSelectedList.add('Vegetation') :null;
+    widget.EchoAssignmentData?.value.othersThrombus ?? false  ? VHSelectedList.add('Thrombus') :null;
+    widget.EchoAssignmentData?.value.mitralStenotic ?? false  ? MitralSelectedList.add('Stenotic') :null;
+    widget.EchoAssignmentData?.value.aorticStenotic ?? false  ? AorticSelectedList.add('Stenotic') :null;
+    widget.EchoAssignmentData?.value.tricuspidStenotic ?? false  ? TricuspidSelectedList.add('Stenotic') :null;
+    widget.EchoAssignmentData?.value.pulmonaryStenotic ?? false  ? PulmonarySelectedList.add('Stenotic') :null;
+    widget.EchoAssignmentData?.value.mitralRegurgitant ?? false  ? MitralSelectedList.add('Regurgitant') :null;
+    widget.EchoAssignmentData?.value.aorticRegurgitant ?? false  ? AorticSelectedList.add('Regurgitant') :null;
+    widget.EchoAssignmentData?.value.tricuspidRegurgitant ?? false  ? TricuspidSelectedList.add('Regurgitant') :null;
+    widget.EchoAssignmentData?.value.pulmonaryRegurgitant ?? false  ? PulmonarySelectedList.add('Regurgitant') :null;
+    widget.EchoAssignmentData?.value.rvNormalAbnormal=='Abnormal' ? isRVAbnormal = true :false;
+    widget.formMData?.value.hospitalisationAfterDischarge == 'Yes' ? isHospitalisations = true :false;
+    widget.formMData?.value.contraceptionUsed =='Others' ? isOther = true :false;
+    widget.formMData?.value.cardiacFollowup == 'Yes' ? isfollowup = true :false;
+    widget.formMData?.value.ecgEvaluation == 'Available' ? isYes = true :false;
+    widget.formMData?.value.ecgEvaluationValue == 'Congestive Heart Failure' ? hasHD = true :false;
+
+
+
+    setState(() {});
   }
 
   @override
@@ -71,7 +94,7 @@ class _FormM2State extends State<FormM2> {
       // MSmallText(text: 'M3 ECHOCARDIOGRAPHIC ASSESSMENT',),
       MSmallText(text: 'M3 ECHOCARDIOGRAPHIC ASSESSMENT',),
       MRowTextRadioWidget(enabled: widget.enabled,title: 'Any significant change from previous echo',initialValue: widget.formMData?.value.significantChanges,onChanged: (val){
-        val =='Yes' ? isAssignment = true : isAssignment = false;
+        // val =='Yes' ? isAssignment = true : isAssignment = false;
         widget.formMData?.value.significantChanges = val;
         setState(() {});
       },isneedDivider: false,),
@@ -316,15 +339,45 @@ class _FormM2State extends State<FormM2> {
         MRowTextRadioWidget(enabled: widget.enabled,title: 'Pericardial effusion ',initialValue: widget.EchoAssignmentData?.value.pericardialEffusion,onChanged: (val){
           widget.EchoAssignmentData?.value.pericardialEffusion = val;
           },options: ['Mild','Moderate','Massive','Tamponade','Others'],isneedDivider: false,),
-        isOthers? MRowTextCheckBox(enabled: widget.enabled,title: 'Others',list: ['Vegetation','Thrombus'],isneedDivider: false,): Container(),
+        widget.EchoAssignmentData?.value.pericardialEffusion == 'Others'? MRowTextCheckBox(enabled: widget.enabled,selectedlist: VHSelectedList,title: 'Others',list: ['Vegetation','Thrombus'],result: (val){
+          val.contains('Vegetation') ? widget.EchoAssignmentData?.value .othersVegetations = true : widget.EchoAssignmentData?.value .othersVegetations = false;
+          val.contains('Thrombus') ? widget.EchoAssignmentData?.value .othersThrombus = true : widget.EchoAssignmentData?.value .othersThrombus = false;
+        },isneedDivider: false,): Container(),
         MDivider(),
 
-        MrowTextTextFieldWidget(enabled: widget.enabled,title: 'Other salient echo details (if any):',onChanged: (val){},),
+        MrowTextTextFieldWidget(enabled: widget.enabled,title: 'Other salient echo details (if any):',initialValue: widget.EchoAssignmentData?.value.otherEchoFindings,onChanged: (val){
+          widget.EchoAssignmentData?.value.otherEchoFindings = val;
+        },),
 
       ],): Container(),
-      MRowTextRadioWidget(enabled: widget.enabled,title: 'M4 Hospitalisations after discharge:',onChanged: (val){},),
-      isHospitalisations ? MTextField(enabled: widget.enabled,label: 'If Yes, Reason',onChanged: (val){},): Container(),
-      MRowTextRadioWidget(enabled: widget.enabled,title: 'M5 Mode of Contraception used: ',onChanged: (val){
+      MRowTextRadioWidget(title: 'M4. Cardiac Medication: ',options: ['Yes','No' ,'Stopped without supervision','Stopped with supervision'],enabled: widget.enabled,onChanged: (val){
+        val =='Yes' ? {isCardiac = true,
+        context.showSnackBar('Kindly Fill Drug Form Below')
+        } : isCardiac = false;
+        widget.formMData?.value.cardiacMedications = val;
+        setState(() {
+        });
+
+      },),
+      isCardiac ?MN1Body(isEnable: widget.enabled,title: 'Drugs PRE-PREGNANCY',visitNo: 3,options: List_items.Drugs,drugMap: (e){
+        print('Value from map $e');
+      },) : Container(),
+      MRowTextRadioWidget(enabled: widget.enabled,title: 'M5 Hospitalisations after discharge:',initialValue: widget.formMData?.value.hospitalisationAfterDischarge,onChanged: (val){
+        if(val == 'Yes'){
+          setState(() {
+            isHospitalisations = true;
+          });
+        }else{
+          setState(() {
+            isHospitalisations = false;
+          });
+        }
+        widget.formMData?.value.hospitalisationAfterDischarge = val;
+      },),
+      isHospitalisations ? MTextField(enabled: widget.enabled,label: 'If Yes, Reason',initalValue: widget.formMData?.value.reasonForHospitalization,onChanged: (val){
+        widget.formMData?.value.reasonForHospitalization = val;
+      },): Container(),
+      MRowTextRadioWidget(enabled: widget.enabled,title: 'M6 Mode of Contraception used: ',initialValue: widget.formMData?.value.contraceptionUsed,onChanged: (val){
         if(val == 'Others'){
           setState(() {
             isOther = true;
@@ -334,18 +387,30 @@ class _FormM2State extends State<FormM2> {
             isOther = true;
           });
         }
+        widget.formMData?.value.contraceptionUsed = val;
       },options: ['Nil','IUCD','OCP','Barrier method','Tubectomy','Others'],),
-      isOther ? MTextField(enabled: widget.enabled,label: 'If Others, Specify:',onChanged: (val){},): Container(),
-      MRowTextRadioWidget(enabled: widget.enabled,title: 'M6 Follow up in Cardiology:',onChanged: (val){
+      isOther ? MTextField(enabled: widget.enabled,label: 'If Others, Specify:',initalValue: widget.formMData?.value.contraceptionUsedOthersValue,onChanged: (val){
+        widget.formMData?.value.contraceptionUsedOthersValue = val;
+      },): Container(),
+      MRowTextRadioWidget(enabled: widget.enabled,title: 'M7 Is the patient on follow up with cardiology department:',initialValue: widget.formMData?.value.cardiacFollowup,onChanged: (val){
         val =='Yes' ? isfollowup = true : isfollowup = false;
+        widget.formMData?.value.cardiacFollowup = val;
         setState(() {});
+      },isneedDivider: false,),
+      // isfollowup ?MRowTextRadioWidget(enabled: widget.enabled,title: 'Specific treatment plans: :',initialValue: widget.formMData?.value.specificTreatmentPlans,onChanged: (val){
+      //   widget.formMData?.value.specificTreatmentPlans = val;
+      // },): Container(),
+      MrowTextTextFieldWidget(title: 'If yes, specify',initialValue: widget.formMData?.value.cardiacFollowupDetails,isneedDivider: false,enabled: widget.enabled,onChanged: (val){
+        widget.formMData?.value.cardiacFollowupDetails = val;
       },),
-      isfollowup ?MRowTextRadioWidget(enabled: widget.enabled,title: 'Specific treatment plans: :',onChanged: (val){},): Container(),
+      MDivider(),
       // MrowTextTextFieldWidget(title: 'M4 On Medications: (Kindly mention the drugs in the space provided below)',onChanged: (val){},),
-      MSmallText(text: 'M7 NEONATAL OUTCOME',),
+      MSmallText(text: 'M8 NEONATAL OUTCOME',),
       // Space(),
-      MrowTextTextFieldWidget(enabled: widget.enabled,title: 'M7.1 Neonatal weight (kg):',onChanged: (val){},),
-      MRowTextRadioWidget(enabled: widget.enabled,title: 'M7.2 Neonatal Echocardiography',options: ['Available','Not Available'],onChanged: (val){
+      MrowTextTextFieldWidget(enabled: widget.enabled,title: 'M8.1 Neonatal weight (kg):',initialValue: widget.formMData?.value.neonatalWeight,onChanged: (val){
+        widget.formMData?.value.neonatalWeight = val;
+      },),
+      MRowTextRadioWidget(enabled: widget.enabled,title: 'M8.2 Neonatal Echocardiography',initialValue: widget.formMData?.value.ecgEvaluation,options: ['Available','Not Available'],onChanged: (val){
         if(val == 'Available'){
           setState(() {
             isYes = true;
@@ -355,15 +420,23 @@ class _FormM2State extends State<FormM2> {
             isYes = false;
           });
         }
+        widget.formMData?.value.ecgEvaluation = val;
       }, isneedDivider: false,),
-      isYes ? MRowTextRadioWidget(enabled: widget.enabled,title: 'If Yes',onChanged: (val){
+      isYes ? MRowTextRadioWidget(enabled: widget.enabled,title: 'If Yes',initialValue: widget.formMData?.value.ecgEvaluationValue,onChanged: (val){
         val == 'Congestive Heart Failure' ? hasHD = true : hasHD = false;
+        widget.formMData?.value.ecgEvaluationValue = val;
         setState(() {});
       }, options: ['Normal','Congestive Heart Failure'],isneedDivider: false,): Container(),
-      isYes && hasHD ? MTextField(enabled: widget.enabled,label:'If Congestive Heart Failure, specify',onChanged: (val){},): Container(),
+      isYes && hasHD ? MTextField(enabled: widget.enabled,label:'If Congestive Heart Failure, specify',initalValue: widget.formMData?.value.ecgEvaluationCong,onChanged: (val){
+        widget.formMData?.value.ecgEvaluationCong = val;
+      },): Container(),
       MDivider(),
-      MRowTextRadioWidget(enabled: widget.enabled,title: 'M7.3 Adverse neonatal outcome: ',options: ['Neonatal death','Cardiac lesion','Nil'], onChanged: (val){},),
-        MrowTextTextFieldWidget(enabled: widget.enabled,title: 'M8. Any other comments:',onChanged: (val){},),
+      MRowTextRadioWidget(enabled: widget.enabled,title: 'M8.3 Adverse neonatal outcome: ',initialValue: widget.formMData?.value.adverseNeonatalOutcome,options: ['Neonatal death','Cardiac lesion','Nil'], onChanged: (val){
+        widget.formMData?.value.adverseNeonatalOutcome = val;
+      },),
+        MrowTextTextFieldWidget(enabled: widget.enabled,title: 'M9. Any other comments:',initialValue: widget.formMData?.value.otherComments,onChanged: (val){
+          widget.formMData?.value.otherComments = val;
+        },),
       ],);
   }
 }

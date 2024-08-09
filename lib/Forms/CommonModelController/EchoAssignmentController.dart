@@ -9,9 +9,9 @@ class EchoAssignmentController extends GetxController{
 
   Rx<EchoAssignmentModel> EchoAssignmentData = EchoAssignmentModel().obs;
 
-  Future<void> getEcoAssignmentData(int FormId)async{
+  Future<void> getEcoAssignmentData(int patientId,int FormId)async{
     var body ={
-      "PatientId":7964,
+      "PatientId":patientId,
       "FormId": FormId
     };
     var response = await http.post(Uri.parse('${Api.baseUrl}${Api.getEchoAssignment}'),body: jsonEncode(body),headers: apiHeader);
@@ -26,19 +26,20 @@ class EchoAssignmentController extends GetxController{
   }
 
 
-  Future<bool> uploadEchoAssignment(int FormId,EchoAssignmentModel model)async{
-    model.patientId = 7964;
+  Future<bool> uploadEchoAssignment(int patientId,int FormId,EchoAssignmentModel model)async{
+    model.patientId = patientId;
     model.formId = FormId;
+    model.doctorId = 2;
     var response = await http.post(Uri.parse('${Api.baseUrl}${Api.uploadEchoAssignment}'),body: jsonEncode(model),headers: apiHeader);
     //print(response.body);
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
       EchoAssignmentData.value = EchoAssignmentModel.fromJson(jsonData);
-      await getEcoAssignmentData(FormId);
+      await getEcoAssignmentData(patientId,FormId);
       return true;
       //print(jsonData);
     }else{
-      print('Error while fetching Echo Assignment data');
+      print('Error while uploading Echo Assignment data');
     }
     return false;
   }

@@ -9,7 +9,7 @@ class List_items{
   static const  List<String> currentEXNever =['Current', 'EX', 'Never'];
   static const  List<String> pregnancyType =['Singleton', 'Twin', 'Others'];
   static const  List<String> AntenatalCheckUpPlace =['Primary Health Centre', 'Private clinic', 'Private Nursing Home','District Hospital','Private Hospital','Tertiary Care Centre'];
-  static const  List<String> assessment =['LIVE', 'IUF', 'AGA','SGA','Not Done'];
+  static const  List<String> assessment =['LIVE', 'IUFD'];
   static const  List<String> GTT =['Normal', 'Impaired'];
   static const  List<String> NormalAbnormal =['Normal', 'Abnormal'];
   static const  List<String> NormalDilated =['Normal', 'Dilated'];
@@ -26,9 +26,9 @@ class List_items{
 
   static const  List<String> HypoplasticChamber =['Morphologic LA', 'Morphologic RA','Morphologic LV','Morphologic RV'];
 
-  static const  List<String> Diagnosis =['Single', 'Twin','Triple','Multiple'];
-  static const  List<String> ETIOLOGICALDiagnosis =['Congenital Heart disease', 'Valvular Heart disease','Cardiomyopathy','Aortopathies','Cardiac Arrhythmia','Coronary artery disease','Venous thromboembolism/ Pulmonary EmbolismPrimary Pulmonary Hypertension','Others (Miscellaneous)'];
-  static const  List<String>  ASSOCIATEDDiagnosis  =['Pulmonary Hypertension (other than primary) ', 'Congestive Heart Failure','Atrial fibrillation (other than lone AF)','Infective endocarditis'];
+  static const  List<String> Diagnosis =['Single', 'Twin','Multiple','Molar' ,'Ectopic'];
+  static const  List<String> ETIOLOGICALDiagnosis =['Congenital Heart disease', 'Heart disease (Other than congenital)','Cardiomyopathy','Aortopathies','Cardiac Arrhythmia','Coronary artery disease','Pulmonary Embolism (Acute / chronic)','Primary Pulmonary Hypertension','Others (Miscellaneous)'];
+  static const  List<String>  ASSOCIATEDDiagnosis  =['Pulmonary Hypertension (other than primary)', 'Congestive Heart Failure','Atrial fibrillation (other than lone AF)','Infective endocarditis'];
 
 
   static const List<String> conception =['Spontaneous','Induced'];

@@ -21,9 +21,9 @@ class _FormL2State extends State<FormL2> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-        MSmallText(text: 'L4 On Medications: (Kindly fill form N)',),
+        MSmallText(text: 'L4 Details of medications been used: (Kindly fill form N)',),
       Space(),
-      MN1Body(title: 'POSTPARTUM 1',options: List_items.Drugs,drugMap: (e){
+      MN1Body(title: 'POSTPARTUM 1',visitNo: 12,options: List_items.Drugs,drugMap: (e){
         print('Value from map $e');
       },),
         Space(),
@@ -42,7 +42,7 @@ class _FormL2State extends State<FormL2> {
         isHospitalisations ? MTextField(enabled: widget.enabled,label: 'If yes, specify:',initalValue: widget.formLData?.value.reasonForHospitalization,onChanged: (val){
           widget.formLData?.value.reasonForHospitalization = val;
         },): Container(),
-        MRowTextRadioWidget(enabled: widget.enabled,title: 'L6 Post-partum plan contraception provided:',initialValue: widget.formLData?.value.postpartumContraception,onChanged: (val){
+        MRowTextRadioWidget(enabled: widget.enabled,title: 'L6 Mode of Contraception used: ',initialValue: widget.formLData?.value.postpartumContraception,options: ['Nil','IUCD','OCP','Barrier method','Tubectomy','Others'],onChanged: (val){
           widget.formLData?.value.postpartumContraception = val;
         },),
         MRowTextRadioWidget(enabled: widget.enabled,title: 'L7 Cardiac referral provided:',initialValue: widget.formLData?.value.cardiacReferral,onChanged: (val){

@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:npac/Forms/FormD/Model/FormD7Model.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/utils/navigator_utils.dart';
 
 class FormD8 extends StatefulWidget {
   final bool? isEnabled;
-  const FormD8({super.key, this.isEnabled});
+  final Rx<FormD7Model>? formD7Model;
+  const FormD8({super.key, this.isEnabled, this.formD7Model});
 
   @override
   State<FormD8> createState() => _FormD8State();

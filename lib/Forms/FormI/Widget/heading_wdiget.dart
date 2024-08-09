@@ -38,7 +38,15 @@ class _Heading_widgetState extends State<Heading_widget> {
       ),
       Space(),
       ThreeTextField(enabled: widget.enabled,title: 'VKAs',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
-      ThreeTextField(enabled: widget.enabled,title: 'ACITROM',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
+      ThreeTextField(enabled: widget.enabled,title: 'ACITROM',doseValidator: (val){
+        if(val != null){
+          if((int.tryParse(val) ?? 0) >0.5  && (int.tryParse(val) ?? 0) <20.0){
+            return null;
+          }else{
+            return 'Dose must be between 0.5 and 20.0';
+          }
+        }
+      },onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ),
       ThreeTextField(enabled: widget.enabled,title: 'WARFARIN',onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},isonlyDose:widget.title =='Follow up' ? true : false ,),
       MSmallText(text: 'Parenteral',),
       Space(),
@@ -57,16 +65,6 @@ class _Heading_widgetState extends State<Heading_widget> {
       // MDivider(),
       // Space(),
       YesNo(enabled: widget.enabled,title: 'ASPIRIN',onDoseChanged: (val){},),
-      Row(
-        children: [
-          MText(text: 'Details of AC switching',),
-        ],
-      ),
-      Space(),
-      widget.switchingWidget ??MRowTextRadioWidget(title: 'Switching done',onChanged: (val){},),
-      YesNo(enabled: widget.enabled,title: 'Vitamin K',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
-      YesNo(enabled: widget.enabled,title: 'Trenaxa',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
-      YesNo(enabled: widget.enabled,title: 'Protamine',widget:ThreeTextField(title: 'If yes specify,',text1: 'Dose',text3: 'Time of use:',text2:'Indication:',text2type: MInputType.text,onText1Changed: (val){},onText2Changed: (val){},onText3Changed: (val){},) ,),
     ],);
   }
 }

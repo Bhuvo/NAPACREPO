@@ -93,11 +93,11 @@ class MRouter{
       case Routes.FormE2:
         return pageRoute( FormE2(formEData: args?['formEData'],), settings);
       case Routes.FormF1:
-        return pageRoute(const FormF1(), settings);
+        return pageRoute( FormF1(patientId: args?['patientId'],), settings);
       case Routes.FormG1:
         return pageRoute(const FormG1(), settings);
       case Routes.FormH1:
-        return pageRoute(const FormH1(), settings);
+        return pageRoute( FormH1(patientId: args?['patientId'],), settings);
       case Routes.FormH2:
         return pageRoute(const FormH2(), settings);
       case Routes.FormH3:
@@ -119,11 +119,11 @@ class MRouter{
       case Routes.FormK1:
         return pageRoute(const FormK1(), settings);
       case Routes.FormL1:
-        return pageRoute(const FormL1(), settings);
+        return pageRoute( FormL1(patientId: args?['patientId'],), settings);
       case Routes.FormL2:
         return pageRoute(const FormL2(), settings);
       case Routes.FormM1:
-        return pageRoute(const FormM1(), settings);
+        return pageRoute( FormM1(patientId: args?['patientId'],), settings);
       case Routes.FormM2:
         return pageRoute(const FormM2(), settings);
       case Routes.FormN1:

@@ -145,6 +145,7 @@ RxList<String> MTPselectedlist = <String>[].obs;
             val.contains('Social / others') ? formEData.value.MtpSocial = true : formEData.value.MtpSocial = false;
             setState(() {});
           },),
+          formEData.value.MtpSocial ?? false ?MTextField(label: 'Specify indication:',enabled: isEnabled,onChanged: (val){},) : Container(),
           MRowTextRadioWidget(enabled : isEnabled,title: 'H5 Gestation at which MTP performed: ',initialValue: formEData.value.gestationWeek,options: const ['Less than 12 weeks', 'Between 12 to 20 weeks','After 20 week'],onChanged: (val){
             formEData.value.gestationWeek = val;
           },),
@@ -361,10 +362,10 @@ RxList<String> MTPselectedlist = <String>[].obs;
             formEData.value.obstetricsVerifiedBy = val;
           },),
          // MFilledButton(onPressed: (){context.push(Routes.FormE2);},text: 'Next',)
-          isObstetric? FormE2(formEData: formEData,enabled: isEnabled,) : Container(),
+          isObstetric? FormE2(formEData: formEData,enabled: isEnabled,patiendID: widget.data?.tNPHDRNOID ??'',otherImage: controller.otherImage,) : Container(),
           Space(20),
          (widget.isFromPatientDetails ?? false )? MFilledButton(text:isEnabled ? 'Save': 'Edit',onPressed: () async {
-           isEnabled ? { await controller.saveData(context,formEData.value,int.parse(widget.data?.tNPHDRNOID ?? '')),
+           isEnabled ? { await controller.saveData(context,formEData.value,int.parse(widget.data?.tNPHDRNOID ?? ''),),
            setState(() {
            isEnabled = !isEnabled;
            })

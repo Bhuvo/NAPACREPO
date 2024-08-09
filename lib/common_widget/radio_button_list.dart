@@ -20,6 +20,7 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
   //final List<String> _options = ["Option 1", "Option 2", "Option 3", "Option 4"];
   List<String> manualOptions = ["Yes","No"];
   void _handleRadioValueChange(String? value) {
+
     widget.options == null || widget.options!.isEmpty  ? widget.onChanged!(value!) : widget.onChanged!(value!);
     setState(() {
       _selectedOption = value;
@@ -51,7 +52,24 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
           title: Text(manualOptions[index]),
           value: manualOptions[index],
           groupValue: _selectedOption,
-          onChanged: (widget.enabled ?? false) ?_handleRadioValueChange :(val){ print('comming 1 st  lsit');},
+          onChanged: (widget.enabled ?? false) ?(val){
+            showDialog(context: context, builder: (context) => AlertDialog( content: Text('Are you sure you want to change to yes/ no'),title: Text('Warning'),actions: <Widget>[
+              TextButton(
+                child: Text('cancel'),
+                onPressed: () {
+                  // _handleRadioValueChange(val);
+                  Navigator.of(context).pop(); // Dismiss the dialog
+                },
+              ),
+              TextButton(
+                child: Text('sure'),
+                onPressed: () {
+                  _handleRadioValueChange(val);
+                  Navigator.of(context).pop(); // Dismiss the dialog
+                },
+              ),
+            ],));
+          } :(val){},
         );
       },
     ) : ListView.builder(

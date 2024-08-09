@@ -64,35 +64,35 @@ class MotherDetails extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-                  context.push(Routes.FormF1);
+                  context.push(Routes.FormF1,{'patientId': int.parse(data.patientid ?? ''),});
                 },
                 child: Card(
                   child: Center(child: Text('ANTENATAL REVISIT-1')),),
               ),
               InkWell(
                 onTap: (){
-                  context.push(Routes.FormG1);
+                  context.push(Routes.FormG1,{'patientId': int.parse(data.patientid ?? ''),});
                 },
                 child: Card(
                   child: Center(child: Text('ANTENATAL REVISIT-2')),),
               ),
               InkWell(
                 onTap: (){
-                  context.push(Routes.FormH1);
+                  context.push(Routes.FormH1,{'patientId': int.parse(data.patientid ?? ''),});
                 },
                 child: Card(
                   child: Center(child: Text('FORM K- PERIPARTUM VISIT FORM')),),
               ),
               InkWell(
                 onTap: (){
-                  context.push(Routes.FormL1);
+                  context.push(Routes.FormL1, {'patientId': int.parse(data.patientid ?? ''),});
                 },
                 child: Card(
                   child: Center(child: Text('FORM L- FIRST POST PARTUM VISIT FORM')),),
               ),
               InkWell(
                 onTap: (){
-                  context.push(Routes.FormM1);
+                  context.push(Routes.FormM1, {'patientId': int.parse(data.patientid ?? ''),});
                 },
                 child: Card(
                   child: Center(child: Text('FORM M- SECOND POST PARTUM VISIT FORM')),),

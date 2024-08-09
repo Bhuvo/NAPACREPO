@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:npac/API/api.dart';
+import 'package:npac/Forms/CommonModelController/EchoImage/EchoImageModel.dart';
 import 'package:npac/Forms/FormE/FormEModel/AntiBodiesList.dart';
 import 'package:npac/Forms/FormE/FormEModel/FormEModel.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,8 @@ class FormEController extends GetxController{
 
   Rx<FormEModel> formEModelData = FormEModel().obs;
   RxList<AntibioticsList> antiBodiesListData= <AntibioticsList>[].obs;
+  RxList<EchoImageModel> otherImage = <EchoImageModel>[].obs;
+
 
   Future<FormEModel> getMTPData(BuildContext context,int patientId)async{
     var body= {

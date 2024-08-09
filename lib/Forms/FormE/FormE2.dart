@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:npac/Forms/CommonModelController/EchoImage/EchoImageModel.dart';
+import 'package:npac/Forms/CommonModelController/OtherImageController/OtherImageController.dart';
 import 'package:npac/Forms/FormE/FormEModel/FormEModel.dart';
 import 'package:npac/app/export.dart';
 import 'package:npac/common_widget/MrowTextTextfieldWidget.dart';
@@ -5,7 +8,10 @@ import 'package:npac/common_widget/MrowTextTextfieldWidget.dart';
 class FormE2 extends StatefulWidget {
   final Rx<FormEModel>? formEData;
   final bool? enabled;
-  const FormE2({super.key, required this.formEData, this.enabled});
+  final String? patiendID;
+  final RxList<EchoImageModel>? otherImage ;
+
+  const FormE2({super.key, required this.formEData, this.enabled, this.otherImage, this.patiendID});
 
   @override
   State<FormE2> createState() => _FormE2State();
@@ -15,6 +21,8 @@ class _FormE2State extends State<FormE2> {
    bool isObstetric = false;
    bool isNonObstetric = false;
    bool isAge = false;
+
+   OtherImageController otherImageController = Get.put(OtherImageController());
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +56,47 @@ class _FormE2State extends State<FormE2> {
         },TextFieldOnChanged: (val){
            widget.formEData?.value.newOnsetHFDetails = val;
         },),
+
         FromE2Common(enabled : widget.enabled,  radioInitialValue: widget.formEData?.value.newSustainedCardiacArrhythmia,TextInitialValue: widget.formEData?.value.newSustainedCardiacArrhythmiaDetails,title: '10.2.4 New or sustained cardiac arrhythmia requiring treatment',radioiOnChanged: (val){
           widget.formEData?.value.newSustainedCardiacArrhythmia = val;
         },TextFieldOnChanged: (val){
            widget.formEData?.value.newSustainedCardiacArrhythmiaDetails = val;
         },),
+      widget.formEData?.value.newSustainedCardiacArrhythmiaDetails== 'Yes' && widget.formEData?.value.newOnsetHFDetails =='Yes' ? Column(children: [
+        ListView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: widget.otherImage?.map((element) => Builder(
+              builder: (context) {
+                return InkWell(
+                  onTap: (){
+                    showModalBottomSheet(
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*0.6,minWidth: MediaQuery.of(context).size.width),
+                        context: context, builder: (context)=>SingleImage(
+                      URL: element.filePath,
+                    )
+                    );
+                  },
+                  child: Container(
+                      height: 30,
+                      // padding:  EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      margin: EdgeInsets.all(4),
+                      child: Center(child: Text(element.name ?? ''))),
+                );
+              }
+          )).toList() ?? [],
+        ),
+        MFilledButton(text: 'Upload Image',onPressed: (){
+          // formFController.uploadEcho();
+          otherImageController.uploadOtherImage(int.parse(widget.patiendID ?? '') ,8 ,'\'NscaReports\'');
+        },),
+      ],): Container(),
+      Space(),
+      MDivider(),
         FromE2Common(enabled : widget.enabled,radioInitialValue: widget.formEData?.value.cVAStroke,TextInitialValue: widget.formEData?.value.cVAStrokeDetails,title: '10.2.5 CVA/ Stroke',radioiOnChanged: (val){
           widget.formEData?.value.cVAStroke = val;
         },TextFieldOnChanged: (val){

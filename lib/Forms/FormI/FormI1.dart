@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:npac/Forms/FormD/FormD4.dart';
 import 'package:npac/Forms/FormI/FormI2.dart';
 import 'package:npac/Forms/FormI/Widget/valueFunction.dart';
 import 'package:npac/app/export.dart';
@@ -24,6 +25,7 @@ class _FormI1State extends State<FormI1> {
   bool isPn =false;
   bool isOthers = false;
   bool isBleeding = false;
+  bool isProsticvalve = false;
 
   bool isMitral = false;
   bool isAortic = false;
@@ -40,8 +42,8 @@ class _FormI1State extends State<FormI1> {
         Space(),
         MSmallText(text: 'G1 Pre-operative Diagnosis:',),
         Space(),
-        MRowTextCheckBox(enabled:widget.isEnabled,title: 'Etiological diagnosis:',list: ['RHD','CHD','DEGENERATIVE','BCAV','OTHERS'],result: (val){
-          if(val.contains('OTHERS')){
+        MRowTextCheckBox(enabled:widget.isEnabled,title: 'Etiological diagnosis:',list: ['RHD','CHD','Degenerative','BCAV','Others'],result: (val){
+          if(val.contains('Others')){
             setState(() {
               isDiagnosisOthers = true;
             });
@@ -55,7 +57,7 @@ class _FormI1State extends State<FormI1> {
         isDiagnosisOthers ? MDivider():Container(),
         MSmallText(text: 'G2 Baseline prosthetic valve details:',),
         Space(),
-        MrowTextDatePickerWidget(enabled:widget.isEnabled,title: 'Date(s) of valve replacement:',onChanged: (val){},),
+        MrowTextDatePickerWidget(enabled:widget.isEnabled,title: 'Date of valve replacement:',onChanged: (val){},),
         MRowTextCheckBox(enabled:widget.isEnabled,title: 'G2.1 Valve replaced.',result: (val){
          setState(() {
            isMitral = val.contains('Mitral');
@@ -72,37 +74,55 @@ class _FormI1State extends State<FormI1> {
         isPulmonary ? valueFunction(title: 'Pulmonary',): Container(),
         Space(),
       MRowTextRadioWidget(enabled:widget.isEnabled,title: 'G2.5 Post op OAC', onChanged: (val){},options: ['Warfarin','Acitrom'],isneedDivider: false,),
-      MRowTextRadioWidget(enabled:widget.isEnabled,title: 'G2.5 Post op Aspirin ', onChanged: (val){},isneedDivider: false,),
+      MRowTextRadioWidget(enabled:widget.isEnabled,title: 'G2.6 Post op Aspirin ', onChanged: (val){},isneedDivider: false,),
+      Space(),
       MRowTextRadioWidget(enabled:widget.isEnabled,title: 'G3. AnEcoagulant Therapy:',onChanged: (val){
         val =='Yes' ? isAnEcoagulant= true : isAnEcoagulant = false;
         widget.isAnEcoagulant?.call(isAnEcoagulant);
         setState(() {});
-      },),
+      },isneedDivider: false,),
+      // isAnEcoagulant ?  FormI2(isEnabled: widget.isEnabled,) : Container(),
+      Space(),
       MRowTextRadioWidget(enabled:widget.isEnabled,title: 'G4 Echocardiographic Assessment',onChanged: (val){
         val =='Yes' ? isAssessment= true : isAssessment = false;
         widget.isAssessment?.call(isAssessment);
         setState(() {});
       },),
-        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Present Pregnancy ComplicaEons: :',onChanged: (val){
+      // isAssessment ? FormD4(isEnabled: widget.isEnabled,) : Container(),
+        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'G5 Present Pregnancy Complications: :',onChanged: (val){
           val =='Yes' ?isAdmitted =true : isAdmitted= false;
           setState(() {});
         },isneedDivider:false,),
         isAdmitted ?MTextField(enabled:widget.isEnabled,label: 'Duration of hospitalization',onChanged: (val){},): Container(),
         MDivider(),
-        MSmallText(text: 'G5.1Prosthetic Valve Thrombosis '),
-        Space(),
-        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'PVT:',onChanged: (val){
+        // MSmallText(text: 'G5.1 Prosthetic Valve Thrombosis '),
+        MRowTextRadioWidget(title: 'G5.1 Prosthetic Valve Thrombosis:',enabled: widget.isEnabled,onChanged: (val){
           if(val == 'Yes'){
             setState(() {
-              isPvt =true;
+              isProsticvalve =true;
             });
           }else{
             setState(() {
-              isPvt =false;
+              isProsticvalve =false;
             });
           }
-        },isneedDivider:false,),
-        isPvt? MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Time of PVT:',onChanged: (val){
+        },isneedDivider: false,),
+        Space(),
+        // MRowTextRadioWidget(enabled:widget.isEnabled,title: 'PVT:',onChanged: (val){
+        //   if(val == 'Yes'){
+        //     setState(() {
+        //       isPvt =true;
+        //     });
+        //   }else{
+        //     setState(() {
+        //       isPvt =false;
+        //     });
+        //   }
+        // },isneedDivider:false,),
+    // MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'INR/APTT at time of PVT',onChanged: (val){},),
+      isProsticvalve ? Column(children: [
+        MrowTextTextFieldWidget(title: 'INR/APTT at time of PVT:',enabled: widget.isEnabled,isneedDivider: false,onChanged: (val){},),
+        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Time of Prosthetic Valve Thrombosis::',onChanged: (val){
           if(val == 'AN'){
             setState(() {
               isAn =true;
@@ -121,26 +141,27 @@ class _FormI1State extends State<FormI1> {
               isPn =false;
             });
           }
-        },options: ['AN' , 'PN'],isneedDivider: false,):Container(),
+        },isneedDivider: false,options: ['AN' , 'PN']),
         isAn ? MTextField(enabled:widget.isEnabled,label: 'Gest weeks:',onChanged: (val){},):Container(),
         isPn ? MTextField(enabled:widget.isEnabled,label: 'PN day',onChanged: (val){},):Container(),
+        // MDivider(),
+        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Anti-coagulant at PVT onset:',onChanged: (val){},isneedDivider: false,options: ['Nil','Don’t Know','Unfractionated Heparin','LMWH','OAC'],),
+        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Thrombolysis done with',onChanged: (val){},isneedDivider: false,options: ['Not Done','SK','TNK'],),
+        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Outcome of Lysis:',onChanged: (val){},isneedDivider: false,options: ['Success','Failure'],),
+      ],): Container(),
         MDivider(),
-        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Thrombolysis done with',onChanged: (val){},options: ['Nil','SK','TNK'],),
-        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Outcome of Lysis:',onChanged: (val){},options: ['Success','Failure'],),
-        MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Anti-coagulant at PVT onset:',onChanged: (val){},options: ['Nil','Don’t Know','OAC','Heparin','UFH','LMWH'],),
-        MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'INR/APTT at time of PVT',onChanged: (val){},),
         Space(),
         MRowTextRadioWidget(enabled:widget.isEnabled,title: 'G5.2 Bleeding Complications:',onChanged: (val){
           val =='Yes' ? isBleeding =true : isBleeding= false;
           setState(() {});
         },),
       isBleeding ?Column(children: [
-          MSmallText(text: 'Type of Bleed',),
+          // MSmallText(text: 'Type of Bleed',),
           Space(),
-          MRowTextCheckBox(enabled:widget.isEnabled,title: 'Major',result: (val){},list: ['IC Bleed','Retroperitoneal','GIB','Others'],),
+        MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'INR/APTT at time of Bleed',onChanged: (val){},),
+        MRowTextCheckBox(enabled:widget.isEnabled,title: 'Major',result: (val){},list: ['IC Bleed','Retroperitoneal','GIB','Others'],),
           MRowTextCheckBox(enabled:widget.isEnabled,title: 'Minor',result: (val){},list: ['Sub Cut','Gum bleed','Epistaxis','Others'],),
-          MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Anti-coagulant at the time of Bleed',onChanged: (val){},options: ['Nil','Don’t Know','OAC','Heparin','UFH','LMWH'],),
-          MrowTextTextFieldWidget(enabled:widget.isEnabled,title: 'INR/APTT at time of Bleed',onChanged: (val){},),
+          MRowTextRadioWidget(enabled:widget.isEnabled,title: 'Anti-coagulant at the time of Bleed',onChanged: (val){},options: ['Nil','Don’t Know','Unfractionated Heparin','LMWH','OAC'],),
         ],) : Container(),
         MRowTextCheckBox(enabled:widget.isEnabled,title: 'G5.3 Other complications',result: (val){
           if(val.contains('Others')){

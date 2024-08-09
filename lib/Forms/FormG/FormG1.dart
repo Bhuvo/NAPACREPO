@@ -15,7 +15,8 @@ import 'package:npac/common_widget/MRowTextDropDown.dart';
 import 'package:npac/common_widget/MSmallText.dart';
 
 class FormG1 extends StatefulWidget {
-  const FormG1({super.key});
+  final int? patientId;
+  const FormG1({super.key, this.patientId});
 
   @override
   State<FormG1> createState() => _FormG1State();
@@ -47,7 +48,7 @@ class _FormG1State extends State<FormG1> {
     await echoImageController.getEchoImage(7964 ,10);
     // await formGController.getEcho();
     // await formGController.getOutCome();
-    await echoAssignmentController.getEcoAssignmentData(9);
+    await echoAssignmentController.getEcoAssignmentData(widget.patientId ??0 ,9);
     formGController.isLoading.value = true;
     formGController.FormJEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
     formGController.FormJEchoAssignmentData.value.mitralStenotic ?? false ? isMitralStenotic = true :null;
@@ -484,10 +485,11 @@ class _FormG1State extends State<FormG1> {
           // MFilledButton(text: 'Submit',onPressed: (){context.push(Routes.Home);},)
           isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
             if(await formGController.upLoadData()){
-              if(await echoAssignmentController.uploadEchoAssignment(10, formGController.FormJEchoAssignmentData.value)){
+              if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ??0 ,10, formGController.FormJEchoAssignmentData.value)){
                 formGController.FormJEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
                 setState(() {
                   isEnabled = !isEnabled;});
+                context.showSnackBar('FormJ Data saved successfully');
               }else{
                 context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');
               }
@@ -502,10 +504,11 @@ class _FormG1State extends State<FormG1> {
         Space(),
         MFilledButton(text: 'Save & Continue',onPressed: () async {
           if(await formGController.upLoadData()){
-            if(await echoAssignmentController.uploadEchoAssignment(10, formGController.FormJEchoAssignmentData.value)){
+            if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ??0 ,10, formGController.FormJEchoAssignmentData.value)){
               formGController.FormJEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
               setState(() {
                 isEnabled = !isEnabled;});
+              context.showSnackBar('FormJ Data saved successfully');
               context.push(Routes.FormI1);
             }else{
               context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');

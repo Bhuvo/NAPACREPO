@@ -173,7 +173,7 @@ class _FormThreePageState extends State<FormThreePage> {
             MrowTextTextFieldWidget(
               enabled: isEnabled,initialValue: registrationModelData.value.gestAgeAtDiagnosis,
             title:
-                  'C.1.2 Gestational age at detection of HD (only if diagnose during current pregnancy): ',
+                  'C.1.2 Gestational age at detection of HD (only if diagnose during pregnancy): ',
               type: MInputType.numeric,
               onChanged: (val) {
                 registrationModelData.value.gestAgeAtDiagnosis = val;
@@ -272,7 +272,7 @@ class _FormThreePageState extends State<FormThreePage> {
               },
               list: OtheCardiacEvents,
             ): Container(),
-            isOtherPriorCardiac ? MTextField(label: 'If other Specify',enabled: isEnabled,initalValue: registrationModelData.value.otherCardiacEventsSpecify, onChanged: (val){
+            isOthercardiac && isOtherPriorCardiac ? MTextField(label: 'If other Specify',enabled: isEnabled,initalValue: registrationModelData.value.otherCardiacEventsSpecify, onChanged: (val){
               registrationModelData.value.otherCardiacEventsSpecify = val;
             },) : Container(),
             isOthercardiac ?MRowTextRadioWidget(title: 'Required Hospitalization',isneedDivider: false,enabled: isEnabled,initialValue: registrationModelData.value.otherPriorCardiacHospitalization,onChanged: (val){
@@ -418,7 +418,7 @@ class _FormThreePageState extends State<FormThreePage> {
                       MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.psychIllness ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.psychIllness = val;
-                          }, title: 'C2.8.3 Psych illness '),
+                          }, title: 'C2.8.3 psychiatric illness'),
                       MRowTextRadioWidget(enabled: isEnabled,initialValue: registrationModelData.value.alcohol ?? 'No',
                           onChanged: (val) {
                             registrationModelData.value.alcohol = val;
@@ -545,25 +545,30 @@ class _FormThreePageState extends State<FormThreePage> {
 
             Space(20),
             MFilledButton(text: 'Save & Continue',onPressed: () {
-               controller.value.registerForm(context,registrationModelData.value,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? ''));
-              context.push(Routes.FormD1);
+              if(formKey.currentState!.validate()){
+                controller.value.registerForm(context,registrationModelData.value,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? ''));
+                context.push(Routes.FormD1);
+              }
             },),
             Space(),
             (widget.isFromPatientDetails ?? false )? MFilledButton(text:isEnabled ? 'Save': 'Edit',onPressed: () async {
               if(isEnabled)  {
-                controller.value.registerForm(context,registrationModelData.value,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? ''));
-                setState(() {
-                  isEnabled = !isEnabled;
-                });
+               if(formKey.currentState!.validate()){
+                 controller.value.registerForm(context,registrationModelData.value,registrationPregnancyModelData,int.parse(widget.data?.tNPHDRNOID ?? ''));
+                 setState(() {
+                   isEnabled = !isEnabled;
+                 });
+               }
               }else{
-
                setState(() {
                 isEnabled = !isEnabled;
               });
               }
              // print(registrationModelData.value.toJson());
             },):  MFilledButton(text: 'Submit',onPressed: (){
-              controller.value.registerForm(context,RegistrationModel(),[],int.parse(widget.data?.tNPHDRNOID ?? ''));
+              if(formKey.currentState!.validate()){
+                controller.value.registerForm(context,RegistrationModel(),[],int.parse(widget.data?.tNPHDRNOID ?? ''));
+              }
               //print(formEData.value.toJson());
             }),
           // MFilledButton(onPressed: (){ controller.registerForm(context,RegistrationModel());},text: 'Submit',)

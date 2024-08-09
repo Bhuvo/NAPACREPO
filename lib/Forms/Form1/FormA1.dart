@@ -190,7 +190,7 @@ class _FormA1State extends State<FormA1> {
 
            (A7 && A8 && A9) ? Column(
             children: [
-              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B1. Hospital/PIN number:',initialValue: formA1Data.value.pinNumber, onChanged: (val){
+              MrowTextTextFieldWidget(enabled: isEnabled,title: 'B1.  Hospital Identification number (UHD/ MRD/ OP/ IP Number):',initialValue: formA1Data.value.pinNumber, onChanged: (val){
                 formA1Data.value.pinNumber = val;
               }),
               MrowTextTextFieldWidget(enabled: isEnabled,title: 'B2. Full name of the patient:',initialValue: formA1Data.value.patientfullname, onChanged: (val){
@@ -294,13 +294,13 @@ class _FormA1State extends State<FormA1> {
                 setState(() {});
               },isneedDivider: false,),
               isHealthCare ? Column(children: [
-                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s name:',initialValue: '${formA1Data.value.healthCarePersonName}',onChanged: (val){
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Health Care Contact person’s name:',initialValue: '${formA1Data.value.healthCarePersonName}',onChanged: (val){
                   formA1Data.value.healthCarePersonName = val;
                 },isneedDivider: false),
-                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person’s Mobile Number',initialValue: '${formA1Data.value.healthCarePersonMoblieNo}',onChanged: (val){
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Health Care Contact person’s Mobile Number',initialValue: '${formA1Data.value.healthCarePersonMoblieNo}',onChanged: (val){
                   formA1Data.value.healthCarePersonMoblieNo = val;
                 },isneedDivider: false),
-                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Contact person designation : ',initialValue: formA1Data.value.healthCarePersonDesignation ??'',onChanged: (val){
+                MrowTextTextFieldWidget(enabled: isEnabled,title: 'Health Care Contact person designation : ',initialValue: formA1Data.value.healthCarePersonDesignation ??'',onChanged: (val){
                   formA1Data.value.healthCarePersonDesignation = val;
                 },isneedDivider: false),
               ],) : Container(),

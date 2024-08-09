@@ -6,7 +6,8 @@ import 'package:npac/Forms/FormM/FormMController/FormMController.dart';
 import 'package:npac/app/export.dart';
 
 class FormM1 extends StatefulWidget {
-  const FormM1({super.key});
+ final int? patientId ;
+  const FormM1({super.key, required this.patientId});
 
   @override
   State<FormM1> createState() => _FormM1State();
@@ -25,6 +26,24 @@ class _FormM1State extends State<FormM1> {
   EchoAssignmentController echoAssignmentController = Get.put(EchoAssignmentController());
   EchoImageController echoImageController = Get.put(EchoImageController());
 
+@override
+  void initState() {
+    super.initState();
+  }
+
+  void getData() async{
+   await controller.getPostpartumSecondData();
+   await echoAssignmentController.getEcoAssignmentData( widget.patientId ?? 0,13);
+   await echoImageController.getEchoImage(widget.patientId ?? 0,13);
+
+   controller.FormLEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
+
+   controller.formMData.value.typeOfFollowup == 'In-person follow up' ? isPerson = true : isPerson = false;
+   controller.formMData.value.typeOfFollowup == 'Telephonic follow up' ? isPhonic = true : isPhonic = false;
+   controller.formMData.value.ceDoneNotDone == 'Done' ? isEvaluated = true : isEvaluated = false;
+
+   setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +145,7 @@ class _FormM1State extends State<FormM1> {
           ),
           MFilledButton(text: 'Upload ECG',onPressed: (){
             // formFController.uploadEcho();
-            echoImageController.uploadEchoImage(7964 ,12);
+            echoImageController.uploadEchoImage(7964 ,13);
           },),
         ],): Container(),
         Space(),
@@ -152,34 +171,87 @@ class _FormM1State extends State<FormM1> {
        // MRowTextRadioWidget(title: 'M6.3 Adverse neonatal outcome:',options: ['Neonatal death','Cardiac lesion','Malnourishment'],onChanged: (val){},),
 
        //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormM2);},),
-       FormM2(enabled: isEnabled,EchoAssignmentData: controller.FormLEchoAssignmentData,)
+       FormM2(enabled: isEnabled,EchoAssignmentData: controller.FormLEchoAssignmentData,formMData: controller.formMData,)
      ],) : Container(),
       isPerson ?Column(children: [
        MRowTextRadioWidget( enabled: isEnabled,title: 'M1. NYHA SYMPTOMS CLASS:', options: List_items.NYHAClass,onChanged: (val){},),
         MSmallText(text: 'M2 CLINICAL SIGNS & ECG',),
          Space(),
-         MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.1 Weight (Kg):',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
-         MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.2 HR (/min): ',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
-         MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.3 SPO2 (%): ',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
-         MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.4 BP (mm Hg): ',onChanged: (val){},type: MInputType.numeric,isneedDivider: false,),
-         MRowTextRadioWidget(enabled: isEnabled,title: 'M2.5 CCF: ',onChanged: (val){},isneedDivider: false,),
-         MRowTextRadioWidget(enabled: isEnabled,title: 'M2.6 Cyanosis:  ',onChanged: (val){},isneedDivider: false,),
-         MRowTextRadioWidget(enabled: isEnabled,title: 'M2.7 Cardiac murmur:',onChanged: (val){},isneedDivider: false,),
-         MrowTextDatePickerWidget(enabled: isEnabled,title: 'M2.8 ECG Date:',onChanged: (val){},isneedDivider: false,),
-         MRowTextRadioWidget(enabled: isEnabled,options:List_items.NormalAbnormal ,onChanged: (val){},isneedDivider: false,),
-       MDivider(),
+        MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.1 Weight (Kg):',initialValue: '${controller.formMData.value.clinicalSignWeight}',onChanged: (val){
+          controller.formMData.value.clinicalSignWeight = int.tryParse(val);
+        },type: MInputType.numeric,isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.2 HR (/min): ',initialValue: '${controller.formMData.value.clinicalSignHR}',onChanged: (val){
+          controller.formMData.value.clinicalSignHR = int.tryParse(val);
+        },type: MInputType.numeric,isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.3 SPO2 (%): ',initialValue: '${controller.formMData.value.clinicalSignSp}',onChanged: (val){
+          controller.formMData.value.clinicalSignSp = int.tryParse(val);
+        },type: MInputType.numeric,isneedDivider: false,),
+        MrowTextTextFieldWidget(enabled: isEnabled,title: 'M2.4 BP (mm Hg): ',initialValue: '${controller.formMData.value.clinicalSignBp}',onChanged: (val){
+          controller.formMData.value.clinicalSignBp = int.tryParse(val);
+        },type: MInputType.numeric,isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,title: 'M2.5 CCF: ',initialValue: controller.formMData.value.clinicalSignCcf,onChanged: (val){
+          controller.formMData.value.clinicalSignCcf = val;
+        },isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,title: 'M2.6 Cyanosis: ',initialValue: controller.formMData.value.clinicalSignCyanosis,onChanged: (val){
+          controller.formMData.value.clinicalSignCyanosis = val;
+        },isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,title: 'M2.7 Cardiac murmur:',initialValue: controller.formMData.value.clinicalSignCardiacMurmur,onChanged: (val){
+          controller.formMData.value.clinicalSignCardiacMurmur = val;
+        },isneedDivider: false,),
+        MrowTextDatePickerWidget(enabled: isEnabled,title: 'M2.8 ECG Date:',initialDate: stringToDate(controller.formMData.value.ecgDate ?? ''),onChanged: (val){
+          controller.formMData.value.ecgDate = dateToString(val);
+        },isneedDivider: false,),
+        MRowTextRadioWidget(enabled: isEnabled,options:List_items.NormalAbnormal,initialValue: controller.formMData.value.ecgNormalAbnormal,onChanged: (val){
+          controller.formMData.value.ecgNormalAbnormal = val;
+        },isneedDivider: false,),
+        controller.formMData.value.ecgNormalAbnormal == 'Abnormal' ? Column(children: [
+          ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: echoImageController.EchoImage.map((element) => Builder(
+                builder: (context) {
+                  return InkWell(
+                    onTap: (){
+                      showModalBottomSheet(
+                          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*0.6,minWidth: MediaQuery.of(context).size.width),
+                          context: context, builder: (context)=>SingleImage(
+                        URL: element.filePath,
+                      )
+                      );
+                    },
+                    child: Container(
+                        height: 30,
+                        // padding:  EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(7),
+                        ),
+                        margin: EdgeInsets.all(4),
+                        child: Center(child: Text(element.name ?? ''))),
+                  );
+                }
+            )).toList(),
+          ),
+          MFilledButton(text: 'Upload ECG',onPressed: (){
+            // formFController.uploadEcho();
+            echoImageController.uploadEchoImage(7964 ,13);
+          },),
+        ],): Container(),
+        Space(),
+        MDivider(),
+        Space(),
        // MRowTextRadioWidget(title: 'M6.3 Adverse neonatal outcome:',options: ['Neonatal death','Cardiac lesion','Malnourishment'],onChanged: (val){},),
        //MFilledButton(text: 'Next',onPressed: (){context.push(Routes.FormM2);},),
-       FormM2(enabled: isEnabled,)
+        FormM2(enabled: isEnabled,EchoAssignmentData: controller.FormLEchoAssignmentData,formMData: controller.formMData,)
      ],) : Container(),
       Space(20),
       isEnabled? MFilledButton(text: 'Submit',onPressed: () async{
         if(await controller.UploadPostpartumsecondData()){
-          if(await echoAssignmentController.uploadEchoAssignment(13, controller.FormLEchoAssignmentData.value)){
+          if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ?? 0,13, controller.FormLEchoAssignmentData.value)){
             controller.FormLEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
             setState(() {
               isEnabled = !isEnabled;});
-            context.showSnackBar('FormL data uploaded successfully');
+            context.showSnackBar('FormM data uploaded successfully');
           }else{
             context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');
           }
@@ -194,11 +266,11 @@ class _FormM1State extends State<FormM1> {
       Space(),
       MFilledButton(text: 'Save & Continue',onPressed: () async{
         if(await controller.UploadPostpartumsecondData()){
-          if(await echoAssignmentController.uploadEchoAssignment(13, controller.FormLEchoAssignmentData.value)){
+          if(await echoAssignmentController.uploadEchoAssignment(widget.patientId ?? 0,13, controller.FormLEchoAssignmentData.value)){
             controller.FormLEchoAssignmentData.value = echoAssignmentController.EchoAssignmentData.value;
             setState(() {
               isEnabled = !isEnabled;});
-            context.showSnackBar('FormL data uploaded successfully');
+            context.showSnackBar('FormM data uploaded successfully');
             context.push(Routes.FormM1);
           }else{
             context.showSnackBar('Error while uploading AntenatalVisitOne Echo Assignment data');
@@ -207,7 +279,6 @@ class _FormM1State extends State<FormM1> {
           context.showSnackBar('Error while uploading AntenatalVisitOne data');
         }
       },),
-      Space(),
       Space(),
     ],),);
   }

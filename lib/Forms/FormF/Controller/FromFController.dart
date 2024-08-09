@@ -25,7 +25,7 @@ class FormFController extends GetxController{
   Future<void> getFormFData(BuildContext context,int patientId) async {
     isLoading.value = true;
     var bo ={
-      "PatientId":7964,
+      "PatientId":patientId,
       "Visit_No":1
     };
       var response = await http.post(
@@ -44,74 +44,79 @@ class FormFController extends GetxController{
     isLoading.value = false;
   }
 
-  Future<bool> upLoadData() async{
+  Future<bool> upLoadData(int patientId) async{
+    print(patientId);
+    FormIData.value.antenatalId = null;
+    FormIData.value.doctorId = 2;
     FormIData.value.visitNo = 1;
-    FormIData.value.patientId = 7964;
+    FormIData.value.patientId = patientId;
     var response = await http.post(Uri.parse('${Api.baseUrl}${Api.updateAntenatalVisitOne}'),body: jsonEncode(FormIData.value.toJson()),headers: apiHeader);
 
     if(response.statusCode == 200){
-      print(response.body);
+      // print(response.body);
       return true;
     }else{
+      print(response.body);
       print('Error while uploading AntenatalVisitOne data');
     }
     return false;
   }
 
 
-  Future<void> getEcho() async{
+  // Future<void> getEcho(int patientId) async{
+  //   var body ={
+  //     "PatientId":patientId,
+  //     "Visit_No":1
+  //   };
+  //   print('getting Echo');
+  //   var response = await http.post(Uri.parse('${Api.baseUrl}${Api.getEcho}'),body: jsonEncode(body),headers: apiHeader);
+  //   //print(response.body);
+  //   if(response.statusCode == 200){
+  //     var jsonData = jsonDecode(response.body);
+  //     echoModel.value = (jsonData as List).map((e) => EchoImageModel.fromJson(e)).toList().obs;
+  //     //print(echoModel.value.toString());
+  //   }else{
+  //     print('Error while fetching Echo data');
+  //   }
+  //
+  // }
+  //
+  // Future<void> uploadEcho(int patientId) async{
+  //   isEcoLoading.value = true;
+  //   FilePicker picker = FilePicker.platform;
+  //   FilePickerResult? result = await picker.pickFiles();
+  //   if(result != null){
+  //     File file = File(result.files.single.path!);
+  //     var response = await http.MultipartRequest('POST',Uri.parse('${Api.baseUrl}${Api.uploadEcho}'));
+  //     response.fields.addAll({
+  //       'PatientId': '$patientId',
+  //       'VisitNo' :'1',
+  //       'DoctorId' :'2',
+  //     });
+  //     response.files.add( await http.MultipartFile.fromPath(
+  //       'Files',
+  //         file.path,
+  //         filename: '${file.path.split('/').last}',
+  //     ));
+  //     var results = await response.send();
+  //     //var results = await http.post(Uri.parse('${Api.baseUrl}${Api.uploadEcho}'),body: response.fields,headers: response.headers);
+  //     print('${file.path.split('/').last}');
+  //     if (results.statusCode == 200) {
+  //       print('Request sent successfully');
+  //       print('response ${results.stream.toString()}');
+  //     } else {
+  //       print('Failed to send request: ${results.statusCode}${results..stream.toString()}');
+  //     }
+  //
+  //   }
+  //   isEcoLoading.value = false;
+  // }
+
+
+
+  Future<void> getOutCome(int patientId) async{
     var body ={
-      "PatientId":7964,
-      "Visit_No":1
-    };
-    print('getting Echo');
-    var response = await http.post(Uri.parse('${Api.baseUrl}${Api.getEcho}'),body: jsonEncode(body),headers: apiHeader);
-    //print(response.body);
-    if(response.statusCode == 200){
-      var jsonData = jsonDecode(response.body);
-      echoModel.value = (jsonData as List).map((e) => EchoImageModel.fromJson(e)).toList().obs;
-      //print(echoModel.value.toString());
-    }else{
-      print('Error while fetching Echo data');
-    }
-
-  }
-
-  Future<void> uploadEcho() async{
-    isEcoLoading.value = true;
-    FilePicker picker = FilePicker.platform;
-    FilePickerResult? result = await picker.pickFiles();
-    if(result != null){
-      File file = File(result.files.single.path!);
-      var response = await http.MultipartRequest('POST',Uri.parse('${Api.baseUrl}${Api.uploadEcho}'));
-      response.fields.addAll({
-        'PatientId': '7964',
-        'VisitNo' :'1',
-      });
-      response.files.add( await http.MultipartFile.fromPath(
-        'Files',
-          file.path,
-          filename: '${file.path.split('/').last}',
-      ));
-      var results = await response.send();
-      //var results = await http.post(Uri.parse('${Api.baseUrl}${Api.uploadEcho}'),body: response.fields,headers: response.headers);
-      print('${file.path.split('/').last}');
-      if (results.statusCode == 200) {
-        print('Request sent successfully');
-        print('response ${results.stream.toString()}');
-      } else {
-        print('Failed to send request: ${results.statusCode}${results..stream.toString()}');
-      }
-
-    }
-    isEcoLoading.value = false;
-  }
-
-
-
-  Future<void> getOutCome() async{
-    var body ={
-      "PatientId":7964,
+      "PatientId":patientId,
       "Visit_No":1
     };
     var response = await http.post(Uri.parse('${Api.baseUrl}${Api.getOutcome}'),body: jsonEncode(body),headers: apiHeader);
@@ -125,7 +130,7 @@ class FormFController extends GetxController{
     }
   }
 
-  Future<void> UploadOutCome() async{
+  Future<void> UploadOutCome(int patientId) async{
     isOutComeUploadLoading.value = true;
     FilePicker picker = FilePicker.platform;
     FilePickerResult? result = await picker.pickFiles();
@@ -133,7 +138,7 @@ class FormFController extends GetxController{
       File file = File(result.files.single.path!);
       var response = await http.MultipartRequest('POST',Uri.parse('${Api.baseUrl}${Api.uploadOutcome}'));
       response.fields.addAll({
-        'PatientId': '7964',
+        'PatientId': '${patientId}',
         'VisitNo' :'1',
       });
       response.files.add( await http.MultipartFile.fromPath(
@@ -146,7 +151,7 @@ class FormFController extends GetxController{
       print('${file.path.split('/').last}');
       if (results.statusCode == 200) {
         print('Request sent successfully');
-        getOutCome();
+        getOutCome(patientId);
         print('response ${results.stream.toString()}');
       } else {
         print('Failed to send request: ${results.statusCode}${results..stream.toString()}');

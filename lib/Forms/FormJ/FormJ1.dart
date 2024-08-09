@@ -56,21 +56,31 @@ bool isInterventionalOther = false;
               isSurgicalOther = false;
             });
           }
-        },list: ['ICR','Fontan','RV-PA Conduit','BDG shunt','BT Shunt','Arterial','Prosthetic Valve','Others'],): Container(),
+        },list: ['Intracardiac repair','Fontan','RV-PA Conduit','BDG shunt','BT Shunt','Arterial','Prosthetic Valve','Others'],): Container(),
         isSurgicalOther ? MTextField(enabled:widget.enabled,label: 'If Others Specify',onChanged: (val){}): Container(),
-        isInterventional ?MRowTextCheckBox(enabled:widget.enabled,result: (val){
-          if(val.contains('Others')){
-            setState(() {
-              isInterventionalOther = true;
-            });
-          }else{
-            setState(() {
-              isInterventionalOther = false;
-            });
-          }
-        },list: ['ASD DC','VSD DC','PDA DC','BPV','BAV','Others'],): Container(),
-        isInterventionalOther ? MTextField(enabled:widget.enabled,label: 'If Others Specify',onChanged: (val){}): Container(),
-
+        // isInterventional ?MRowTextCheckBox(enabled:widget.enabled,result: (val){
+        //   if(val.contains('Others')){
+        //     setState(() {
+        //       isInterventionalOther = true;
+        //     });
+        //   }else{
+        //     setState(() {
+        //       isInterventionalOther = false;
+        //     });
+        //   }
+        // },list: ['ASD DC','VSD DC','PDA DC','BPV','BAV','Others'],): Container(),
+        // isInterventionalOther ? MTextField(enabled:widget.enabled,label: 'If Others Specify',onChanged: (val){}): Container(),
+      isInterventionalOther ? Column(
+        children: [
+          MSmallText(text: 'Post cardiac interventional',),
+          MRowTextCheckBox(title: 'Device closure ',isneedDivider: false, enabled:widget.enabled,result: (val){},list: ['ASD','VSD','PDA'],),
+          MRowTextCheckBox(title: 'Balloon Valvotomy:',isneedDivider: false, enabled:widget.enabled,result: (val){},list: ['Pulmonary','Aortic','Mitral'],),
+          MTextField(label: 'Others',onChanged: (val){},enabled: widget.enabled,)
+        ],
+      ): Container(),
+        MDivider(),
+        Space(),
+        MrowTextTextFieldWidget(title: 'Other Heart Disease – Specify:',enabled: widget.enabled,onChanged: (val){},),
         MSmallText(text: 'E2 Clinical findings in the current pregnancy',),
         Space(),
         MRowTextCheckBox(enabled:widget.enabled,title: 'E2.1 Symptoms',result: (val){},list: ['Headache','Visual disturbance','Dizziness','Polycythemia','Anemia','Altered mental status','CNS symptoms','Arthritis','Renal dysfunction','Cyanosis','Bleeding tendency'],),

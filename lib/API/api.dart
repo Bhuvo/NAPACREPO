@@ -44,6 +44,22 @@ class Api{
   static const String getPostpartumFirstData='VRAPI/GetPostPartumFirstDetails';
   static const String UploadPostpartumFirst='VRAPI/SavePostPartumFirst';
 
+  static const String getK1Data ='VRAPI/GetPeripartumVisitDetails';
+  static const String getK2Data ='VRAPI/GetPeripartumDetails';
+  static const String getK3Data ='VRAPI/GetPrimaryOutcomeDetails';
+  static const String getK4Data ='VRAPI/GetMaternalOutcomeDetails';
+  static const String getK5Data ='VRAPI/GetObsOutcomeDetails';
+  static const String getK6Data ='VRAPI/GetFetalOutcomeDetails';
+  static const String getK7Data ='VRAPI/GetFinalOutcomeDetails';
+
+  static const String savek1Data ='VRAPI/SavePeripartumVisitDetails';
+  static const String savek2Data ='VRAPI/SavePeripartumDetails';
+  static const String savek3Data ='VRAPI/SavePrimaryOutcomeDetails';
+  static const String savek4Data ='VRAPI/SaveMaternalOutcomeDetails';
+  static const String savek5Data ='VRAPI/SaveObsOutcomeDetails';
+  static const String savek6Data ='VRAPI/SaveFetalOutcomeDetails';
+  static const String savek7Data ='VRAPI/SaveFinalOutcomeDetails';
+
 
 
 }

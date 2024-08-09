@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:npac/Hive/Box.dart';
 import 'package:npac/Route/routes.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'NPAC',
       scrollBehavior: const ScrollBehaviorModified(),
       debugShowCheckedModeBanner: false,

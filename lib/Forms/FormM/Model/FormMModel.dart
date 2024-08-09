@@ -29,6 +29,8 @@ class FormMModel {
   String? adverseNeonatalOutcome;
   String? commentsOption;
   String? otherComments;
+  String? cardiacFollowupDetails;
+  String? cardiacMedications;
 
   FormMModel(
       {this.id,
@@ -60,6 +62,8 @@ class FormMModel {
         this.ecgEvaluationCong,
         this.adverseNeonatalOutcome,
         this.commentsOption,
+        this.cardiacFollowupDetails,
+        this.cardiacMedications,
         this.otherComments});
 
   FormMModel.fromJson(Map<String, dynamic> json) {
@@ -93,6 +97,8 @@ class FormMModel {
     adverseNeonatalOutcome = json['AdverseNeonatalOutcome'];
     commentsOption = json['CommentsOption'];
     otherComments = json['OtherComments'];
+    cardiacFollowupDetails = json['CardiacFollowupDetails'];
+    cardiacMedications = json['CardiacMedications'];
   }
 
   Map<String, dynamic> toJson() {
@@ -127,6 +133,8 @@ class FormMModel {
     data['AdverseNeonatalOutcome'] = this.adverseNeonatalOutcome;
     data['CommentsOption'] = this.commentsOption;
     data['OtherComments'] = this.otherComments;
+    data['CardiacFollowupDetails'] = this.cardiacFollowupDetails;
+    data['CardiacMedications'] = this.cardiacMedications;
     return data;
   }
 }
