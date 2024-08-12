@@ -81,16 +81,16 @@ class FormD1Model {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Cp_Antenatal_Id'] = this.cpAntenatalId;
-    data['PatientId'] = this.patientId;
-    data['Gestational_Age_At_Enrollment'] = this.gestationalAgeAtEnrollment;
+    data['Cp_Antenatal_Id'] = '${this.cpAntenatalId}';
+    data['PatientId'] = '${this.patientId}';
+    data['Gestational_Age_At_Enrollment'] = '${this.gestationalAgeAtEnrollment}';
     data['First_Visit_Date'] = this.firstVisitDate;
     data['Conception'] = this.conception;
     data['Prior_Cardiac_Event'] = this.priorCardiacEvent;
-    data['ObstetricScore_G'] = this.obstetricScoreG;
-    data['ObstetricScore_P'] = this.obstetricScoreP;
-    data['ObstetricScore_L'] = this.obstetricScoreL;
-    data['ObstetricScore_A'] = this.obstetricScoreA;
+    data['ObstetricScore_G'] = '${this.obstetricScoreG}';
+    data['ObstetricScore_P'] = '${this.obstetricScoreP}';
+    data['ObstetricScore_L'] = '${this.obstetricScoreL}';
+    data['ObstetricScore_A'] = '${this.obstetricScoreA}';
     data['Pregnancy_Type'] = this.pregnancyType;
     data['Pregnancy_Type_Others'] = this.pregnancyTypeOthers;
     data['LMP'] = this.lMP;

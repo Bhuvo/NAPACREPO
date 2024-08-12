@@ -49,7 +49,7 @@ class _FormD3State extends State<FormD3> {
 
    @override
   void initState() {
-     
+     getData();
     super.initState();
   }
   void getData(){
@@ -69,6 +69,8 @@ class _FormD3State extends State<FormD3> {
 
   @override
   Widget build(BuildContext context) {
+     print(widget.formD4Model?.value.echocardiographicAssessment);
+     print(widget.formD4Model?.value.morphologicalLA);
     return Column(
       children: [
           MRowTextRadioWidget(enabled: widget.enabled,onChanged: (val){

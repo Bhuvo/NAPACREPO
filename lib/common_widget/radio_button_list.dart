@@ -53,7 +53,9 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
           value: manualOptions[index],
           groupValue: _selectedOption,
           onChanged: (widget.enabled ?? false) ?(val){
-            showDialog(context: context, builder: (context) => AlertDialog( content: Text('Are you sure you want to change to yes/ no'),title: Text('Warning'),actions: <Widget>[
+            if(_selectedOption == 'Yes' )
+              {
+              showDialog(context: context, builder: (context) => AlertDialog( content: Text('Are you sure you want to change to yes/ no'),title: Text('Warning'),actions: <Widget>[
               TextButton(
                 child: Text('cancel'),
                 onPressed: () {
@@ -68,7 +70,9 @@ class _MRadioButtonListState extends State<MRadioButtonList> {
                   Navigator.of(context).pop(); // Dismiss the dialog
                 },
               ),
-            ],));
+            ],));}else{
+              _handleRadioValueChange(val);
+            }
           } :(val){},
         );
       },

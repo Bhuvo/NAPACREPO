@@ -60,19 +60,19 @@ String calculateAge(DateTime dob) {
 
 
 Map<String, dynamic> removeNulls(Map<String, dynamic> original) {
-  return Map.fromEntries(original.entries.where((entry) => entry.value != null));
+  return Map.fromEntries(original.entries.where((entry) => entry.value != null && entry.value != ''));
 }
 
 
 DateTime? stringToDate(String dateString) {
   if(dateString == ''||dateString.isEmpty) return null;
-  DateTime date = DateFormat("dd/MM/yyyy").parse(dateString);
+  DateTime date = DateFormat("dd/mm/yyyy").parse(dateString);
   return date;
 }
 
 String dateToString(DateTime? date) {
   if(date == null) return '';
-  String dateString = DateFormat("dd/MM/yyyy").format(date);
+  String dateString = DateFormat("dd/mm/yyyy").format(date);
   // String dateString ='${date.day}/${date.month}/${date.year}';
   return dateString;
 }

@@ -20,9 +20,9 @@ class FormD2Model {
   String? ifAnyOthersInvestigations;
   String? eCGDate;
   String? eCGValue;
-  Null? uploadedFile;
+  String? uploadedFile;
   String? eCGDetail;
-  Null? insertDate;
+  String? insertDate;
   int? hb;
 
   FormD2Model(
@@ -82,31 +82,31 @@ class FormD2Model {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Clinical_and_baseline_id'] = this.clinicalAndBaselineId;
-    data['PatientId'] = this.patientId;
-    data['Height'] = this.height;
-    data['Weight'] = this.weight;
-    data['SPO2'] = this.sPO2;
-    data['Heart_Rate'] = this.heartRate;
-    data['Blood_Pressure'] = this.bloodPressure;
+    data['Clinical_and_baseline_id'] = '${this.clinicalAndBaselineId}';
+    data['PatientId'] = '${this.patientId}';
+    data['Height'] = '${this.height}';
+    data['Weight'] = '${this.weight}';
+    data['SPO2'] = '${this.sPO2}';
+    data['Heart_Rate'] = '${this.heartRate}';
+    data['Blood_Pressure'] = '${this.bloodPressure}';
     data['Heart_Failure'] = this.heartFailure;
     data['Cyanosis'] = this.cyanosis;
     data['Cardiac_Murmur'] = this.cardiacMurmur;
     data['Abdomen_Examination'] = this.abdomenExamination;
     data['GTT'] = this.gTT;
-    data['Blood_urea'] = this.bloodUrea;
-    data['Sr_Creatinine'] = this.srCreatinine;
-    data['TSH'] = this.tSH;
-    data['HCT'] = this.hCT;
-    data['BNP'] = this.bNP;
-    data['NT_pro_BNP'] = this.nTProBNP;
+    data['Blood_urea'] = '${this.bloodUrea}';
+    data['Sr_Creatinine'] = '${this.srCreatinine}';
+    data['TSH'] = '${this.tSH}';
+    data['HCT'] = '${this.hCT}';
+    data['BNP'] = '${this.bNP}';
+    data['NT_pro_BNP'] = '${this.nTProBNP}';
     data['If_Any_Others_Investigations'] = this.ifAnyOthersInvestigations;
     data['ECG_Date'] = this.eCGDate;
     data['ECG_Value'] = this.eCGValue;
     data['Uploaded_File'] = this.uploadedFile;
     data['ECG_Detail'] = this.eCGDetail;
     data['Insert_Date'] = this.insertDate;
-    data['Hb'] = this.hb;
+    data['Hb'] = '${this.hb}';
     return data;
   }
 }

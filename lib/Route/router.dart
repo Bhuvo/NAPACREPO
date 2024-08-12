@@ -71,7 +71,7 @@ class MRouter{
       case Routes.Form3Three:
         return pageRoute(const FormThree3page(), settings);
       case Routes.FormD1:
-        return pageRoute(const FormD1(), settings);
+        return pageRoute(FormD1(patientId: args?['patientId'] ?? '7965',), settings);
       case Routes.FormD2:
         return pageRoute(const FormD2(), settings);
       case Routes.FormD3:

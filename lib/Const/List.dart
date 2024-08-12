@@ -9,7 +9,7 @@ class List_items{
   static const  List<String> currentEXNever =['Current', 'EX', 'Never'];
   static const  List<String> pregnancyType =['Singleton', 'Twin', 'Others'];
   static const  List<String> AntenatalCheckUpPlace =['Primary Health Centre', 'Private clinic', 'Private Nursing Home','District Hospital','Private Hospital','Tertiary Care Centre'];
-  static const  List<String> assessment =['LIVE', 'IUFD'];
+  static const  List<String> assessment =['LIVE', 'IUFD','AGA','SGA','Not applicable'];
   static const  List<String> GTT =['Normal', 'Impaired'];
   static const  List<String> NormalAbnormal =['Normal', 'Abnormal'];
   static const  List<String> NormalDilated =['Normal', 'Dilated'];
@@ -19,7 +19,7 @@ class List_items{
   static const  List<String> MildModerateSevere =['Mild', 'Moderate','Severe'];
   static const  List<String> FirstSecondThird =['First', 'Second','Third'];
   static const  List<String> MWHORisk =['mWHO I', 'mWHO II','mWHO II-III','mWHO III','mWHO IV'];
-  static const  List<String> Disease =['ASD', 'Ventricular Septal Defect','Patent Ductus Arteriosus','AVCD','APW','Other L→R shunts', 'Valvular PS','Sub valvular PS ','Tetralogy of Fallot (TOF)','Double outlet right ventricle','Transposition of Great Arteries-TGA','Corrected transposition(cc-TGA)','Ebstein’s anomaly','Pulmonary atresia','Truncus arteriosus','Single ventricle','Tricuspid atresia','Eisenmenger physiology (Please tick the relevant shunt above)','Other'];
+  static const  List<String> Disease =['Atrial Septal Defect', 'Ventricular Septal Defect','Patent Ductus Arteriosus','AV Canal Defect','AP Window','Other L→R shunts', 'Valvular Pulmonary Stenosis','Sub-Valvular Pulmonary Stenosis','Tetralogy of Fallot','Double Outlet Right Ventricle','Transposition of Great Arteries','Corrected Transposition of Great Arteries','Ebstein’s anomaly','Pulmonary Atresia','Truncus Arteriosus','Single Ventricle','Tricuspid Atresia','Eisenmenger physiology','Other'];
   static const  List<String> CardiacFailure =['Peripartum Cardiomyopathy', 'Dilated Cardiomyopathy','ischemic heart disease','Ventricular Heart Disease','Hypertrophic Cardiomyopathy','Restrictive Cardiomyopathy','Myocarditis','congenital heart disease','Acute Rheumatic Fever', 'Non-compliant Cardiomyopathy','Others' ];
 
 

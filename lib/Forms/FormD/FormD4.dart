@@ -13,7 +13,16 @@ class FormD4 extends StatefulWidget {
 }
 
 class _FormD4State extends State<FormD4> {
+  List<String> selectedList = [];
 
+@override
+  void initState() {
+  widget.formDR4Model?.value.mitral?? false ? selectedList.add('Mitral') : null;
+  widget.formDR4Model?.value.aortic?? false ? selectedList.add('Aortic') : null;
+  widget.formDR4Model?.value.tricuspid?? false ? selectedList.add('Tricuspid') : null;
+  widget.formDR4Model?.value.pulmonary?? false ? selectedList.add('Pulmonary') : null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class _FormD4State extends State<FormD4> {
           Flexible(child: MText(text: 'ECHOCARDIOGRAPHIC ASSESSMENT AND FOLLOW UP',)),
         ],
       ),
-      MRowTextCheckBox(title: 'Valve replaced',enabled: widget.isEnabled,result: (val){
+      MRowTextCheckBox(title: 'Valve replaced',enabled: widget.isEnabled,selectedlist: selectedList,result: (val){
         val.contains('Mitral') ? widget.formDR4Model?.value.mitral = true : widget.formDR4Model?.value.mitral = false;
         val.contains('Aortic') ?  widget.formDR4Model?.value.aortic = true :  widget.formDR4Model?.value.aortic = false;
         val.contains('Tricuspid') ? widget.formDR4Model?.value.tricuspid = true : widget.formDR4Model?.value.tricuspid = false;

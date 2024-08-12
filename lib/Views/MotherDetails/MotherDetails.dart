@@ -50,7 +50,7 @@ class MotherDetails extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-                  context.push(Routes.FormD1 );
+                  context.push(Routes.FormD1, {'patientId' : data.tNPHDRNOID,});
                 },
                 child: Card(
                   child: Center(child: Text('First visit Form')),),

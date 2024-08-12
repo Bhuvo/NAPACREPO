@@ -43,6 +43,7 @@ class _FormD2State extends State<FormD2> {
   @override
   void initState() {
     // TODO: implement initState
+    getData();
     super.initState();
   }
   void getData(){

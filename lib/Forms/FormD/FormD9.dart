@@ -1,4 +1,8 @@
 
+import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:npac/Forms/FormD/Model/FormD9Model.dart';
 import 'package:npac/Forms/FormN/widget/MN1body.dart';
 import 'package:npac/app/export.dart';
@@ -18,6 +22,24 @@ class _FormD9State extends State<FormD9> {
   bool isEchocardiogramAbnormal = false;
   bool isAnomalyAbnormal = false;
   List<String> selectedAdvice = [];
+
+  RxInt carpregScore = 0.obs;
+  RxDouble zaharaScore = 0.0.obs;
+  RxInt deviScore = 0.obs;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  void getData(){
+    widget.formD9Model?.value.hospitalization ?? false ? selectedAdvice.add('Hospitalization') : null;
+    widget.formD9Model?.value.changeOfMedication ?? false ? selectedAdvice.add('Change of medication') : null;
+    widget.formD9Model?.value.obstetricsIntervention ?? false ? selectedAdvice.add('Obstetrics intervention') : null;
+    widget.formD9Model?.value.cardiacIntervention ?? false ? selectedAdvice.add('Cardiac intervention') : null;
+    widget.formD9Model?.value.specificAdviceOthers ?? false ? selectedAdvice.add('Others') : null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +64,15 @@ class _FormD9State extends State<FormD9> {
       },isneedDivider: false,) : Container(),
       MDivider(),
       MRowTextRadioWidget(enabled: widget.isEnabled, title: 'D 12. Fetal anomaly scan',initialValue: widget.formD9Model?.value.fetalAnomalyScan,onChanged: (val){
-        if(val== 'Abnormal'){
-        setState(() {
-          isAnomalyAbnormal = true;
-        });
-      }else{
-        setState(() {
-          isAnomalyAbnormal = false;
-        });
-      }
+      //   if(val== 'Abnormal'){
+      //   setState(() {
+      //     isAnomalyAbnormal = true;
+      //   });
+      // }else{
+      //   setState(() {
+      //     isAnomalyAbnormal = false;
+      //   });
+      // }
         widget.formD9Model?.value.fetalAnomalyScan = val;
       },isneedDivider:false,options: ['Normal','Abnormal','Not done'],),
       widget.formD9Model?.value.fetalAnomalyScan == 'Abnormal' ? MrowTextTextFieldWidget( enabled: widget.isEnabled,title: 'If abnormal details:',initialValue: widget.formD9Model?.value.fetalAnomalyScanAbnormal,onChanged: (val){
@@ -59,88 +81,220 @@ class _FormD9State extends State<FormD9> {
       MDivider(),
       const MText(text: 'D13. RISK ASSESSMENT AND TRIAGE',),
         const Space(),
-        MRowTextCheckBox(enabled: widget.isEnabled,title: 'D13.1 Baseline risk',result: (val){},list: const ['m WHO I','m WHO II','m WHO II-III','m WHO III ','m WHO IV'],),
-        const MText(text: 'D13.2 CARPREG II SCORE: (Yes/NO) ',),
+        MRowTextRadioWidget(enabled: widget.isEnabled,initialValue: widget.formD9Model?.value.baselineriskMwho,title: 'D13.1 Baseline risk',onChanged: (val){
+          widget.formD9Model?.value.baselineriskMwho = val;
+        },options: const ['m WHO I','m WHO II','m WHO II-III','m WHO III ','m WHO IV'],),
+         Obx(() => MText(text: 'D13.2 CARPREG II SCORE: ${carpregScore.value}',)),
         const Space(),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '1 Prior cardiac event/ arrhythmia',initialValue: widget.formD9Model?.value.carpreg21,onChanged: (val){
+          // widget.formD9Model?.value.carpreg21 = val;
+          // widget.formD9Model?.value.carpreg21 == 'Yes' ? carpregScore.value += 3 : null;
+          // print('$val ,,,,,,,, ${widget.formD9Model?.value.carpreg21}');
+          if(val =='No' && widget.formD9Model?.value.carpreg21 == 'Yes'){
+            carpregScore.value -= 3;
+          }else if(val == 'Yes'){
+            carpregScore.value += 3;
+          }
           widget.formD9Model?.value.carpreg21 = val;
-        },isneedDivider: false,),
+            },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '2 Baseline NYHA III / IV or Cyanosis',initialValue: widget.formD9Model?.value.carpreg22,onChanged: (val){
+         // print(val);
+          if(val =='No' && widget.formD9Model?.value.carpreg22 == 'Yes'){
+            carpregScore.value -= 3;
+          }else if(val == 'Yes'){
+            carpregScore.value += 3;
+          }
           widget.formD9Model?.value.carpreg22 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '3 Mechanical prosthetic valves',initialValue: widget.formD9Model?.value.carpreg23,onChanged: (val){
+         // print(val);
+          if(val =='No' && widget.formD9Model?.value.carpreg23 == 'Yes'){
+            carpregScore.value -= 3;
+          }else if(val == 'Yes'){
+            carpregScore.value += 3;
+          }
           widget.formD9Model?.value.carpreg23 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '4 Ventricular dysfunction',initialValue: widget.formD9Model?.value.carpreg24,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.carpreg24 == 'Yes'){
+            carpregScore.value -= 2;
+          }else if(val == 'Yes'){
+            carpregScore.value += 2;
+          }
           widget.formD9Model?.value.carpreg24 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '5 High Risk Lt sided valve disease LVOTO',initialValue: widget.formD9Model?.value.carpreg25,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.carpreg25 == 'Yes'){
+            carpregScore.value -= 2;
+          }else if(val == 'Yes'){
+            carpregScore.value += 2;
+          }
           widget.formD9Model?.value.carpreg25 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '6 Pulmonary Hypertension',initialValue: widget.formD9Model?.value.carpreg26,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.carpreg26 == 'Yes'){
+            carpregScore.value -= 2;
+          }else if(val == 'Yes'){
+            carpregScore.value += 2;
+          }
           widget.formD9Model?.value.carpreg26 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '7 CAD',initialValue: widget.formD9Model?.value.carpreg27,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.carpreg27 == 'Yes'){
+            carpregScore.value -= 2;
+          }else if(val == 'Yes'){
+            carpregScore.value += 2;
+          }
           widget.formD9Model?.value.carpreg27 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '8 High risk aortopathy',initialValue: widget.formD9Model?.value.carpreg28,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.carpreg28 == 'Yes'){
+            carpregScore.value -= 2;
+          }else if(val == 'Yes'){
+            carpregScore.value += 2;
+          }
           widget.formD9Model?.value.carpreg28 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '9 No Prior cardiac interventions',initialValue: widget.formD9Model?.value.carpreg29,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.carpreg29 == 'Yes'){
+            carpregScore.value -= 1;
+          }else if(val == 'Yes'){
+            carpregScore.value += 1;
+          }
           widget.formD9Model?.value.carpreg29 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '10 Late pregnancy assessment',initialValue: widget.formD9Model?.value.carpreg210,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.carpreg210 == 'Yes'){
+            carpregScore.value -= 1;
+          }else if(val == 'Yes'){
+            carpregScore.value += 1;
+          }
           widget.formD9Model?.value.carpreg210 = val;
         }),
 
-        const MText(text: 'D13.3 ZAHARA SCORE: (Yes/NO)',),
+        Obx(()=> MText(text: 'D13.3 ZAHARA SCORE: ${zaharaScore.value}',)),
         const Space(),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '1 History of arrhythmic events',initialValue: widget.formD9Model?.value.zaharascore1,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore1 == 'Yes'){
+            zaharaScore.value -= 1;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 1;
+          }
           widget.formD9Model?.value.zaharascore1 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '2 Baseline NYHA III or IV',initialValue: widget.formD9Model?.value.zaharascore2,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore2 == 'Yes'){
+            zaharaScore.value -= 0.75;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 0.75;
+          }
           widget.formD9Model?.value.zaharascore2 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '3 LVOT obstruction >50 mm Hg',initialValue: widget.formD9Model?.value.zaharascore3,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore3 == 'Yes'){
+            zaharaScore.value -= 1;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 1;
+          }
           widget.formD9Model?.value.zaharascore3 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '4 Mechanical valve prosthesis',initialValue: widget.formD9Model?.value.zaharascore4,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore4 == 'Yes'){
+            zaharaScore.value -= 1;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 1;
+          }
           widget.formD9Model?.value.zaharascore4 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '5 Cardiac drugs pre-pregnancy use',initialValue: widget.formD9Model?.value.zaharascore5,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore5 == 'Yes'){
+            zaharaScore.value -= 1;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 1;
+          }
           widget.formD9Model?.value.zaharascore5 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '6 CCHD [repaired or unrepaired]',initialValue: widget.formD9Model?.value.zaharascore6,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore6 == 'Yes'){
+            zaharaScore.value -= 1;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 1;
+          }
           widget.formD9Model?.value.zaharascore6 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '7 Moderate to severe sub pulmonic \nAV valve regurgitation',initialValue: widget.formD9Model?.value.zaharascore7,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore7 == 'Yes'){
+            zaharaScore.value -= 0.75;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 0.75;
+          }
           widget.formD9Model?.value.zaharascore7 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '8 Moderate to severe systemic AV \nvalve regurgitation',initialValue: widget.formD9Model?.value.zaharascore8,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.zaharascore8 == 'Yes'){
+            zaharaScore.value -= 0.75;
+          }else if(val == 'Yes'){
+            zaharaScore.value += 0.75;
+          }
           widget.formD9Model?.value.zaharascore8 = val;
         }),
 
-        const MText(text: 'D13.4 DEVI SCORE: (Yes/NO) ',),
+         Obx(()=> MText(text: 'D13.4 DEVI SCORE: ${deviScore.value} ',)),
         const Space(),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '1 Prior cardiovascular event',initialValue: widget.formD9Model?.value.deviscore1,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.deviscore1 == 'Yes'){
+            deviScore.value -= 4;
+          }else if(val == 'Yes'){
+            deviScore.value += 4;
+          }
           widget.formD9Model?.value.deviscore1 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '2 Pulmonary hypertension',initialValue: widget.formD9Model?.value.deviscore2,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.deviscore1 == 'Yes'){
+            deviScore.value -= 4;
+          }else if(val == 'Yes'){
+            deviScore.value += 4;
+          }
           widget.formD9Model?.value.deviscore2 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '3 Severe mitral stenosis',initialValue: widget.formD9Model?.value.deviscore3,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.deviscore1 == 'Yes'){
+            deviScore.value -= 4;
+          }else if(val == 'Yes'){
+            deviScore.value += 4;
+          }
           widget.formD9Model?.value.deviscore3 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '4 Moderate mitral stenosis',initialValue: widget.formD9Model?.value.deviscore4,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.deviscore1 == 'Yes'){
+            deviScore.value -= 2;
+          }else if(val == 'Yes'){
+            deviScore.value += 2;
+          }
           widget.formD9Model?.value.deviscore4 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '5 Prosthetic heart valve',initialValue: widget.formD9Model?.value.deviscore5,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.deviscore1 == 'Yes'){
+            deviScore.value -= 2;
+          }else if(val == 'Yes'){
+            deviScore.value += 2;
+          }
           widget.formD9Model?.value.deviscore5 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '6 Mild mitral stenosis',initialValue: widget.formD9Model?.value.deviscore6,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.deviscore1 == 'Yes'){
+            deviScore.value -= 1;
+          }else if(val == 'Yes'){
+            deviScore.value += 1;
+          }
           widget.formD9Model?.value.deviscore6 = val;
         },isneedDivider: false,),
         MRowTextRadioWidget(enabled: widget.isEnabled,title: '7 Taking cardiac medications',initialValue: widget.formD9Model?.value.deviscore7,onChanged: (val){
+          if(val =='No' && widget.formD9Model?.value.deviscore1 == 'Yes'){
+            deviScore.value += 1;
+          }else if(val == 'Yes'){
+            deviScore.value -= 1;
+          }
           widget.formD9Model?.value.deviscore7 = val;
         }),
 
@@ -167,25 +321,25 @@ class _FormD9State extends State<FormD9> {
         // });
           widget.formD9Model?.value.specificAdvice = val;
           setState(() {});
-          },isneedDivider: isAdvice ? false: true,),
+          },isneedDivider:false,),
       widget.formD9Model?.value.specificAdvice == 'Yes' ? MRowTextCheckBox(enabled: widget.isEnabled,selectedlist: selectedAdvice,result: (val){
-          if(val.contains('Others')) {
-            setState(() {
-              isAdviceOther = true;
-            });
-          }else{
-            setState(() {
-              isAdviceOther = false;
-            });
-          }
+          // if(val.contains('Others')) {
+          //   setState(() {
+          //     isAdviceOther = true;
+          //   });
+          // }else{
+          //   setState(() {
+          //     isAdviceOther = false;
+          //   });
+          // }
           val.contains('Hospitalization') ?widget.formD9Model?.value.hospitalization = true:widget.formD9Model?.value.hospitalization = false;
           val.contains('Change of medication') ?widget.formD9Model?.value.changeOfMedication = true:widget.formD9Model?.value.changeOfMedication = false;
           val.contains('Obstetrics Intervention') ?widget.formD9Model?.value.obstetricsIntervention = true:widget.formD9Model?.value.obstetricsIntervention = false;
-          val.contains('Cardiac Intervention ') ?widget.formD9Model?.value.cardiacIntervention = true:widget.formD9Model?.value.cardiacIntervention = false;
+          val.contains('Cardiac Intervention') ?widget.formD9Model?.value.cardiacIntervention = true:widget.formD9Model?.value.cardiacIntervention = false;
           val.contains('Others') ?widget.formD9Model?.value.specificAdviceOthers = true:widget.formD9Model?.value.specificAdviceOthers = false;
-        },list: const ['Hospitalization','Change of medication','Obstetrics Intervention','Change of medication.','Cardiac Intervention ','Others'],): Container(),
+        },list: const ['Hospitalization','Change of medication','Obstetrics Intervention','Change of medication','Cardiac Intervention','Others'],): Container(),
       widget.formD9Model?.value.specificAdviceOthers  ?? false ? MTextField(enabled: widget.isEnabled,label: 'If others Specify',onChanged: (val){},): Container(),
-      widget.formD9Model?.value.specificAdviceOthers ?? false ? const MDivider(): Container(),
+      MDivider(),
         const Space(),
         MSmallText(text: 'D15 Details of medications advised/ being used: ',),
           MN1Body(isEnable: widget.isEnabled,title: 'Drugs',visitNo: 4,options: List_items.Drugs,drugMap: (e){
