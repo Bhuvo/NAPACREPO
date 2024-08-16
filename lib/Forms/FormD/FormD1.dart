@@ -19,6 +19,7 @@ import 'package:npac/Forms/FormJ/FormEcontroller.dart';
 import 'package:npac/Forms/FormJ/FormJ1.dart';
 import 'package:npac/Forms/FormL/FormL1.dart';
 import 'package:npac/Forms/FormL/FormL2.dart';
+import 'package:npac/Forms/Formk/FormFController.dart';
 import 'package:npac/Forms/Formk/FormK1.dart';
 import 'package:npac/Route/routes.dart';
 import 'package:npac/app/export.dart';
@@ -72,6 +73,7 @@ class _FormD1State extends State<FormD1> {
   }
   FormDController  controller = Get.put(FormDController());
   FormEcontroller formEcontroller = Get.put(FormEcontroller());
+  FormFController formFController = Get.put(FormFController());
   EchoImageController echoImageController = Get.put(EchoImageController());
 
 
@@ -92,6 +94,7 @@ class _FormD1State extends State<FormD1> {
     await controller.getFormD7Data(widget.patientId?? '7965',context);
     await controller.getFormD9Data(widget.patientId?? '7965',context);
     await formEcontroller.getFormEData(widget.patientId?? '7965',context);
+    await formFController.getFormFData(widget.patientId?? '7965',context);
     controller.isDataLoading.value = false;
     setState(() {});
 

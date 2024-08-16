@@ -31,6 +31,7 @@ List<String> symptomsSelectedList = [];
 
   @override
   void initState() {
+
     widget.formEModel?.value.atrialSeptalDefect ?? false ? diseaseSelectedList.add('Atrial Septal Defect') : null;
     widget.formEModel?.value.ventricularSeptalDefect ?? false ? diseaseSelectedList.add('Ventricular Septal Defect') : null;
     widget.formEModel?.value.patentDuctusArteriosus ?? false ? diseaseSelectedList.add('Patent Ductus Arteriosus') : null;

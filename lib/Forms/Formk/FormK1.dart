@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:npac/Forms/Formk/FormFModel.dart';
 import 'package:npac/app/export.dart';
 
 class FormK1 extends StatefulWidget {
   final bool? isEnabled;
+  final Rx<FormFModel>? formFModel;
   final Function(bool)? isEcho;
-  const FormK1({super.key, this.isEnabled, this.isEcho});
+  const FormK1({super.key, this.isEnabled, this.isEcho, this.formFModel});
 
   @override
   State<FormK1> createState() => _FormK1State();
@@ -16,11 +18,12 @@ class _FormK1State extends State<FormK1> {
   bool isAntenatal = false;
   bool isEcho = false;
   int count = 1;
+  List<String> selectedList = [];
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-        MRowTextCheckBox(enabled: widget.isEnabled,title: 'F1 Etiology of Cardiac failure',list: List_items.CardiacFailure,result: (val){
+        MRowTextCheckBox(enabled: widget.isEnabled,selectedlist: selectedList,title: 'F1 Etiology of Cardiac failure',list: List_items.CardiacFailure,result: (val){
           if(val.contains('Others')){
             setState(() {
               isOthers = true;
@@ -30,6 +33,9 @@ class _FormK1State extends State<FormK1> {
               isOthers = false;
             });
           }
+          val.contains('Peripartum Cardiomyopathy') ? widget.formFModel?.value.peripartumCardiomyopathy = true : widget.formFModel?.value.peripartumCardiomyopathy = false;
+          val.contains('Dilated Cardiomyopathy') ? widget.formFModel?.value.dilatedCardiomyopathy = true : widget.formFModel?.value.dilatedCardiomyopathy = false;
+          val.contains('ischemic heart disease') ? widget.formFModel?.value.ischemicHeartDisease = true : widget.formFModel?.value.ischemicHeartDisease = false;
         },isneedDivider: false,),
         isOthers ? MTextField(enabled: widget.isEnabled,label: 'If Other, Specify',onChanged: (val){},): Container(),
         MDivider(),
